@@ -95,10 +95,13 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
   --pad:calc(var(--cw) * .052);
   --rail:0px;
   --v:calc(var(--ch) * .01);
+  /* 固定ヘッダーに隠れる高さ。カードが内側に入っているぶんは差し引く。
+     面の上端の内容がヘッダーの下に潜り込むのを防ぐ */
+  --safetop:max(0px, calc(var(--sh-h, 62px) - var(--cardpad)));
   display:grid;grid-template-columns:minmax(0,1fr);
   grid-template-rows:auto minmax(0,1fr) auto;
   row-gap:calc(var(--v) * 3.2);
-  padding:calc(var(--v) * 4.4) calc(var(--pad) + var(--rail))
+  padding:calc(var(--safetop) + var(--v) * 4.4) calc(var(--pad) + var(--rail))
           calc(var(--groundh) + var(--v) * 2.4) var(--pad);
   border:1.5px solid var(--ink);
   box-shadow:0 1.4vh 4.6vh rgba(20,17,15,.24)}
@@ -288,8 +291,11 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 
 /* 答え：カード全面。地面だけ残す */
 .qa__view{position:absolute;inset:0 0 var(--groundh) 0;z-index:40;pointer-events:none}
+/* 答えは面いっぱいに出るので、面と同じだけ上と右を空ける。
+   上＝固定ヘッダーのぶん、右＝操作列のぶん */
 .qa__a{display:none;position:absolute;inset:0;background:#FAF8F5;
-  padding:4.4cqh var(--pad) 3cqh;pointer-events:auto;
+  padding:calc(var(--safetop) + 4.4cqh) calc(var(--pad) + var(--rail)) 3cqh var(--pad);
+  pointer-events:auto;
   grid-template-rows:auto auto minmax(0,1fr) auto;row-gap:2.2cqh;
   animation:qin .3s cubic-bezier(.22,.61,.36,1) both}
 @keyframes qin{from{opacity:0;translate:0 2.5cqh}to{opacity:1;translate:0 0}}
@@ -1094,16 +1100,38 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
       else { window.scrollTo(0,to); settling=0; }
     })(0);
   }
+  /* 面の頭の位置は、画面の高さを掛けるのではなく要素から実測する。
+     スマホは 100svh（アドレスバーが出ている高さ）と innerHeight が食い違うので、
+     掛け算だと枚数が進むほどずれていく */
+  var tops=[];
+  function measure(){
+    var y=window.pageYOffset;
+    tops=panes.map(function(p){ return Math.round(p.getBoundingClientRect().top + y); });
+  }
+  function clampTo(i){
+    var max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+    i=Math.max(0,Math.min(i,tops.length-1));
+    return Math.min(tops[i],max);
+  }
+  /* いまの位置にいちばん近い面 */
+  function nearest(y){
+    var best=0, bd=Infinity;
+    for(var k=0;k<tops.length;k++){
+      var d=Math.abs(tops[k]-y);
+      if(d<bd){ bd=d; best=k; }
+    }
+    return best;
+  }
   /* 少しでも下へ送ったら次の面、上へ戻したら前の面。半分まで動かさんと戻される気持ち悪さを消す */
   var anchor=0;
   function rest(){
     if(settling) return;
-    var h=window.innerHeight, y=window.pageYOffset,
-        max=Math.max(0,document.documentElement.scrollHeight-h),
-        d=y-anchor, i=y/h;
-    i = d>1 ? Math.ceil(i-0.02) : d<-1 ? Math.floor(i+0.02) : Math.round(i);
-    i = Math.max(0,Math.min(i,panes.length-1));
-    var to=Math.min(i*h,max);
+    measure();
+    var y=window.pageYOffset, d=y-anchor, i=nearest(y);
+    /* 送った向きに一歩進める。いまの面に留まったままにならんように */
+    if(d>1 && tops[i]<y-1 && i<tops.length-1) i++;
+    else if(d<-1 && tops[i]>y+1 && i>0) i--;
+    var to=clampTo(i);
     anchor=to;
     if(Math.abs(to-y)>2) glide(to);
   }
@@ -1111,26 +1139,27 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
     if(settling) return;
     clearTimeout(idle); idle=setTimeout(rest,150);
   },{passive:true});
-  window.addEventListener('resize',function(){ anchor=window.pageYOffset; });
+  window.addEventListener('resize',function(){ measure(); anchor=window.pageYOffset; });
 
   /* 右端の柱。いま何枚目か */
   var dots=[].slice.call(document.querySelectorAll('.dots i')),
       num=document.querySelector('.rail2__i');
   function mark(){
-    var h=window.innerHeight, i=Math.round(window.pageYOffset/h);
+    var i=nearest(window.pageYOffset);
     i=Math.max(0,Math.min(i,panes.length-1));
     dots.forEach(function(d,k){ d.classList.toggle('on', k===i); });
     if(num) num.textContent=('0'+(i+1)).slice(-2);
   }
-  window.addEventListener('scroll',mark,{passive:true}); mark();
+  window.addEventListener('scroll',mark,{passive:true});
+  measure(); mark();
+  /* 画像が入って高さが決まったあとに測り直す */
+  window.addEventListener('load',function(){ measure(); mark(); });
 
   /* 1枚ずつ送る。指のはらいと矢印キー。どっちもブラウザ標準の上に足すだけ */
   function go(d){
-    var h=window.innerHeight,
-        i=Math.round(anchor/h)+d,
-        max=Math.max(0,document.documentElement.scrollHeight-h);
-    i=Math.max(0,Math.min(i,panes.length-1));
-    clearTimeout(idle); anchor=Math.min(i*h,max); glide(anchor);
+    measure();
+    var i=nearest(anchor)+d;
+    clearTimeout(idle); anchor=clampTo(i); glide(anchor);
   }
   var ty=0, tt=0;
   document.addEventListener('touchstart',function(e){

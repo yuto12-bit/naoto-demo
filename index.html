@@ -165,18 +165,33 @@ html.ready .scroll{opacity:.55}
 .gate .en{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.34em;
   color:var(--vermil);margin-top:.9em}
 .lane-wrap{margin-top:clamp(2rem,7vh,4rem);overflow:hidden;padding-bottom:3.5rem}
-.lane{display:flex;align-items:flex-end;gap:clamp(1.2rem,4vw,3rem);will-change:transform}
-.dish{flex:0 0 auto;width:clamp(120px,16vw,196px);display:flex;flex-direction:column;align-items:center}
-.dish:nth-child(2n){translate:0 -14px}
-.art{width:72%;aspect-ratio:3/4;margin-bottom:-6%;border:2px dashed rgba(20,17,15,.28);
-  background:rgba(255,255,255,.4);display:grid;place-content:center;font-size:.56rem;
-  letter-spacing:.06em;color:rgba(20,17,15,.45)}
-/* 実物の作品。-cut は白を抜いた透過なので箱や枠で囲まない */
-.art--img{aspect-ratio:auto;border:0;background:none;display:block}
-.art--img img{display:block;width:100%;height:auto}
+.lane{display:flex;align-items:flex-end;gap:clamp(.9rem,2.6vw,2.2rem);will-change:transform}
+/* 皿は作品の幅に合わせる。だから器は中身なりの幅にしておく */
+.dish{flex:0 0 auto;width:max-content;display:flex;flex-direction:column;align-items:center}
+/* 7点それぞれに大きさと高さの差を付ける。
+   レーンは7点を2周ぶん並べて繋いでいるので、差の周期も必ず7にする（ずらすと継ぎ目で跳ねる） */
+.dish{--ah:clamp(104px,13.5vw,196px);--aw:clamp(132px,18vw,268px)}
+.dish:nth-child(7n+1){--ah:clamp(116px,15vw,218px);--aw:clamp(128px,17vw,250px);translate:0 -4px}
+.dish:nth-child(7n+2){--ah:clamp(132px,17.5vw,252px);--aw:clamp(150px,20vw,290px);translate:0 -22px}
+.dish:nth-child(7n+3){--ah:clamp(98px,12.5vw,182px);--aw:clamp(126px,17vw,246px);translate:0 10px}
+.dish:nth-child(7n+4){--ah:clamp(124px,16vw,232px);--aw:clamp(154px,21vw,302px);translate:0 -14px}
+.dish:nth-child(7n+5){--ah:clamp(92px,11.5vw,168px);--aw:clamp(112px,15vw,216px);translate:0 14px}
+.dish:nth-child(7n+6){--ah:clamp(140px,18.5vw,266px);--aw:clamp(158px,21.5vw,310px);translate:0 -28px}
+.dish:nth-child(7n+7){--ah:clamp(108px,14vw,202px);--aw:clamp(136px,18.5vw,272px);translate:0 2px}
+/* 間合いにも差を付けて、等間隔の行列に見えないようにする */
+.dish:nth-child(7n+2),.dish:nth-child(7n+5){margin-right:clamp(.5rem,2vw,1.6rem)}
+.dish:nth-child(7n+4){margin-left:clamp(.4rem,1.6vw,1.2rem)}
+.art{display:block;border:0;background:none}
+/* 実物の作品。-cut は白を抜いた透過なので箱や枠で囲まない。
+   縦長・横長・正方形が混ざるので、高さと幅の上限だけ決めて形はそのまま出す */
+.art--img img{display:block;width:auto;height:auto;
+  max-height:var(--ah);max-width:var(--aw);
+  filter:drop-shadow(0 3px 5px rgba(20,17,15,.18))}
 /* 地色が作品の一部の2点だけ細い枠を付ける */
 .art--rect img{border:1.5px solid rgba(20,17,15,.3)}
-.plate{width:100%;aspect-ratio:993/407;background:var(--im-plate) no-repeat center/contain}
+.plate{width:116%;min-width:86px;aspect-ratio:993/407;
+  background:var(--im-plate) no-repeat center/contain;
+  margin-top:calc(var(--ah) * -.085)}   /* 作品の裾を皿の縁に沈める */
 .rail{height:2px;background:var(--ink);opacity:.5;margin:0 -10vw;position:relative}
 .rail::after{content:"";position:absolute;left:0;right:0;top:5px;height:1px;background:var(--vermil)}
 .empty{height:40vh}
@@ -381,7 +396,7 @@ html.ready .scroll{opacity:.55}
 <section class="gate">
   <h2>人物、服、街の空気。</h2>
   <p class="en">PEOPLE / FASHION / CITY</p>
-  <div class="lane-wrap"><div class="lane" id="lane"><figure class="dish"><span class="art art--img art--rect"><img src="naoto-works/works/cityboy-cover@400w.webp" srcset="naoto-works/works/cityboy-cover@400w.webp 400w, naoto-works/works/cityboy-cover@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="CITY BOY 表紙風の作品" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/trio-blue-cut@400w.webp" srcset="naoto-works/works/trio-blue-cut@400w.webp 400w, naoto-works/works/trio-blue-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="3人組・青ジャケットのスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/happy-wedding-cut@400w.webp" srcset="naoto-works/works/happy-wedding-cut@400w.webp 400w, naoto-works/works/happy-wedding-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="HAPPY WEDDING のスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art">作品 04</span><i class="plate"></i></figure><figure class="dish"><span class="art art--img art--rect"><img src="naoto-works/works/green-down-wall@400w.webp" srcset="naoto-works/works/green-down-wall@400w.webp 400w, naoto-works/works/green-down-wall@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="緑のダウンとレンガの壁のスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/trio-yellow-cut@400w.webp" srcset="naoto-works/works/trio-yellow-cut@400w.webp 400w, naoto-works/works/trio-yellow-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="3人歩き・黄のスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art">作品 07</span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img art--rect"><img src="naoto-works/works/cityboy-cover@400w.webp" srcset="naoto-works/works/cityboy-cover@400w.webp 400w, naoto-works/works/cityboy-cover@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img"><img src="naoto-works/works/trio-blue-cut@400w.webp" srcset="naoto-works/works/trio-blue-cut@400w.webp 400w, naoto-works/works/trio-blue-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img"><img src="naoto-works/works/happy-wedding-cut@400w.webp" srcset="naoto-works/works/happy-wedding-cut@400w.webp 400w, naoto-works/works/happy-wedding-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art">作品 04</span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img art--rect"><img src="naoto-works/works/green-down-wall@400w.webp" srcset="naoto-works/works/green-down-wall@400w.webp 400w, naoto-works/works/green-down-wall@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img"><img src="naoto-works/works/trio-yellow-cut@400w.webp" srcset="naoto-works/works/trio-yellow-cut@400w.webp 400w, naoto-works/works/trio-yellow-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art">作品 07</span><i class="plate"></i></figure></div></div>
+  <div class="lane-wrap"><div class="lane" id="lane"><figure class="dish"><span class="art art--img art--rect"><img src="naoto-works/works/cityboy-cover@400w.webp" srcset="naoto-works/works/cityboy-cover@400w.webp 400w, naoto-works/works/cityboy-cover@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="CITY BOY 表紙風の作品" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/trio-blue-cut@400w.webp" srcset="naoto-works/works/trio-blue-cut@400w.webp 400w, naoto-works/works/trio-blue-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="3人組・青ジャケットのスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/happy-wedding-cut@400w.webp" srcset="naoto-works/works/happy-wedding-cut@400w.webp 400w, naoto-works/works/happy-wedding-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="HAPPY WEDDING のスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/grid-people-a-cut@400w.webp" srcset="naoto-works/works/grid-people-a-cut@400w.webp 400w, naoto-works/works/grid-people-a-cut@600w.webp 600w" sizes="(max-width:760px) 42vw, 19vw" alt="人物を並べたスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img art--rect"><img src="naoto-works/works/green-down-wall@400w.webp" srcset="naoto-works/works/green-down-wall@400w.webp 400w, naoto-works/works/green-down-wall@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="緑のダウンとレンガの壁のスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/trio-yellow-cut@400w.webp" srcset="naoto-works/works/trio-yellow-cut@400w.webp 400w, naoto-works/works/trio-yellow-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="3人歩き・黄のスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/grid-people-b-cut@400w.webp" srcset="naoto-works/works/grid-people-b-cut@400w.webp 400w, naoto-works/works/grid-people-b-cut@600w.webp 600w" sizes="(max-width:760px) 42vw, 19vw" alt="人物を並べたスケッチ その2" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img art--rect"><img src="naoto-works/works/cityboy-cover@400w.webp" srcset="naoto-works/works/cityboy-cover@400w.webp 400w, naoto-works/works/cityboy-cover@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img"><img src="naoto-works/works/trio-blue-cut@400w.webp" srcset="naoto-works/works/trio-blue-cut@400w.webp 400w, naoto-works/works/trio-blue-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img"><img src="naoto-works/works/happy-wedding-cut@400w.webp" srcset="naoto-works/works/happy-wedding-cut@400w.webp 400w, naoto-works/works/happy-wedding-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/grid-people-a-cut@400w.webp" srcset="naoto-works/works/grid-people-a-cut@400w.webp 400w, naoto-works/works/grid-people-a-cut@600w.webp 600w" sizes="(max-width:760px) 42vw, 19vw" alt="人物を並べたスケッチ" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img art--rect"><img src="naoto-works/works/green-down-wall@400w.webp" srcset="naoto-works/works/green-down-wall@400w.webp 400w, naoto-works/works/green-down-wall@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish" aria-hidden="true"><span class="art art--img"><img src="naoto-works/works/trio-yellow-cut@400w.webp" srcset="naoto-works/works/trio-yellow-cut@400w.webp 400w, naoto-works/works/trio-yellow-cut@600w.webp 600w" sizes="(max-width:760px) 34vw, 14vw" alt="" loading="lazy" decoding="async"></span><i class="plate"></i></figure><figure class="dish"><span class="art art--img"><img src="naoto-works/works/grid-people-b-cut@400w.webp" srcset="naoto-works/works/grid-people-b-cut@400w.webp 400w, naoto-works/works/grid-people-b-cut@600w.webp 600w" sizes="(max-width:760px) 42vw, 19vw" alt="人物を並べたスケッチ その2" loading="lazy" decoding="async"></span><i class="plate"></i></figure></div></div>
   <div class="rail"></div>
   <div class="ticker" aria-label="OSUSHI JAPAN ART / 兵庫県加古郡播磨町・オンライン対応 / 雑誌・広告・アパレル・イベント">
     <div class="ticker__in" id="ticker"><span class="ticker__seg"><b>OSUSHI JAPAN ART</b><i aria-hidden="true"></i><span>PEOPLE / FASHION / CITY</span><i aria-hidden="true"></i><em>兵庫県加古郡播磨町・オンライン対応</em><i aria-hidden="true"></i><span>EDITORIAL / AD / APPAREL / EVENT</span><i aria-hidden="true"></i><em>雑誌・広告・アパレル・イベント</em><i aria-hidden="true"></i></span><span class="ticker__seg"><b>OSUSHI JAPAN ART</b><i aria-hidden="true"></i><span>PEOPLE / FASHION / CITY</span><i aria-hidden="true"></i><em>兵庫県加古郡播磨町・オンライン対応</em><i aria-hidden="true"></i><span>EDITORIAL / AD / APPAREL / EVENT</span><i aria-hidden="true"></i><em>雑誌・広告・アパレル・イベント</em><i aria-hidden="true"></i></span><span class="ticker__seg"><b>OSUSHI JAPAN ART</b><i aria-hidden="true"></i><span>PEOPLE / FASHION / CITY</span><i aria-hidden="true"></i><em>兵庫県加古郡播磨町・オンライン対応</em><i aria-hidden="true"></i><span>EDITORIAL / AD / APPAREL / EVENT</span><i aria-hidden="true"></i><em>雑誌・広告・アパレル・イベント</em><i aria-hidden="true"></i></span><span class="ticker__seg"><b>OSUSHI JAPAN ART</b><i aria-hidden="true"></i><span>PEOPLE / FASHION / CITY</span><i aria-hidden="true"></i><em>兵庫県加古郡播磨町・オンライン対応</em><i aria-hidden="true"></i><span>EDITORIAL / AD / APPAREL / EVENT</span><i aria-hidden="true"></i><em>雑誌・広告・アパレル・イベント</em><i aria-hidden="true"></i></span></div>
@@ -412,7 +427,12 @@ addEventListener('load',function(){ clearTimeout(t); setTimeout(go,3500); });
   }
   var says=[].slice.call(g.querySelectorAll('.say'));
   var marks=[0,.16667,.33333,.5,.66667,.83333];   /* 街と言葉の切り替わり位置。6つとも同じ長さ */
-  var LEAD=.025;                   /* 街が変わってから言葉が出るまでの間 */
+  /* 街と文は一組。1つの区間の中を、割合で次のように配る。
+       0〜12%  街が入れ替わる。文は出さない（前の文はもう引いている）
+      12〜86%  文が出ていて読める時間
+      86〜100% 文が引く。空いた状態で次の街へ渡す
+     締めの1枚だけは次の街がないので、最後まで文を残す。 */
+  var IN=.12, OUT=.86;
   var cur=-1, tick=false;
   function upd(){
     tick=false;
@@ -430,10 +450,13 @@ addEventListener('load',function(){ clearTimeout(t); setTimeout(go,3500); });
       layers.forEach(function(el,k){ el.classList.toggle('on', k===i); });
       g.classList.toggle('is-night', layers[i].hasAttribute('data-night'));   /* data-night を付けた街だけ夜 */
     }
-    /* 言葉は担当の街が出てから現れ、次の街に変わるまで画面中央に留まる */
-    var s=-1; for(var k2=0;k2<marks.length;k2++){ if(p>=marks[k2]+LEAD) s=k2; }
+    /* いまの区間の中でどこまで来たか（0〜1）。これで文の出入りを決める */
+    var from=marks[i], to=(i+1<marks.length ? marks[i+1] : 1);
+    var u=(to>from) ? (p-from)/(to-from) : 1;
+    var last=(i===marks.length-1);
+    var showing = u>=IN && (last ? true : u<=OUT);
     var mid=innerHeight*.5, live=(r.top<mid && r.bottom>mid);   /* 区間が画面の中心にあるか */
-    says.forEach(function(el,k){ el.classList.toggle('on', live && k===s); });
+    says.forEach(function(el,k){ el.classList.toggle('on', live && showing && k===i); });
   }
   addEventListener('scroll',function(){ if(!tick){tick=true;requestAnimationFrame(upd);} },{passive:true});
   addEventListener('resize',upd);
@@ -473,6 +496,11 @@ figs.forEach(function(el){io.observe(el);});
   var lane=document.getElementById('lane'),x=0,half=0,raf;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   function m(){half=lane.scrollWidth/2;} addEventListener('resize',m); m();
+  /* 皿の画像は後から読み込まれる。読み終えるたびに長さを測り直さないと、
+     一周の継ぎ目がずれる */
+  [].slice.call(lane.querySelectorAll('img')).forEach(function(im){
+    if(!im.complete) im.addEventListener('load', m, {once:true});
+  });
   function ap(){ if(half) x=((x%half)+half)%half; lane.style.transform='translateX('+(-x)+'px)'; }
   addEventListener('wheel',function(e){ x+=(Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)*.35;
     if(!raf) raf=requestAnimationFrame(function(){raf=null;ap();}); },{passive:true});
