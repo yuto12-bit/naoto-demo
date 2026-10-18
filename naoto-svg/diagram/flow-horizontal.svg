@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 250" role="img" aria-label="制作の流れ 全5ステップ">
+<style>
+  .num   { font-family:"Anton", sans-serif; font-size:26px; fill:currentColor; }
+  .jp    { font-family:"Noto Sans JP", system-ui, sans-serif; font-weight:900; font-size:21px; fill:currentColor; }
+  .en    { font-family:"Anton", sans-serif; font-size:11px; letter-spacing:.22em; fill:currentColor; opacity:.5; }
+  .note  { font-family:"Noto Sans JP", system-ui, sans-serif; font-size:12.5px; fill:currentColor; opacity:.66; }
+  .ring  { fill:none; stroke:currentColor; stroke-width:3.2; }
+  .base  { stroke:currentColor; stroke-width:2.4; }
+  .tick  { stroke:currentColor; stroke-width:2.4; }
+  .arw   { fill:var(--vermil,#D3381C); }
+  .arwl  { stroke:var(--vermil,#D3381C); stroke-width:3.4; }
+</style>
+<path class="base" d="M20 214h1200"/>
+<circle class="ring" cx="124.0" cy="52" r="27"/>
+<text class="num" x="124.0" y="61" text-anchor="middle">01</text>
+<text class="jp" x="124.0" y="117" text-anchor="middle">お問い合わせ</text>
+<text class="en" x="124.0" y="137" text-anchor="middle">CONTACT</text>
+<text class="note" x="124.0" y="167" text-anchor="middle">フォームまたはメールから</text>
+<path class="tick" d="M124.0 214v-24"/>
+<path class="arwl" d="M166.0 52h151.0"/>
+<path class="arw" d="M317.0 43l13 9-13 9z"/>
+<circle class="ring" cx="372.0" cy="52" r="27"/>
+<text class="num" x="372.0" y="61" text-anchor="middle">02</text>
+<text class="jp" x="372.0" y="117" text-anchor="middle">ヒアリング</text>
+<text class="en" x="372.0" y="137" text-anchor="middle">HEARING</text>
+<text class="note" x="372.0" y="167" text-anchor="middle">用途・サイズ・納期を確認</text>
+<path class="tick" d="M372.0 214v-24"/>
+<path class="arwl" d="M414.0 52h151.0"/>
+<path class="arw" d="M565.0 43l13 9-13 9z"/>
+<circle class="ring" cx="620.0" cy="52" r="27"/>
+<text class="num" x="620.0" y="61" text-anchor="middle">03</text>
+<text class="jp" x="620.0" y="117" text-anchor="middle">お見積り</text>
+<text class="en" x="620.0" y="137" text-anchor="middle">ESTIMATE</text>
+<text class="note" x="620.0" y="167" text-anchor="middle">内容を固めて金額を提示</text>
+<path class="tick" d="M620.0 214v-24"/>
+<path class="arwl" d="M662.0 52h151.0"/>
+<path class="arw" d="M813.0 43l13 9-13 9z"/>
+<circle class="ring" cx="868.0" cy="52" r="27"/>
+<text class="num" x="868.0" y="61" text-anchor="middle">04</text>
+<text class="jp" x="868.0" y="117" text-anchor="middle">ラフ・本制作</text>
+<text class="en" x="868.0" y="137" text-anchor="middle">DRAWING</text>
+<text class="note" x="868.0" y="167" text-anchor="middle">方向性を確認しながら描く</text>
+<path class="tick" d="M868.0 214v-24"/>
+<path class="arwl" d="M910.0 52h151.0"/>
+<path class="arw" d="M1061.0 43l13 9-13 9z"/>
+<circle class="ring" cx="1116.0" cy="52" r="27"/>
+<text class="num" x="1116.0" y="61" text-anchor="middle">05</text>
+<text class="jp" x="1116.0" y="117" text-anchor="middle">納品</text>
+<text class="en" x="1116.0" y="137" text-anchor="middle">DELIVERY</text>
+<text class="note" x="1116.0" y="167" text-anchor="middle">指定の形式でデータをお渡し</text>
+<path class="tick" d="M1116.0 214v-24"/>
+</svg>

@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-hidden="true"><defs><pattern id="p-stripe-diag" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M-5 5L5 -5M0 20L20 0M15 25L25 15" stroke="currentColor" stroke-width="7"/></pattern></defs><rect width="100%" height="100%" fill="url(#p-stripe-diag)"/></svg>

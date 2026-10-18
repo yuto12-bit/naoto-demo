@@ -1,0 +1,588 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<!-- 確認用の仮公開。検索に拾われないようにしている。本番公開のときに消すこと -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WORKS — NAOTO OTAKA</title>
+<!-- @meta -->
+<link rel="icon" href="../assets/ogp/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/ogp/favicon-180.png">
+<meta name="description" content="大高直人の作品一覧。展示室でみる7点と、街で描きためたスケッチ71体。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OSUSHI JAPAN ART">
+<meta property="og:title" content="WORKS — NAOTO OTAKA">
+<meta property="og:description" content="大高直人の作品一覧。展示室でみる7点と、街で描きためたスケッチ71体。">
+<meta property="og:image" content="../assets/ogp/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- /@meta -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+JP:wght@400;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14110F;--ink-40:rgba(20,17,15,.4);--ink-20:rgba(20,17,15,.2);--ink-12:rgba(20,17,15,.12);
+  --paper:#E9E8E6;--vermil:#D3381C;
+  --im-paper:url("../naoto-assets/tile/paper-white@512w.webp");
+  --im-grain:url("../naoto-assets/overlay/photocopy-grain@420w.webp");
+  --im-icon:url("../naoto-works/works/icon-face-cut@400w.webp");
+  --im-plate:url("../naoto-hand/hand/sushi-plate@400w.webp");}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans JP",sans-serif;color:var(--ink);
+  background:var(--paper) var(--im-paper) repeat;background-size:320px}
+html,body{overflow-x:hidden;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
+  background:var(--im-grain) repeat;background-size:420px;opacity:.32;mix-blend-mode:multiply}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:1.4rem;
+  padding:1.2rem clamp(1.2rem,5vw,4rem);mix-blend-mode:multiply}
+.nav .logo{width:32px;height:32px;border-radius:50%;background:var(--im-icon) center/cover no-repeat;
+  border:1.5px solid var(--ink);flex:none}
+.nav b{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.16em;margin-right:auto}
+.nav a{color:inherit;text-decoration:none;font-family:Anton,sans-serif;font-size:.68rem;
+  letter-spacing:.16em;border-bottom:2px solid transparent;padding-bottom:.15rem}
+.nav a:hover,.nav a[aria-current]{border-bottom-color:var(--vermil)}
+
+.intro{height:100svh;display:grid;place-content:center;text-align:center;position:relative}
+.intro h1{font-weight:900;font-size:clamp(1.7rem,5.2vw,3.4rem);line-height:1.3}
+.intro .en{display:block;font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.34em;
+  color:var(--vermil);margin-top:1.1em}
+.intro .cue{position:absolute;left:50%;translate:-50% 0;bottom:2.6rem;
+  font-family:Anton,sans-serif;font-size:.62rem;letter-spacing:.3em;opacity:.5;
+  display:flex;flex-direction:column;align-items:center;gap:.7rem}
+.intro .cue::after{content:"";width:1.5px;height:44px;background:var(--ink);
+  animation:drop 2.1s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(.15);transform-origin:top}
+ 55%{transform:scaleY(1);transform-origin:top}56%{transform:scaleY(1);transform-origin:bottom}
+ 100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== 1点ずつ。壁に掛かった額 ===== */
+.viewer{position:relative}
+.slide{height:100svh;position:sticky;top:0;overflow:hidden;
+  padding:clamp(4.5rem,9vh,6rem) clamp(1.4rem,5vw,4rem) clamp(2.5rem,6vh,4rem)}
+/* 1点ずつ落ち着いて見られるよう、次がせり上がってくるまで間を空ける。
+   .slide は sticky なので、次の slide を下にずらすとその分だけ現在の1点が留まる */
+.viewer{--hold:100svh}
+.slide+.slide{margin-top:var(--hold)}
+/* sticky は自分の余白ごと親の内容ボックスに収まる決まりなので、
+   最後の1点を留めるには余白ではなく中身のある箱が要る */
+.viewer::after{content:"";display:block;height:var(--hold)}
+@media (max-width:760px){.viewer{--hold:70svh}}
+.wall{position:absolute;inset:0;z-index:0;display:block;
+  background-position:center;background-size:cover;background-repeat:no-repeat}
+.stageimg{position:absolute;inset:0;z-index:1;pointer-events:none}
+.frame{position:absolute;left:var(--px);top:46%;translate:-50% -50%;
+  aspect-ratio:1/var(--ar);
+  /* 高さと幅の両方を上限で縛る。小さいほうが採用される */
+  height:min(var(--vh), calc(var(--maxw) * var(--ar)));
+  width:auto;max-width:var(--maxw);
+  opacity:0;transform:translateY(22px) scale(.99);
+  transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1.1s cubic-bezier(.2,.6,.2,1);
+  filter:drop-shadow(10px 14px 18px rgba(20,17,15,.34)) drop-shadow(2px 3px 4px rgba(20,17,15,.22))}
+.frame--tall{--maxw:34vw}
+.frame--sq{--maxw:40vw}
+.frame--wide{--maxw:46vw}
+.slide.on .frame{transform:none}
+.slide.on .frame{opacity:1}
+.frame__bg{display:block;width:100%;height:100%;object-fit:contain}
+.frame__win{position:absolute;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;background:#fff}
+.frame__win img{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
+
+.info{position:absolute;z-index:2;right:clamp(1.4rem,5vw,4rem);bottom:clamp(2.4rem,8vh,5rem);
+  max-width:min(300px,34vw);opacity:0;transform:translateY(16px);
+  transition:opacity .9s ease .25s,transform .9s cubic-bezier(.2,.6,.2,1) .25s}
+.slide--dim .info,.slide--dim .info__no{color:#F3F1ED}
+.slide--dim .info__no{-webkit-text-stroke-color:#F3F1ED}
+.slide--dim .info__jp{border-top-color:#F3F1ED}
+.slide--dim .info__meta dt{opacity:.55}
+.slide.on .info{opacity:1;transform:none}
+.info__no{font-family:Anton,sans-serif;font-size:clamp(2.2rem,5.5vw,4rem);line-height:1;
+  color:transparent;-webkit-text-stroke:1.5px var(--ink);display:block}
+.info__no i{font-style:normal;font-size:.9rem;letter-spacing:.14em;
+  -webkit-text-stroke:0;color:var(--ink-40);margin-left:.5rem}
+.info__jp{font-weight:900;font-size:clamp(1.1rem,2.5vw,1.75rem);line-height:1.45;
+  margin-top:1.1rem;border-top:3px solid var(--ink);padding-top:1rem}
+.info__en{font-family:Anton,sans-serif;font-size:.64rem;letter-spacing:.26em;
+  color:var(--vermil);margin-top:.7em}
+.info__meta{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.1rem;
+  margin-top:1.8rem;font-size:.72rem}
+.info__meta dt{font-family:Anton,sans-serif;font-size:.56rem;letter-spacing:.2em;opacity:.4}
+.info__meta dd{margin:0;line-height:1.7}
+
+/* ===== 71体：コンベア ===== */
+.belt{position:relative;z-index:2;
+  background:var(--paper) var(--im-paper) repeat;background-size:320px;
+  border-top:4px solid var(--ink);
+  padding:clamp(3.4rem,10vh,6rem) 0 clamp(4rem,11vh,6.5rem);overflow:hidden}
+.belt__h{display:flex;align-items:baseline;gap:1.1rem;margin:0 clamp(1.4rem,5vw,4rem) 1.4rem}
+.belt__h b{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.3em}
+.belt__h span{font-size:.76rem;opacity:.5}
+.belt__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
+.belt__lead{margin:0 clamp(1.4rem,5vw,4rem) 1.2rem;max-width:620px;
+  font-size:clamp(.8rem,1.35vw,.92rem);line-height:2.05;opacity:.72}
+.belt__count{display:flex;align-items:baseline;gap:.7rem;margin:0 clamp(1.4rem,5vw,4rem) 2rem}
+.belt__count b{font-family:Anton,sans-serif;font-size:clamp(2.4rem,7vw,5rem);line-height:1;
+  color:transparent;-webkit-text-stroke:1.6px var(--ink)}
+.belt__count span{font-family:Anton,sans-serif;font-size:.66rem;letter-spacing:.26em;color:var(--vermil)}
+.lane{display:flex;align-items:flex-end;gap:clamp(1rem,2.6vw,2rem);width:max-content;
+  will-change:transform;padding:0 2vw}
+.bfig{flex:0 0 auto;margin:0;display:flex;flex-direction:column;align-items:center;
+  width:clamp(74px,8.5vw,118px)}
+.bfig:nth-child(2n){translate:0 -12px}
+.bfig:nth-child(3n){translate:0 7px}
+.bfig img{display:block;width:100%;height:auto;margin-bottom:-5%}
+.bplate{display:block;width:118%;aspect-ratio:993/407;
+  background:var(--im-plate) center/contain no-repeat}
+.rail{position:relative;height:2px;background:var(--ink);opacity:.5;
+  margin:0 -6vw;top:-2px}
+.rail::after{content:"";position:absolute;left:0;right:0;top:5px;height:1px;background:var(--vermil)}
+.belt__note{margin:clamp(2rem,6vh,3rem) clamp(1.4rem,5vw,4rem) 0;
+  font-size:.68rem;opacity:.45;line-height:1.9}
+
+/* ===== 実績：ページをめくる ===== */
+.mag{border-top:4px solid var(--ink);
+  padding:clamp(3.2rem,9vh,5.5rem) clamp(1.2rem,4vw,3rem) clamp(4.5rem,12vh,7rem)}
+.mag__h{display:flex;align-items:baseline;gap:1.1rem;margin-bottom:clamp(1.6rem,4.5vh,2.4rem);
+  max-width:1120px;margin-inline:auto}
+.mag__h b{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.3em}
+.mag__h span{font-size:.76rem;opacity:.5}
+.mag__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
+
+/* ===== 本 ===== */
+.book{position:relative;max-width:1120px;margin:0 auto;
+  aspect-ratio:1120/620;perspective:2400px;perspective-origin:50% 50%;
+  touch-action:pan-y;user-select:none;cursor:grab}
+.book:active{cursor:grabbing}
+.book__base{position:absolute;inset:0;background:#F2F0EC;
+  box-shadow:0 26px 58px rgba(20,17,15,.13),0 2px 5px rgba(20,17,15,.05)}
+.book__end{position:absolute;inset:0;display:grid;place-content:center;text-align:center;
+  font-family:Anton,sans-serif;font-size:.66rem;letter-spacing:.26em;color:var(--ink-40);
+  line-height:2.4}
+
+.sheet{position:absolute;inset:0;transform-style:preserve-3d;
+  transform-origin:left center;will-change:transform}
+.face,.back{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden}
+.face{display:grid;grid-template-columns:1fr 1fr;background:#FAF8F5}
+.back{transform:rotateY(180deg);background:#F4F2EE;
+  background-image:linear-gradient(270deg,rgba(20,17,15,.055),transparent 26%),
+    var(--im-paper);background-size:auto,300px;background-blend-mode:multiply,normal}
+/* 曲面の近似：帯ごとに角度をずらす */
+.strip{position:absolute;top:0;bottom:0;transform-style:preserve-3d;
+  will-change:transform,filter;backface-visibility:hidden}
+.strip>div{position:absolute;top:0;bottom:0;left:0;width:var(--bw);overflow:hidden}
+.strip img,.strip .clip{position:absolute;top:0;left:var(--ox);height:100%;width:var(--fw)}
+
+.face__gutter{position:absolute;left:50%;top:0;bottom:0;width:36px;translate:-50% 0;z-index:3;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(20,17,15,.10) 42%,rgba(20,17,15,.14) 50%,
+    rgba(20,17,15,.10) 58%,transparent)}
+.pg--l{position:relative;display:flex;align-items:center;justify-content:center;
+  padding:clamp(1.2rem,2.6vw,2.4rem);background:#F2F0EC;overflow:hidden}
+.pg--l img{display:block;max-width:100%;max-height:100%;width:auto;
+  box-shadow:0 10px 24px rgba(20,17,15,.18)}
+.pg--l .hold{width:min(60%,200px);aspect-ratio:1414/2000;border:2px dashed var(--ink-20);
+  display:grid;place-content:center;text-align:center;font-family:Anton,sans-serif;
+  font-size:.54rem;letter-spacing:.2em;color:var(--ink-40);line-height:2.2;
+  background:rgba(255,255,255,.4)}
+.sheet--next .pg--l .hold{border-color:rgba(211,56,28,.4);color:var(--vermil)}
+.pg--r{position:relative;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(1.6rem,3vw,2.6rem) clamp(1.2rem,2.6vw,2.2rem)
+    clamp(2.6rem,5.5vh,3.4rem) clamp(2rem,3.6vw,2.8rem)}
+.pg__kicker{font-family:Anton,sans-serif;font-size:.56rem;letter-spacing:.26em;
+  color:var(--vermil);display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.pg__kicker::after{content:"";flex:1;height:1.5px;background:var(--vermil);opacity:.35}
+.pg__cl{font-weight:900;font-size:clamp(1.1rem,2.4vw,1.85rem);line-height:1.35}
+.pg__en{font-family:Anton,sans-serif;font-size:.56rem;letter-spacing:.24em;opacity:.4;margin-top:.7em}
+.pg__lead{font-size:clamp(.74rem,1.2vw,.88rem);line-height:2.1;margin-top:1.2rem;
+  padding-top:1.1rem;border-top:2px solid var(--ink)}
+.pg__data{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.2rem;margin-top:1.3rem;font-size:.7rem}
+.pg__data dt{font-family:Anton,sans-serif;font-size:.5rem;letter-spacing:.2em;opacity:.4;padding-top:.25em}
+.pg__data dd{margin:0;line-height:1.75}
+.pg__folio{position:absolute;bottom:clamp(.9rem,2.2vh,1.4rem);
+  font-family:Anton,sans-serif;font-size:.56rem;letter-spacing:.22em;opacity:.4}
+.pg--l .pg__folio{left:clamp(1.2rem,2.6vw,2.4rem)}
+.pg--r .pg__folio{right:clamp(1.2rem,2.6vw,2.4rem)}
+.pg__runner{position:absolute;top:clamp(.9rem,2.2vh,1.4rem);right:clamp(1.2rem,2.6vw,2.2rem);
+  font-family:Anton,sans-serif;font-size:.5rem;letter-spacing:.24em;opacity:.3}
+
+.bar{max-width:1120px;margin:1.2rem auto 0;display:flex;align-items:center;gap:1rem}
+.bar__idx{font-family:Anton,sans-serif;font-size:.6rem;letter-spacing:.22em;opacity:.45}
+.bar__track{flex:1;height:2px;background:var(--ink-12);position:relative}
+.bar__track i{position:absolute;left:0;top:0;bottom:0;background:var(--vermil);width:0;
+  transition:width .8s cubic-bezier(.3,.02,.2,1)}
+.bar__hint{font-family:Anton,sans-serif;font-size:.58rem;letter-spacing:.24em;opacity:.4}
+
+@media(max-width:780px){
+  .book{aspect-ratio:3/4}
+  .face{grid-template-columns:1fr;grid-template-rows:1fr 1.25fr}
+  .face__gutter{display:none}
+  .pg--l{border-bottom:2px solid var(--ink-12);padding:1rem}
+}
+@media (prefers-reduced-motion:reduce){ .sheet{transition:none!important} }
+
+
+.next{position:relative;z-index:2;background:var(--paper) var(--im-paper) repeat;background-size:320px;
+  border-top:4px solid var(--ink);padding:clamp(3rem,9vh,5rem) clamp(1.4rem,5vw,4rem)}
+.next a{display:flex;align-items:center;gap:clamp(1rem,4vw,3rem);flex-wrap:wrap;
+  color:inherit;text-decoration:none}
+.next__jp{font-weight:900;font-size:clamp(1.2rem,3.6vw,2.4rem);line-height:1.35}
+.next__en{display:block;font-family:Anton,sans-serif;font-size:.66rem;letter-spacing:.3em;
+  color:var(--vermil);margin-top:.8em}
+.next__arw{width:clamp(48px,7vw,92px);height:auto;flex:none;
+  transition:transform .5s cubic-bezier(.2,.7,.25,1)}
+.next a:hover .next__arw{transform:translateX(14px)}
+
+.foot{position:relative;z-index:2;background:var(--paper) var(--im-paper) repeat;background-size:320px;
+  border-top:2px solid var(--ink-12);
+  padding:clamp(1.4rem,4vh,2.4rem) clamp(1.4rem,5vw,4rem) clamp(2.4rem,6vh,4rem);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  font-family:Anton,sans-serif;font-size:.6rem;letter-spacing:.2em;opacity:.55}
+.foot nav{display:flex;gap:1.4rem}
+.foot a{color:inherit;text-decoration:none}
+.foot a:hover{color:var(--vermil)}
+
+@media(max-width:860px){
+  .frame{left:50%!important;top:40%;--maxw:82vw;height:min(var(--vh),50vh,calc(82vw * var(--ar)))}
+  .info{right:auto;left:clamp(1.2rem,5vw,3rem);bottom:clamp(2rem,7vh,4rem);max-width:78vw}
+  .info__no{font-size:1.9rem}
+  .info__jp{font-size:1.02rem;margin-top:.6rem;padding-top:.6rem}
+  .info__meta{grid-template-columns:auto 1fr auto 1fr;margin-top:.9rem}
+  .nav a{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .frame,.info{opacity:1!important;transform:none!important;transition:none}
+  .intro .cue::after{animation:none}
+}
+</style><link rel="stylesheet" href="../assets/css/site-header.css">
+<script src="../assets/js/site-header.js" defer></script>
+</head><body><header class="sh">
+<a class="sh__id" href="../" aria-label="OSUSHI JAPAN ART ホーム"><i class="sh__logo" aria-hidden="true"></i><b>OSUSHI JAPAN ART</b></a>
+<nav class="sh__nav" aria-label="メインナビゲーション"><a href="../works/" aria-current="page">WORKS</a><a href="../faq/">FAQ</a><a href="../about/">ABOUT</a><a href="../contact/">CONTACT</a></nav>
+<button class="sh__btn" type="button" id="sh-btn" aria-expanded="false" aria-controls="sh-menu" aria-label="メニューを開く"><i aria-hidden="true"></i></button>
+</header>
+<div class="sh-menu" id="sh-menu" hidden><nav aria-label="サイト内（全体）"><a href="../"><em>HOME</em><span>トップ</span></a><a href="../works/" aria-current="page"><em>WORKS</em><span>作品</span></a><a href="../faq/"><em>FAQ</em><span>ご依頼について</span></a><a href="../about/"><em>ABOUT</em><span>大高直人について</span></a><a href="../contact/"><em>CONTACT</em><span>お問い合わせ</span></a></nav>
+<p class="sh-menu__foot">OSUSHI JAPAN ART / NAOTO OTAKA<br>兵庫県加古郡播磨町</p></div>
+
+
+
+<section class="intro">
+  <div><h1>これまで描いてきたもの</h1><span class="en">WORKS</span></div>
+  <p class="cue">SCROLL</p>
+</section>
+
+<div class="viewer">
+    <article class="slide slide--bright" data-i="1">
+      <i class="wall" style="background-image:url(../naoto-assets/gallery/wall-bright.webp)"></i>
+      <div class="stageimg">
+        <div class="frame frame--tall" style="--ar:1.3093;--px:34%;--vh:62vh">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/trio-blue-cut@360w.webp" alt="3人" loading="lazy" decoding="async">
+          </span>
+        </div>
+      </div>
+      <div class="info">
+        <span class="info__no">01<i>/ 07</i></span>
+        <h2 class="info__jp">3人</h2>
+        <p class="info__en">THREE</p>
+        <dl class="info__meta"><dt>YEAR</dt><dd>2026</dd><dt>TOOL</dt><dd>コピック／ペン</dd></dl>
+      </div>
+    </article>
+    <article class="slide slide--bright" data-i="2">
+      <i class="wall" style="background-image:url(../naoto-assets/gallery/wall-bright.webp)"></i>
+      <div class="stageimg">
+        <div class="frame frame--tall" style="--ar:1.3093;--px:58%;--vh:52vh">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/happy-wedding-cut@360w.webp" alt="ハッピーウェディング" loading="lazy" decoding="async">
+          </span>
+        </div>
+      </div>
+      <div class="info">
+        <span class="info__no">02<i>/ 07</i></span>
+        <h2 class="info__jp">ハッピーウェディング</h2>
+        <p class="info__en">HAPPY WEDDING</p>
+        <dl class="info__meta"><dt>YEAR</dt><dd>2026</dd><dt>TOOL</dt><dd>コピック／ペン</dd></dl>
+      </div>
+    </article>
+    <article class="slide slide--dim" data-i="3">
+      <i class="wall" style="background-image:url(../naoto-assets/gallery/wall-dim.webp)"></i>
+      <div class="stageimg">
+        <div class="frame frame--tall" style="--ar:1.3093;--px:30%;--vh:70vh">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/cityboy-cover@360w.webp" alt="シティボーイ" loading="lazy" decoding="async">
+          </span>
+        </div>
+      </div>
+      <div class="info">
+        <span class="info__no">03<i>/ 07</i></span>
+        <h2 class="info__jp">シティボーイ</h2>
+        <p class="info__en">CITY BOY</p>
+        <dl class="info__meta"><dt>YEAR</dt><dd>2026</dd><dt>TOOL</dt><dd>コピック／ペン</dd></dl>
+      </div>
+    </article>
+    <article class="slide slide--dim" data-i="4">
+      <i class="wall" style="background-image:url(../naoto-assets/gallery/wall-dim.webp)"></i>
+      <div class="stageimg">
+        <div class="frame frame--sq" style="--ar:0.9977;--px:62%;--vh:48vh">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-sq.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:15.58139534883721%;top:16.083916083916083%;width:68.37209302325581%;height:69.23076923076923%">
+            <img src="../naoto-works/works/trio-yellow-cut@360w.webp" alt="歩く" loading="lazy" decoding="async">
+          </span>
+        </div>
+      </div>
+      <div class="info">
+        <span class="info__no">04<i>/ 07</i></span>
+        <h2 class="info__jp">歩く</h2>
+        <p class="info__en">WALK</p>
+        <dl class="info__meta"><dt>YEAR</dt><dd>2026</dd><dt>TOOL</dt><dd>コピック／ペン</dd></dl>
+      </div>
+    </article>
+    <article class="slide slide--bright" data-i="5">
+      <i class="wall" style="background-image:url(../naoto-assets/gallery/wall-bright.webp)"></i>
+      <div class="stageimg">
+        <div class="frame frame--sq" style="--ar:0.9977;--px:40%;--vh:56vh">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-sq.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:15.58139534883721%;top:16.083916083916083%;width:68.37209302325581%;height:69.23076923076923%">
+            <img src="../naoto-works/works/green-down-wall@360w.webp" alt="壁の前で" loading="lazy" decoding="async">
+          </span>
+        </div>
+      </div>
+      <div class="info">
+        <span class="info__no">05<i>/ 07</i></span>
+        <h2 class="info__jp">壁の前で</h2>
+        <p class="info__en">ON THE WALL</p>
+        <dl class="info__meta"><dt>YEAR</dt><dd>2026</dd><dt>TOOL</dt><dd>コピック／ペン・写真</dd></dl>
+      </div>
+    </article>
+    <article class="slide slide--corner" data-i="6">
+      <i class="wall" style="background-image:url(../naoto-assets/gallery/wall-corner.webp)"></i>
+      <div class="stageimg">
+        <div class="frame frame--tall" style="--ar:1.3093;--px:27%;--vh:66vh">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/grid-people-b-cut@360w.webp" alt="街のスケッチ" loading="lazy" decoding="async">
+          </span>
+        </div>
+      </div>
+      <div class="info">
+        <span class="info__no">06<i>/ 07</i></span>
+        <h2 class="info__jp">街のスケッチ</h2>
+        <p class="info__en">STREET SKETCHES</p>
+        <dl class="info__meta"><dt>YEAR</dt><dd>2026</dd><dt>TOOL</dt><dd>コピック／ペン</dd></dl>
+      </div>
+    </article>
+    <article class="slide slide--corner" data-i="7">
+      <i class="wall" style="background-image:url(../naoto-assets/gallery/wall-corner.webp)"></i>
+      <div class="stageimg">
+        <div class="frame frame--wide" style="--ar:0.7093;--px:36%;--vh:40vh">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-wide.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:13.25581395348837%;top:15.081967213114755%;width:73.25581395348837%;height:69.83606557377048%">
+            <img src="../naoto-works/works/crowd-top-cut@360w.webp" alt="群衆" loading="lazy" decoding="async">
+          </span>
+        </div>
+      </div>
+      <div class="info">
+        <span class="info__no">07<i>/ 07</i></span>
+        <h2 class="info__jp">群衆</h2>
+        <p class="info__en">CROWD</p>
+        <dl class="info__meta"><dt>YEAR</dt><dd>2026</dd><dt>TOOL</dt><dd>コピック／ペン</dd></dl>
+      </div>
+    </article>
+</div>
+
+<section class="belt">
+  <p class="belt__h"><b>SKETCH ARCHIVE</b><span>スケッチ一覧</span></p>
+  <p class="belt__lead">日々のスケッチから。ひとりずつ、街で見かけた人を描きためています。</p>
+  <p class="belt__count"><b>71</b><span>SKETCHES</span></p>
+  <div class="lane" id="lane"><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-01@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-02@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-03@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-04@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-05@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-06@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-07@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-08@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-09@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-10@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-11@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-12@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-13@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-14@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-15@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-16@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-17@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-18@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-19@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-20@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-21@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-22@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-23@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-24@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-25@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-26@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-27@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-28@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-29@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-30@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-31@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-32@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-33@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-34@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-35@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-36@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-01@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-02@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-03@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-04@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-05@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-06@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-07@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-08@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-09@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-10@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-11@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-12@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-13@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-14@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-15@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-16@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-17@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-18@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-19@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-20@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-21@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-22@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-23@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-24@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-25@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-26@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-27@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-28@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-29@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-30@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-31@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-32@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-33@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-34@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-35@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-01@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-02@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-03@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-04@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-05@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-06@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-07@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-08@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-09@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-10@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-11@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-12@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-13@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-14@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-15@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-16@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-17@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-18@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-19@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-20@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-21@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-22@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-23@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-24@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-25@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-26@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-27@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-28@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-29@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-30@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-31@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-32@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-33@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-34@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-35@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-a-36@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-01@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-02@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-03@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-04@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-05@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-06@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-07@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-08@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-09@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-10@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-11@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-12@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-13@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-14@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-15@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-16@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-17@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-18@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-19@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-20@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-21@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-22@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-23@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-24@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-25@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-26@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-27@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-28@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-29@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-30@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-31@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-32@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-33@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-34@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure><figure class="bfig"><img src="../naoto-works/figures-solid/fig-b-35@94w.webp" alt="" loading="lazy" decoding="async"><i class="bplate"></i></figure></div>
+  <div class="rail"></div>
+  <p class="belt__note">掲載しているのは一部です。用途に応じて個別にお見せできます。</p>
+</section>
+
+<section class="mag">
+  <p class="mag__h"><b>COLLABORATION</b><span>実績 — ドラッグでめくる</span></p>
+
+  <div class="book" id="book">
+    <div class="book__base">
+      <p class="book__end">END OF<br>COLLABORATION</p>
+    </div>
+      <div class="sheet" data-i="0">
+        <div class="face">
+        <i class="face__gutter" aria-hidden="true"></i>
+        <div class="pg pg--l"><img src="../naoto-works/works/maison-de-vii@420w.webp" alt="MAISON DE VII." loading="lazy" decoding="async"><span class="pg__folio">01a</span></div>
+        <div class="pg pg--r">
+          <span class="pg__runner">COLLABORATION</span>
+          <p class="pg__kicker">LIVE DRAWING</p>
+          <h3 class="pg__cl">MAISON DE VII.</h3>
+          <p class="pg__en">TOKYO, DAIKANYAMA</p>
+          <p class="pg__lead">代官山のヴィンテージセレクトショップ。店頭でのライブドローイングを行いました。テーマは WEAR. WALK. DRAW. ── 着る、歩く、描く。</p>
+          <dl class="pg__data"><dt>DATE</dt><dd>2026.09.26</dd><dt>PLACE</dt><dd>東京都渋谷区猿楽町 23-6<br>SCOTT SIDE DAIKANYAMA 1F</dd><dt>WORK</dt><dd>ライブドローイング</dd></dl>
+          <span class="pg__folio">01b</span>
+        </div>
+      </div>
+        <div class="back" aria-hidden="true"></div>
+      </div>
+      <div class="sheet sheet--next" data-i="1">
+        <div class="face">
+        <i class="face__gutter" aria-hidden="true"></i>
+        <div class="pg pg--l"><div class="hold">RECORD<br>IN PROGRESS</div><span class="pg__folio">02a</span></div>
+        <div class="pg pg--r">
+          <span class="pg__runner">COLLABORATION</span>
+          <p class="pg__kicker">NEXT — LIVE DRAWING</p>
+          <h3 class="pg__cl">LIVE sketch</h3>
+          <p class="pg__en">RECORD IN PROGRESS</p>
+          <p class="pg__lead">ライブスケッチの記録。撮影が終わり次第、このページに掲載します。</p>
+          <dl class="pg__data"><dt>DATE</dt><dd>2026.09（予定）</dd><dt>WORK</dt><dd>ライブスケッチ</dd></dl>
+          <span class="pg__folio">02b</span>
+        </div>
+      </div>
+        <div class="back" aria-hidden="true"></div>
+      </div>
+      <div class="sheet sheet--next" data-i="2">
+        <div class="face">
+        <i class="face__gutter" aria-hidden="true"></i>
+        <div class="pg pg--l"><div class="hold">RELEASE<br>2026.10</div><span class="pg__folio">03a</span></div>
+        <div class="pg pg--r">
+          <span class="pg__runner">COLLABORATION</span>
+          <p class="pg__kicker">NEXT — APPAREL</p>
+          <h3 class="pg__cl">niko and &hellip;</h3>
+          <p class="pg__en">RELEASE 2026.10</p>
+          <p class="pg__lead">アパレルブランドとのコラボレーション。2026年10月に公開されます。</p>
+          <dl class="pg__data"><dt>DATE</dt><dd>2026.10（予定）</dd><dt>WORK</dt><dd>コラボレーション</dd></dl>
+          <span class="pg__folio">03b</span>
+        </div>
+      </div>
+        <div class="back" aria-hidden="true"></div>
+      </div>
+  </div>
+
+  <div class="bar">
+    <span class="bar__idx" id="idx">01 / 03</span>
+    <span class="bar__track"><i id="fill"></i></span>
+    <span class="bar__hint">DRAG TO TURN</span>
+  </div>
+</section>
+
+
+<section class="next">
+  <a href="../faq/">
+    <span><span class="next__jp">ご依頼について</span><span class="next__en">FAQ</span></span>
+    <svg class="next__arw" viewBox="0 0 600 200" aria-hidden="true">
+      <path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg>
+  </a>
+</section>
+
+<footer class="foot">
+  <span>© OSUSHI JAPAN ART / NAOTO OTAKA</span>
+  <nav><a href="../works/">WORKS</a><a href="../faq/">FAQ</a><a href="../about/">ABOUT</a><a href="../contact/">CONTACT</a></nav>
+  <span>HYOGO, JAPAN</span>
+</footer>
+
+<script>
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('on'); });
+},{threshold:.25});
+document.querySelectorAll('.slide').forEach(function(el){io.observe(el);});
+
+
+(function(){
+  var book=document.getElementById('book');
+  var sheets=[].slice.call(book.querySelectorAll('.sheet'));
+  var idx=document.getElementById('idx'), fill=document.getElementById('fill');
+  var N=sheets.length, cur=0;               // cur = めくり終わった枚数
+  var STRIPS=26;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* 各シートの表面を帯に切る */
+  sheets.forEach(function(sh){
+    var face=sh.querySelector('.face');
+    face.style.zIndex=1;
+  });
+
+  function z(){ sheets.forEach(function(sh,i){ sh.style.zIndex = (N-i)+10; }); }
+  z();
+
+  /* p: 0=閉じている 1=めくり終わり */
+  function apply(i,p){
+    var sh=sheets[i];
+    if(p<=0){ sh.style.transform='rotateY(0deg)'; sh.style.opacity=1; return; }
+    if(p>=1){ sh.style.transform='rotateY(-180deg)'; return; }
+    /* めくり始めに抵抗をつける。急に倒れない */
+    var e=p<.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2;
+    var deg=-180*e;
+    /* 影は薄く、遠く。紙が軽く見える */
+    var soft=Math.sin(Math.PI*p);
+    sh.style.transform='rotateY('+deg+'deg)';
+    sh.style.filter='drop-shadow('+(-e*34)+'px '+(soft*14)+'px '+(26+soft*30)+'px rgba(20,17,15,'+(0.07+soft*0.10).toFixed(3)+'))';
+  }
+
+  function render(){
+    sheets.forEach(function(_,i){ apply(i, i<cur?1:0); });
+    var k=Math.min(cur,N-1);
+    idx.textContent=('0'+(k+1)).slice(-2)+' / 0'+N;
+    fill.style.width=(cur/N*100).toFixed(1)+'%';
+  }
+  render();
+
+  /* ドラッグ */
+  var dragging=false, startX=0, target=-1, dir=0;
+  book.addEventListener('pointerdown',function(e){
+    var w=book.clientWidth, x=e.clientX-book.getBoundingClientRect().left;
+    if(x>w*0.5 && cur<N){ target=cur; dir=1; }
+    else if(x<=w*0.5 && cur>0){ target=cur-1; dir=-1; }
+    else return;
+    dragging=true; startX=e.clientX; book.setPointerCapture(e.pointerId);
+    sheets[target].style.transition='none';
+  });
+  book.addEventListener('pointermove',function(e){
+    if(!dragging) return;
+    var w=book.clientWidth, d=(e.clientX-startX)/w;
+    var p = dir>0 ? Math.min(Math.max(-d*1.05,0),1) : Math.min(Math.max(1+(-d*1.05),0),1);
+    apply(target,p);
+  });
+  function finish(e){
+    if(!dragging) return;
+    dragging=false;
+    var w=book.clientWidth, d=(e.clientX-startX)/w;
+    var p = dir>0 ? Math.min(Math.max(-d*1.05,0),1) : Math.min(Math.max(1+(-d*1.05),0),1);
+    sheets[target].style.transition='transform .92s cubic-bezier(.30,.02,.20,1),filter .92s ease';
+    if(p>0.28){ apply(target,1); cur=target+1; }
+    else{ apply(target,0); cur=target; }
+    setTimeout(function(){ sheets[target].style.transition=''; render(); },940);
+    render();
+  }
+  book.addEventListener('pointerup',finish);
+  book.addEventListener('pointercancel',finish);
+
+  /* クリックでもめくる */
+  book.addEventListener('click',function(e){
+    if(Math.abs(e.detail)===0) return;
+    var w=book.clientWidth, x=e.clientX-book.getBoundingClientRect().left;
+    var t = x>w*0.5 ? cur : cur-1;
+    if(x>w*0.5 && cur<N){ sheets[t].style.transition='transform .95s cubic-bezier(.30,.02,.20,1),filter .95s ease';
+      apply(t,1); cur=t+1; }
+    else if(x<=w*0.5 && cur>0){ sheets[t].style.transition='transform .95s cubic-bezier(.30,.02,.20,1),filter .95s ease';
+      apply(t,0); cur=t; }
+    setTimeout(render,960);
+  });
+})();
+
+
+(function(){
+  var lane=document.getElementById('lane'),x=0,half=0,raf;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function m(){half=lane.scrollWidth/2;} addEventListener('resize',m); m();
+  function ap(){ if(half) x=((x%half)+half)%half; lane.style.transform='translateX('+(-x)+'px)'; }
+  addEventListener('wheel',function(e){
+    x+=(Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)*.3;
+    if(!raf) raf=requestAnimationFrame(function(){raf=null;ap();});
+  },{passive:true});
+  var d=false,sx=0,s0=0;
+  lane.addEventListener('pointerdown',function(e){d=true;sx=e.clientX;s0=x;lane.setPointerCapture(e.pointerId);});
+  lane.addEventListener('pointermove',function(e){if(d){x=s0-(e.clientX-sx);ap();}});
+  lane.addEventListener('pointerup',function(){d=false;});
+  if(!reduce)(function dr(){ if(!d){x+=.22;ap();} requestAnimationFrame(dr); })();
+  ap();
+})();
+</script>
+</body></html>

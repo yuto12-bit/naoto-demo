@@ -1,0 +1,4 @@
+# 確認用の仮公開のあいだは検索を止める。
+# 本番公開のときに Allow に戻し、Sitemap 行を足すこと。
+User-agent: *
+Disallow: /
