@@ -253,17 +253,16 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .st-b--now{border-top-color:var(--vermil)}
 
 /* ===== P06 プロフィール ===== */
-.pf-name{grid-column:3 / 13;grid-row:4 / 6;font-family:var(--font-en);font-weight:400;
-  font-size:min(calc(var(--lh)*1.05),6.6cqi);letter-spacing:.05em;line-height:calc(var(--lh)*1.2)}
-.pf-body{grid-column:3 / 13;grid-row:6 / 12;line-height:var(--lh);
-  font-size:min(calc(var(--lh)*.46),4cqi)}
+.pf-name{grid-column:3 / 8;grid-row:4 / 6;font-family:var(--font-en);font-weight:400;
+  font-size:min(calc(var(--lh)*.95),5.6cqi);letter-spacing:.04em;line-height:calc(var(--lh)*1.2)}
+.pf-body{grid-column:3 / 13;grid-row:12 / 18;line-height:var(--lh);
+  font-size:min(calc(var(--lh)*.44),3.75cqi)}
 /* 貼った写真。インクの貼り込みと違って、紙に重ねず普通に置く */
-.snap{grid-column:5 / 13;grid-row:12 / 18;margin:0;position:relative;rotate:1.3deg;
+.snap{grid-column:8 / 13;grid-row:4 / 12;margin:0;position:relative;rotate:1.3deg;
   background:#FCFBF8;padding:calc(var(--lh)*.26);
   box-shadow:0 calc(var(--lh)*.18) calc(var(--lh)*.48) rgba(20,17,15,.16);
   display:flex;flex-direction:column;gap:calc(var(--lh)*.18);overflow:hidden}
-.snap img{flex:1 1 auto;min-height:0;width:100%;object-fit:cover;object-position:54% 40%;
-  display:block}
+.snap img{flex:1 1 auto;min-height:0;width:100%;object-fit:contain;display:block}
 .snap figcaption{flex:0 0 auto;font-size:calc(var(--lh)*.38);line-height:calc(var(--lh)*.6);
   text-align:center;color:var(--ink-40)}
 .snap i{position:absolute;top:calc(var(--lh)*-.18);left:50%;translate:-50% 0;rotate:-2deg;
@@ -340,8 +339,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   .cover-fig{grid-column:4 / 13;grid-row:11 / 16}
   .p3-paste{grid-column:2 / 8;grid-row:10 / 15}
   .p3-cap{grid-column:2 / 10;grid-row:15 / 18}
-  .pf-body{grid-row:6 / 14}
-  .snap{grid-row:14 / 18}
+  .pf-body{grid-row:11 / 18}
+  .snap{grid-row:4 / 10}
   .p4-lead{grid-row:4 / 10}
   .p4-paste{grid-row:13 / 18}
   .kw{grid-row:10 / 13}
