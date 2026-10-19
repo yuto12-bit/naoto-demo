@@ -201,30 +201,29 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .nums{grid-column:3 / 13;grid-row:13 / 18;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:calc(var(--lh)*.5);border-top:3px solid var(--ink);padding-top:calc(var(--lh)*.4)}
 .n{min-width:0}
-.n b{display:block;font-family:var(--font-en);line-height:calc(var(--lh)*1);
-  font-size:min(calc(var(--lh)*1.25),7cqi)}
+.n b{display:block;line-height:calc(var(--lh)*1);
+  font-size:min(calc(var(--lh)*1.15),6.4cqi)}
 .n--v b{color:var(--vermil)}
 .n--w b{font-size:min(calc(var(--lh)*.92),4.4cqi);letter-spacing:-.01em}
-.n span{display:block;font-family:var(--font-en);font-size:min(calc(var(--lh)*.36),3cqi);
-  letter-spacing:.14em;opacity:.45;white-space:nowrap}
+.n span{display:block;font-size:min(calc(var(--lh)*.4),3.2cqi);
+  letter-spacing:.1em;opacity:.5;white-space:nowrap}
 .n small{display:block;font-size:calc(var(--lh)*.44);line-height:calc(var(--lh)*.7);opacity:.68;margin-top:.25em}
 
 /* ===== P03 一行だけ書いた日 ===== */
 .tate{grid-column:8 / 12;grid-row:2 / 14;writing-mode:vertical-rl;text-orientation:mixed;
   font-weight:900;font-size:calc(var(--lh)*1.02);line-height:calc(var(--lh)*1.55);letter-spacing:.14em;
-  block-size:calc(var(--lh)*1.55*2 + var(--lh)*.5 + 4px);justify-self:end;
-  border-left:4px solid var(--ink);padding-left:calc(var(--lh)*.5)}
+  block-size:calc(var(--lh)*1.55*2 + var(--lh)*.5);justify-self:end}
 .tate i{font-style:normal;color:var(--vermil);display:inline-block}
 .p3-paste{grid-column:2 / 7;grid-row:9 / 15;rotate:-2deg}
 .p3-cap{grid-column:2 / 8;grid-row:16 / 18;font-size:calc(var(--lh)*.46);
   line-height:calc(var(--lh)*.8);color:var(--vermil);font-weight:900;rotate:-1deg;align-self:end}
 
 /* ===== P04 貼り込み ===== */
-.p4-lead{grid-column:3 / 13;grid-row:4 / 9;font-size:calc(var(--lh)*.6);line-height:var(--lh)}
+.p4-lead{grid-column:3 / 13;grid-row:4 / 8;font-size:calc(var(--lh)*.6);line-height:var(--lh)}
 .p4-lead b{font-weight:900;border-bottom:2.5px solid var(--vermil)}
 .p4-paste{grid-column:7 / 13;grid-row:9 / 17;rotate:1.6deg}
-.kw{grid-column:2 / 7;grid-row:12 / 17;display:flex;flex-wrap:wrap;gap:calc(var(--lh)*.24);
-  align-content:flex-end}
+.kw{grid-column:3 / 8;grid-row:8 / 14;display:flex;flex-wrap:wrap;gap:calc(var(--lh)*.24);
+  align-content:flex-start}
 .kw span{font-weight:900;font-size:calc(var(--lh)*.44);border:1.5px solid var(--ink);
   padding:.3em .5em;line-height:1.25;white-space:nowrap}
 .kw span:nth-child(2){background:var(--vermil);color:#FAF8F5;border-color:var(--vermil)}
@@ -257,14 +256,16 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   width:46%;aspect-ratio:480/69;background:var(--im-tape) center/100% 100% no-repeat;z-index:2}
 
 /* ===== P07 画材をスケッチした日 ===== */
-.tool{display:flex;flex-direction:column;gap:calc(var(--lh)*.16);align-self:end}
-.tool svg{width:calc(var(--lh)*1.5);height:auto;color:var(--ink)}
-.tool b{font-weight:900;font-size:calc(var(--lh)*.6);line-height:calc(var(--lh)*.9)}
-.tool span{font-family:var(--font-en);font-size:min(calc(var(--lh)*.36),3cqi);letter-spacing:.14em;opacity:.45}
-.t1{grid-column:2 / 6;grid-row:5 / 10}
-.t2{grid-column:6 / 9;grid-row:7 / 12}
-.t3{grid-column:9 / 13;grid-row:4 / 9}
-.p7-hand{grid-column:2 / 11;grid-row:13 / 15}
+/* 3つ横並び。絵の下に名前、高さを揃えて散らかさない */
+.tool{display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:calc(var(--lh)*.22);align-self:start}
+.tool svg{width:min(calc(var(--lh)*1.9),13cqi);height:auto;color:var(--ink)}
+.tool b{font-weight:900;font-size:min(calc(var(--lh)*.56),4.4cqi);line-height:calc(var(--lh)*.9)}
+.tool span{font-size:min(calc(var(--lh)*.34),2.8cqi);letter-spacing:.1em;opacity:.45}
+.t1{grid-column:1 / 5;grid-row:5 / 9}
+.t2{grid-column:5 / 9;grid-row:5 / 9}
+.t3{grid-column:9 / 13;grid-row:5 / 9}
+.p7-hand{grid-column:2 / 12;grid-row:11 / 13}
 .p7-tbd{grid-column:2 / 13;grid-row:16 / 18;font-size:calc(var(--lh)*.44);
   line-height:calc(var(--lh)*.8);opacity:.5;border-top:1.5px solid var(--ink-12);padding-top:.4em}
 
@@ -303,9 +304,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   .cover-fig{grid-column:4 / 13;grid-row:11 / 16}
   .p3-paste{grid-column:2 / 8;grid-row:10 / 15}
   .p3-cap{grid-column:2 / 10;grid-row:15 / 18}
-  .p4-lead{grid-row:4 / 11}
-  .p4-paste{grid-row:11 / 17}
-  .kw{grid-row:12 / 17}
+  .p4-lead{grid-row:4 / 10}
+  .p4-paste{grid-row:13 / 18}
+  .kw{grid-row:10 / 13}
+  .kw span{font-size:calc(var(--lh)*.4)}
   .st-r1{grid-row:3} .st-d1{grid-row:4 / 7}
   .st-r2{grid-row:7} .st-d2{grid-row:8 / 11}
   .st-r3{grid-row:11} .st-d3{grid-row:12 / 14}
@@ -576,7 +578,7 @@ html:not(.js) .tix__tearoff{display:none}
       <section class="pg grid5" data-tab="1">
         <div class="pg__in">
           <p class="runner">CONCEPT</p>
-          <p class="tate">その瞬間の空気を、<i>線に残す</i>。</p>
+          <p class="tate">その瞬間の<br>空気を、<i>線に残す</i>。</p>
           <div class="paste p3-paste"><i aria-hidden="true"></i>
             <img src="../naoto-works/works/crowd-top-cut@430w.webp" alt="" loading="lazy" decoding="async"></div>
           <p class="p3-cap">街で見かけた人を、<br>そのまま描いています。</p>
