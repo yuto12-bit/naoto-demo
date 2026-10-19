@@ -61,7 +61,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .book__base{position:absolute;inset:0;background:#EFEDE9;
   box-shadow:0 26px 58px rgba(20,17,15,.13),0 2px 5px rgba(20,17,15,.05)}
 .book__end{position:absolute;inset:0;display:grid;place-content:center;text-align:center;
-  font-family:var(--font-en);font-size:.66rem;letter-spacing:.26em;color:var(--ink-40);line-height:2.4}
+  font-size:.66rem;letter-spacing:.26em;color:var(--ink-40);line-height:2.4}
+.book__end p{font-family:var(--font-en)}
 .sheet{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:left center;will-change:transform}
 .face,.back{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden}
 .face{display:grid;grid-template-columns:1.06fr .94fr;background:#FAF8F5}
@@ -294,6 +295,11 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .p7-tbd{grid-column:2 / 13;grid-row:16 / 18;font-size:calc(var(--lh)*.44);
   line-height:calc(var(--lh)*.8);opacity:.5;border-top:1.5px solid var(--ink-12);padding-top:.4em}
 
+/* ===== P09 プロフィール ===== */
+.pf-name{grid-column:3 / 13;grid-row:4 / 6;font-family:var(--font-en);font-weight:400;
+  font-size:min(calc(var(--lh)*1.05),6.6cqi);letter-spacing:.05em;line-height:calc(var(--lh)*1.2)}
+.pf-body{grid-column:3 / 13;grid-row:7 / 18;font-size:calc(var(--lh)*.56);line-height:var(--lh)}
+
 /* ===== P08 住所録 ===== */
 .ad-dt{grid-column:1 / 3;font-family:var(--font-en);font-size:calc(var(--lh)*.4);
   letter-spacing:.14em;opacity:.45;padding-top:.45em}
@@ -307,15 +313,15 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   border-top:2px solid var(--ink);padding-top:calc(var(--lh)*.35)}
 .sns svg{width:calc(var(--lh)*.7);height:auto;color:var(--vermil);flex:none}
 .sns:hover{color:var(--vermil)}
-/* 最後のページから表紙へ戻る */
-.p8-top{grid-column:3 / 10;grid-row:17 / 18;justify-self:start;align-self:center;
-  display:inline-flex;align-items:center;gap:.5em;cursor:pointer;
-  font-family:inherit;font-size:calc(var(--lh)*.46);letter-spacing:.04em;
+/* ノートの底。めくり終わったらここが出る */
+.book__end p{margin:0}
+.book__top{margin-top:1.4rem;justify-self:center;display:inline-flex;align-items:center;gap:.5em;
+  cursor:pointer;font-family:"Zen Kurenaido",sans-serif;font-size:.78rem;letter-spacing:.06em;
   color:var(--ink);background:none;border:1.5px solid var(--ink);
-  padding:.4em 1em;transition:background .18s ease,color .18s ease}
-.p8-top::before{content:"↺";color:var(--vermil);font-size:1.15em;line-height:1}
-.p8-top:hover,.p8-top:focus-visible{background:var(--ink);color:#FAF8F5}
-.p8-top:hover::before,.p8-top:focus-visible::before{color:#FAF8F5}
+  padding:.5em 1.2em;transition:background .18s ease,color .18s ease}
+.book__top::before{content:"↺";color:var(--vermil);font-size:1.15em;line-height:1}
+.book__top:hover,.book__top:focus-visible{background:var(--ink);color:#FAF8F5}
+.book__top:hover::before,.book__top:focus-visible::before{color:#FAF8F5}
 .p8-pin{grid-column:1 / 3;grid-row:5 / 7;width:calc(var(--lh)*1.1);height:auto;color:var(--vermil);
   justify-self:center;align-self:start}
 
@@ -572,7 +578,10 @@ html:not(.js) .tix__tearoff{display:none}
 
 <div class="wrap">
   <div class="book" id="book">
-    <div class="book__base"><p class="book__end">END OF<br>NOTEBOOK</p></div>
+    <div class="book__base">
+      <div class="book__end"><p>END OF<br>NOTEBOOK</p>
+        <button class="book__top" type="button">表紙にもどる</button></div>
+    </div>
 
     <!-- ページはここに8枚。JSが見開き／単ページに組み替える -->
     <div id="pages">
@@ -681,6 +690,9 @@ html:not(.js) .tix__tearoff{display:none}
         </div>
       </section>
 
+      <!-- ============ 09 プロフィール ============ -->
+      <!-- ※ 08 のうしろに置く。ページの組（見開き）を崩さないため -->
+
       <!-- ============ 08 住所録 ============ -->
       <section class="pg ruled mgr" data-tab="3">
         <div class="pg__in">
@@ -693,8 +705,17 @@ html:not(.js) .tix__tearoff{display:none}
           <p class="ad-dd ad-r3">雑誌・広告・アパレル・イベント</p>
           <a class="sns" href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="17.4" cy="6.6" r="1.5" fill="currentColor"/></svg>@osushi__japan__art</a>
-          <button class="p8-top" type="button">表紙にもどる</button>
           <span class="folio">08</span>
+        </div>
+      </section>
+
+      <!-- 09 プロフィール -->
+      <section class="pg ruled mgr" data-tab="4">
+        <div class="pg__in">
+          <p class="kick">プロフィール<em>PROFILE</em></p>
+          <p class="pf-name">NAOTO OTAKA</p>
+          <p class="pf-body">イラストレーター。2003年生まれ、兵庫県播磨町出身。ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
+          <span class="folio">09</span>
         </div>
       </section>
 
@@ -705,6 +726,7 @@ html:not(.js) .tix__tearoff{display:none}
       <button class="tab" type="button" data-tab="1">制作</button>
       <button class="tab" type="button" data-tab="2">これまで</button>
       <button class="tab" type="button" data-tab="3">画材・拠点</button>
+      <button class="tab" type="button" data-tab="4">プロフィール</button>
     </div>
   </div>
 
@@ -880,7 +902,7 @@ html:not(.js) .tix__tearoff{display:none}
     fill.style.width=(cur/N*100).toFixed(1)+'%';
     var t=sheets[k]?sheets[k].querySelector('.pg[data-tab]'):null;
     var active=t?t.getAttribute('data-tab'):'0';
-    var toTop=document.querySelector('.p8-top');
+    var toTop=document.querySelector('.book__top');
   if(toTop) toTop.addEventListener('click',function(){ goto(0); });
 
   tabs.forEach(function(b){
@@ -907,7 +929,7 @@ html:not(.js) .tix__tearoff{display:none}
 
   var dragging=false,startX=0,target=-1,dir=0;
   book.addEventListener('pointerdown',function(e){
-    if(e.target.closest('.tabs')) return;
+    if(e.target.closest('.tabs,.book__top')) return;
     var w=book.clientWidth,x=e.clientX-book.getBoundingClientRect().left;
     if(x>w*0.5&&cur<N){target=cur;dir=1;}
     else if(x<=w*0.5&&cur>0){target=cur-1;dir=-1;} else return;

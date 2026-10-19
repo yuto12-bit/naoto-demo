@@ -64,24 +64,24 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
    マークアップは5ページに複製されているので、ここのCSSだけで成立させる。 */
 .sh-menu{position:fixed;inset:0;z-index:300;        /* ページ側の最前面（about の .tabs が 200）より上 */
   display:grid;align-content:center;
-  gap:clamp(.1rem,.6vh,.5rem);
-  padding:clamp(4.5rem,12vh,7rem) clamp(1.4rem,6vw,5rem) clamp(2rem,6vh,4rem);
+  gap:clamp(.2rem,1.6vh,1.1rem);
+  padding:clamp(4.5rem,11vh,7rem) clamp(1rem,4vw,3.4rem) clamp(1.6rem,5vh,3.4rem);
   background:#E9E8E6 url("../../naoto-assets/tile/paper-white@512w.webp") repeat;
   background-size:320px;
   overflow:hidden}
 .sh-menu[hidden]{display:none}
 /* 人の上に文字が乗っても読めるよう、紙色のにじみで浮かせる（街の文言と同じ考え方） */
-.sh-menu nav{position:relative;z-index:1;display:grid;justify-items:center;gap:clamp(.1rem,.6vh,.5rem)}
+.sh-menu nav{position:relative;z-index:1;display:grid;justify-items:center;gap:clamp(.2rem,1.6vh,1.1rem)}
 .sh-menu a{display:flex;align-items:baseline;gap:.8rem;text-decoration:none;color:#14110F;
   padding:clamp(.55rem,1.7vh,.95rem) 0;position:relative;width:max-content;max-width:100%;
   text-shadow:0 0 10px #E9E8E6,0 0 10px #E9E8E6,0 0 22px #E9E8E6,0 0 22px #E9E8E6}
 /* 大きさも寄せも傾きも1行ずつ振る。紙の上に手で置いたように散らす。
    横のずれは left（動きの translate とぶつからない）、間隔は上の余白で作る */
-.sh-menu a:nth-of-type(1){left:-12%;rotate:-1.1deg}
-.sh-menu a:nth-of-type(2){left:15%;rotate:.7deg;margin-top:clamp(.1rem,1.1vh,.8rem)}
-.sh-menu a:nth-of-type(3){left:-17%;rotate:-.5deg}
-.sh-menu a:nth-of-type(4){left:11%;rotate:1.2deg;margin-top:clamp(.2rem,1.5vh,1.1rem)}
-.sh-menu a:nth-of-type(5){left:-6%;rotate:-.8deg}
+.sh-menu a:nth-of-type(1){left:-25%;rotate:-1.2deg}
+.sh-menu a:nth-of-type(2){left:26%;rotate:.8deg;margin-top:clamp(.2rem,2vh,1.4rem)}
+.sh-menu a:nth-of-type(3){left:-23%;rotate:-.6deg}
+.sh-menu a:nth-of-type(4){left:19%;rotate:1.3deg;margin-top:clamp(.3rem,2.4vh,1.8rem)}
+.sh-menu a:nth-of-type(5){left:-15%;rotate:-.9deg}
 .sh-menu em{font-family:Anton,sans-serif;font-style:normal;
   font-size:clamp(2rem,11vw,4.2rem);letter-spacing:.02em;line-height:.96;
   transition:color .18s ease,translate .18s ease}
