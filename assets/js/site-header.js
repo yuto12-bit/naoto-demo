@@ -77,7 +77,10 @@
 /* ===== ページの切り替え。行き先の名前を出し、人が歩いて横切る ===== */
 (function () {
   var WAIT = 1150;                      /* 幕を見せている時間 */
-  var OUT = 300;                        /* そのうち、最後に場面が引く時間 */
+  var de = document.documentElement;
+  /* 去り際の場面を引き継ぐための覚え書き（行き先・人・始めた時刻） */
+  var saved = null;
+  try { var raw = de.getAttribute('data-sh-nav'); if (raw) saved = JSON.parse(raw); } catch (e) {}
   /* 全身が描かれていて、横から見ても形が分かる人を選んである */
   var CAST = ['fig-b-10','fig-b-09','fig-b-13','fig-b-08',
               'fig-b-11','fig-b-24','fig-a-05','fig-b-14'];
@@ -124,7 +127,9 @@
   ground.className = 'sh-fade__ground';
   var walk = document.createElement('div');
   walk.className = 'sh-fade__walk';
-  pick(5).forEach(function (f) {
+  /* 引き継ぎなら去り際と同じ人。そうでなければ選び直す */
+  var cast = (saved && saved.f && saved.f.length === 5) ? saved.f : pick(5);
+  cast.forEach(function (f) {
     /* 横へ運ぶ箱・上下する絵・足元の影、で役割を分ける */
     var box = document.createElement('span');
     box.className = 'sh-fade__p';
@@ -146,13 +151,43 @@
   if (document.body) attach(); else document.addEventListener('DOMContentLoaded', attach);
 
   /* 入ってきたら幕を上げる（戻る・進むで戻ってきたときも） */
-  addEventListener('pageshow', function () { fade.classList.remove('is-on', 'is-out'); });
+  addEventListener('pageshow', function () {
+    if (!fade.classList.contains('is-cont')) fade.classList.remove('is-on');
+  });
 
-  /* 着いた先の幕は CSS がじんわり引く。引き終わったら印を落とす */
-  var de = document.documentElement;
+  /* ===== 着いた先。去り際の場面をそのまま続けて、ぜんたいを一度に引く ===== */
+  if (saved && de.classList.contains('sh-arrive')) {
+    ghost.textContent = saved.k;
+    name.textContent = saved.k;
+    jp.textContent = saved.j || '';
+    attach();
+    /* 出入りの動きは使わない。すでに出ている状態から始める */
+    fade.classList.add('is-on', 'is-cont');
+    /* 人は去り際の続きから歩く。経った時間ぶんだけ動きを先へ送る */
+    var el = (Date.now() - (saved.t || 0)) / 1000;
+    if (el > 0 && el < 30) {
+      var ps = fade.querySelectorAll('.sh-fade__p');
+      for (var i = 0; i < ps.length; i++) {
+        var d0 = parseFloat(getComputedStyle(ps[i]).animationDelay) || 0;
+        ps[i].style.animationDelay = (d0 - el) + 's';
+        var im2 = ps[i].querySelector('img'), sh2 = ps[i].querySelector('i');
+        if (im2) im2.style.animationDelay = (-el) + 's';
+        if (sh2) sh2.style.animationDelay = (-el) + 's';
+      }
+    }
+    /* CSS の当て布はもう要らない。人のいる幕が同じ地で下にある */
+    de.classList.remove('sh-arrive');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { fade.classList.add('is-leave'); });
+    });
+    setTimeout(function () {
+      fade.classList.remove('is-on', 'is-cont', 'is-leave');
+      de.removeAttribute('data-sh-nav');
+    }, 900);
+  }
+  /* 引き継げなかったときは、当て布だけで引く */
   if (de.classList.contains('sh-arrive')) {
     var clear = function () { de.classList.remove('sh-arrive'); };
-    /* 引き終わりを待つ。描き出しが遅れた端末でも途中で切れないように */
     de.addEventListener('animationend', function (e) {
       if (e.animationName === 'shArrive') clear();
     });
@@ -181,14 +216,23 @@
     jp.textContent = NAMES[key] || '';
     attach();
     /* いったん消してから付け直して、2回目以降も最初から動かす */
-    fade.classList.remove('is-on', 'is-out');
+    fade.classList.remove('is-on', 'is-cont', 'is-leave');
     void fade.offsetWidth;
     fade.classList.add('is-on');
-    /* 渡す前に場面を引いて、朱の面だけにしておく */
-    setTimeout(function () { fade.classList.add('is-out'); }, WAIT - OUT);
+    var started = Date.now();
+    /* 次のページを先に取りに行く。渡したときすぐ描けるように */
+    try {
+      var pf = document.createElement('link');
+      pf.rel = 'prefetch';
+      pf.href = a.href;
+      document.head.appendChild(pf);
+    } catch (e) {}
     setTimeout(function () {
-      /* 着いた先でも同じ文字を出せるよう、行き先の名前を持たせて渡す */
-      try { sessionStorage.setItem('sh-nav', JSON.stringify([key, NAMES[key] || ''])); } catch (e) {}
+      /* 着いた先で場面を続けられるよう、行き先・人・始めた時刻を持たせて渡す */
+      try {
+        sessionStorage.setItem('sh-nav', JSON.stringify(
+          { k: key, j: NAMES[key] || '', f: cast, t: started }));
+      } catch (e) {}
       location.href = a.href;
     }, WAIT);
   });

@@ -208,30 +208,29 @@ html.sh-arrive body::before{position:fixed;left:0;right:0;
 .sh-fade.is-on .sh-fade__ground{animation:shLine .66s cubic-bezier(.2,.7,.3,1) both}
 @keyframes shLine{from{opacity:0;scale:.2 1}to{opacity:1;scale:1 1}}
 
-/* 去りぎわ。文字も人も線も引いて、朱の面だけ残してから次のページへ渡す */
-.sh-fade.is-out .sh-fade__ghost,
-.sh-fade.is-out .sh-fade__ground,
-.sh-fade.is-out .sh-fade__walk{animation:shOut .3s ease both}
-/* 文字もここから落ち始める。消しきらず、着いた先へこの濃さのまま渡す */
-.sh-fade.is-out .sh-fade__name,
-.sh-fade.is-out .sh-fade__jp{animation:shDim .3s ease both}
-@keyframes shOut{from{opacity:1}to{opacity:0}}
-@keyframes shDim{from{opacity:1}to{opacity:.3}}
+/* 着いた先。去りぎわの場面をそのまま続ける。出入りの動きは使わず、出ている状態から始める */
+.sh-fade.is-cont{opacity:1;visibility:visible;pointer-events:none;transition:none}
+.sh-fade.is-cont .sh-fade__ghost,
+.sh-fade.is-cont .sh-fade__name,
+.sh-fade.is-cont .sh-fade__jp,
+.sh-fade.is-cont .sh-fade__ground{animation:none;opacity:1}
+/* 人も文字も地も、まとめて一度に引く */
+.sh-fade.is-cont.is-leave{opacity:0;transition:opacity .42s ease}
 
 /* 着いた先。去りぎわと同じ朱の面から始めて、じんわり引く */
 html.sh-arrive::before{content:"";position:fixed;inset:0;z-index:500;pointer-events:none;
   background:var(--sh-curtain);
   background-size:var(--sh-curtain-size);
   background-blend-mode:var(--sh-curtain-blend);
-  animation:shArrive .28s cubic-bezier(.4,0,.75,.9) both}
+  animation:shArrive 1.2s cubic-bezier(.4,0,.75,.9) both}
 /* 行き先の文字も同じ場所に出して、地と一緒に引く。文字のほうが少しだけ長く残る */
 html.sh-arrive::after{content:var(--sh-to,"");z-index:501;
-  animation:shArriveText .28s cubic-bezier(.4,0,.75,.9) both}
+  animation:shArriveText 1.2s cubic-bezier(.4,0,.75,.9) both}
 html.sh-arrive body::before{content:var(--sh-jp,"");z-index:501;
-  animation:shArriveText .28s cubic-bezier(.4,0,.75,.9) both}
+  animation:shArriveText 1.2s cubic-bezier(.4,0,.75,.9) both}
 /* 地と文字は同じ時間・同じ曲がり方。濃さが違うだけなので、画面全体が一度に引く */
-@keyframes shArrive{0%,6%{opacity:1}100%{opacity:0}}
-@keyframes shArriveText{0%,6%{opacity:.3}100%{opacity:0}}
+@keyframes shArrive{0%,42%{opacity:1}100%{opacity:0}}
+@keyframes shArriveText{0%,42%{opacity:1}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){
   html.sh-arrive::before,
   html.sh-arrive::after,

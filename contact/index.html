@@ -128,7 +128,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
 @media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
 </style><link rel="stylesheet" href="../assets/css/site-header.css">
 <script src="../assets/js/site-header.js" defer></script>
-<script>try{var v=sessionStorage.getItem("sh-nav");if(v){sessionStorage.removeItem("sh-nav");v=JSON.parse(v);var d=document.documentElement;d.style.setProperty("--sh-to",'"'+v[0]+'"');d.style.setProperty("--sh-jp",'"'+v[1]+'"');d.classList.add("sh-arrive")}}catch(e){}</script>
+<script>try{var v=sessionStorage.getItem("sh-nav");if(v){sessionStorage.removeItem("sh-nav");var o=JSON.parse(v),d=document.documentElement;d.setAttribute("data-sh-nav",v);d.style.setProperty("--sh-to",'"'+o.k+'"');d.style.setProperty("--sh-jp",'"'+o.j+'"');d.classList.add("sh-arrive")}}catch(e){}</script>
 </head><body><header class="sh">
 <a class="sh__id" href="../" aria-label="OSUSHI JAPAN ART ホーム"><i class="sh__logo" aria-hidden="true"></i><b>OSUSHI JAPAN ART</b></a>
 <nav class="sh__nav" aria-label="メインナビゲーション"><a href="../works/">WORKS</a><a href="../faq/">FAQ</a><a href="../about/">ABOUT</a><a href="../contact/" aria-current="page">CONTACT</a></nav>
