@@ -77,6 +77,7 @@
 /* ===== ページの切り替え。行き先の名前を出し、人が歩いて横切る ===== */
 (function () {
   var WAIT = 1150;                      /* 幕を見せている時間 */
+  var OUT = 260;                        /* そのうち、最後に場面が引く時間 */
   /* 全身が描かれていて、横から見ても形が分かる人を選んである */
   var CAST = ['fig-b-10','fig-b-09','fig-b-13','fig-b-08',
               'fig-b-11','fig-b-24','fig-a-05','fig-b-14'];
@@ -145,7 +146,18 @@
   if (document.body) attach(); else document.addEventListener('DOMContentLoaded', attach);
 
   /* 入ってきたら幕を上げる（戻る・進むで戻ってきたときも） */
-  addEventListener('pageshow', function () { fade.classList.remove('is-on'); });
+  addEventListener('pageshow', function () { fade.classList.remove('is-on', 'is-out'); });
+
+  /* 着いた先の幕は CSS がじんわり引く。引き終わったら印を落とす */
+  var de = document.documentElement;
+  if (de.classList.contains('sh-arrive')) {
+    var clear = function () { de.classList.remove('sh-arrive'); };
+    /* 引き終わりを待つ。描き出しが遅れた端末でも途中で切れないように */
+    de.addEventListener('animationend', function (e) {
+      if (e.animationName === 'shArrive') clear();
+    });
+    setTimeout(clear, 3000);
+  }
 
   function internal(a) {
     if (!a || !a.getAttribute) return false;
@@ -169,9 +181,14 @@
     jp.textContent = NAMES[key] || '';
     attach();
     /* いったん消してから付け直して、2回目以降も最初から動かす */
-    fade.classList.remove('is-on');
+    fade.classList.remove('is-on', 'is-out');
     void fade.offsetWidth;
     fade.classList.add('is-on');
-    setTimeout(function () { location.href = a.href; }, WAIT);
+    /* 渡す前に場面を引いて、朱の面だけにしておく */
+    setTimeout(function () { fade.classList.add('is-out'); }, WAIT - OUT);
+    setTimeout(function () {
+      try { sessionStorage.setItem('sh-nav', '1'); } catch (e) {}
+      location.href = a.href;
+    }, WAIT);
   });
 })();

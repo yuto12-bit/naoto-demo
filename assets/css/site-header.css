@@ -144,20 +144,25 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 
 
 /* ===== ページの切り替え ===== */
-/* 紙の地に地面の線を引き、その上を街の人が歩いて横切る。
-   行き先は真ん中に袋文字・英字・日本語の3段で示す。文字はそれだけ */
-.sh-fade{position:fixed;inset:0;z-index:400;pointer-events:none;overflow:hidden;
-  /* 開いた先が紙なので、幕は朱に振る。紙の目を掛け合わせて「紙に塗った色」にする。
-     模様は入れず、地面より下だけを深くして立つ場所を作る */
-  background:
+/* 幕の地。去るときと着いたときで同じ面を出すので、作りは一か所にまとめる */
+:root{
+  --sh-curtain:
     url("../../naoto-assets/overlay/photocopy-grain@420w.webp") repeat,
     url("../../naoto-assets/tile/paper-white@512w.webp") repeat,
     radial-gradient(118% 84% at 50% 34%,rgba(255,255,255,.18),rgba(255,255,255,0) 60%),
     radial-gradient(125% 105% at 50% 48%,rgba(20,17,15,0) 52%,rgba(20,17,15,.15) 100%),
     radial-gradient(90% 60% at 88% 96%,rgba(20,17,15,.14),rgba(20,17,15,0) 70%),
     linear-gradient(to bottom,#D44226 0 76%,#BC361C 79%,#A02E14 100%);
-  background-size:340px,270px,auto,auto,auto,auto;
-  background-blend-mode:multiply,multiply,screen,multiply,multiply,normal;
+  --sh-curtain-size:340px,270px,auto,auto,auto,auto;
+  --sh-curtain-blend:multiply,multiply,screen,multiply,multiply,normal}
+/* 紙の地に地面の線を引き、その上を街の人が歩いて横切る。
+   行き先は真ん中に袋文字・英字・日本語の3段で示す。文字はそれだけ */
+.sh-fade{position:fixed;inset:0;z-index:400;pointer-events:none;overflow:hidden;
+  /* 開いた先が紙なので、幕は朱に振る。紙の目を掛け合わせて「紙に塗った色」にする。
+     模様は入れず、地面より下だけを深くして立つ場所を作る */
+  background:var(--sh-curtain);
+  background-size:var(--sh-curtain-size);
+  background-blend-mode:var(--sh-curtain-blend);
   opacity:0;visibility:hidden;
   transition:opacity .3s ease,visibility 0s linear .3s}
 .sh-fade.is-on{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
@@ -192,6 +197,24 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
   background:rgba(243,240,234,.34)}
 .sh-fade.is-on .sh-fade__ground{animation:shLine .66s cubic-bezier(.2,.7,.3,1) both}
 @keyframes shLine{from{opacity:0;scale:.2 1}to{opacity:1;scale:1 1}}
+
+/* 去りぎわ。文字も人も線も引いて、朱の面だけ残してから次のページへ渡す */
+.sh-fade.is-out .sh-fade__ghost,
+.sh-fade.is-out .sh-fade__mid,
+.sh-fade.is-out .sh-fade__ground,
+.sh-fade.is-out .sh-fade__walk{animation:shOut .26s ease both}
+@keyframes shOut{from{opacity:1}to{opacity:0}}
+
+/* 着いた先。去りぎわと同じ朱の面から始めて、じんわり引く */
+html.sh-arrive::before{content:"";position:fixed;inset:0;z-index:500;pointer-events:none;
+  background:var(--sh-curtain);
+  background-size:var(--sh-curtain-size);
+  background-blend-mode:var(--sh-curtain-blend);
+  animation:shArrive .86s cubic-bezier(.4,0,.25,1) both}
+@keyframes shArrive{0%,16%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  html.sh-arrive::before{animation-duration:.3s}
+}
 
 /* 歩いて横切る人。脚は動かせないので、歩幅に合わせた上下・傾き・足元の影で歩きを作る */
 .sh-fade__walk{position:absolute;left:0;right:0;bottom:0;top:0;pointer-events:none}
