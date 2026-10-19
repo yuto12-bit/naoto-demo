@@ -91,7 +91,7 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 .sh-menu a:nth-of-type(3) em{font-size:clamp(2.3rem,12.5vw,4.8rem)}
 .sh-menu a:nth-of-type(4) em{font-size:clamp(1.6rem,8.4vw,3.2rem)}
 .sh-menu a:nth-of-type(5) em{font-size:clamp(1.9rem,10vw,3.8rem)}
-.sh-menu span{font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:.72rem;
+.sh-menu span{font-weight:900;font-size:.72rem;
   color:rgba(20,17,15,.55);white-space:nowrap}
 /* いま見ているページと、触っているところだけ朱の線を引く */
 .sh-menu a::after{content:"";position:absolute;left:0;right:0;bottom:clamp(.35rem,1.1vh,.7rem);
@@ -187,7 +187,8 @@ html.sh-arrive::after{position:fixed;left:0;right:0;top:38%;translate:0 -50%;
 html.sh-arrive body::before{position:fixed;left:0;right:0;
   top:calc(38% + clamp(2rem,11vw,5.4rem) * .5 + clamp(.55rem,1.8vh,1rem));
   margin:0;text-align:center;pointer-events:none;
-  font-family:"Noto Sans JP",sans-serif;font-weight:900;
+  font-family:system-ui,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-weight:900;
   font-size:clamp(.74rem,2.6vw,1rem);letter-spacing:.14em;
   color:#14110F}
 .sh-fade__name,.sh-fade__jp{opacity:0}
