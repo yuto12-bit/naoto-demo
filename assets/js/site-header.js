@@ -123,7 +123,7 @@
   ground.className = 'sh-fade__ground';
   var walk = document.createElement('div');
   walk.className = 'sh-fade__walk';
-  pick(4).forEach(function (f) {
+  pick(5).forEach(function (f) {
     /* 横へ運ぶ箱・上下する絵・足元の影、で役割を分ける */
     var box = document.createElement('span');
     box.className = 'sh-fade__p';
@@ -161,8 +161,9 @@
     var a = e.target.closest ? e.target.closest('a') : null;
     if (!internal(a)) return;
     if (a.href.split('#')[0] === location.href.split('#')[0]) return;   /* 同じページ */
-    e.preventDefault();
     var key = label(a.href);
+    if (key === 'HOME') return;     /* トップへ戻るときは幕を出さない */
+    e.preventDefault();
     ghost.textContent = key;
     name.textContent = key;
     jp.textContent = NAMES[key] || '';
