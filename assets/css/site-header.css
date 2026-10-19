@@ -150,13 +150,16 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
   /* 開いた先が紙なので、幕は朱に振る。紙の目を掛け合わせて「紙に塗った色」にする。
      模様は入れず、地面より下だけを深くして立つ場所を作る */
   background:
+    url("../../naoto-assets/overlay/photocopy-grain@420w.webp") repeat,
     url("../../naoto-assets/tile/paper-white@512w.webp") repeat,
-    radial-gradient(130% 70% at 50% 2%,rgba(255,255,255,.26),rgba(255,255,255,0) 68%),
-    linear-gradient(to bottom,#D3381C 0 76%,#B82F16 79%,#9E2711 100%);
-  background-size:320px,auto,auto;
-  background-blend-mode:multiply,screen,normal;
+    radial-gradient(118% 84% at 50% 34%,rgba(255,255,255,.18),rgba(255,255,255,0) 60%),
+    radial-gradient(125% 105% at 50% 48%,rgba(20,17,15,0) 52%,rgba(20,17,15,.15) 100%),
+    radial-gradient(90% 60% at 88% 96%,rgba(20,17,15,.14),rgba(20,17,15,0) 70%),
+    linear-gradient(to bottom,#D44226 0 76%,#BC361C 79%,#A02E14 100%);
+  background-size:340px,270px,auto,auto,auto,auto;
+  background-blend-mode:multiply,multiply,screen,multiply,multiply,normal;
   opacity:0;visibility:hidden;
-  transition:opacity .2s ease,visibility 0s linear .2s}
+  transition:opacity .3s ease,visibility 0s linear .3s}
 .sh-fade.is-on{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
 
 /* 行き先。後ろに大きな袋文字、手前に英字と日本語 */
@@ -174,9 +177,9 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
   font-family:"Noto Sans JP",sans-serif;font-weight:900;
   font-size:clamp(.74rem,2.6vw,1rem);letter-spacing:.14em;
   color:#14110F;opacity:0}
-.sh-fade.is-on .sh-fade__ghost{animation:shGhost .6s cubic-bezier(.2,.7,.3,1) both}
-.sh-fade.is-on .sh-fade__name{animation:shName .46s cubic-bezier(.2,.7,.3,1) .05s both}
-.sh-fade.is-on .sh-fade__jp{animation:shName .46s cubic-bezier(.2,.7,.3,1) .14s both}
+.sh-fade.is-on .sh-fade__ghost{animation:shGhost .78s cubic-bezier(.2,.7,.3,1) both}
+.sh-fade.is-on .sh-fade__name{animation:shName .58s cubic-bezier(.2,.7,.3,1) .08s both}
+.sh-fade.is-on .sh-fade__jp{animation:shName .58s cubic-bezier(.2,.7,.3,1) .24s both}
 @keyframes shGhost{from{opacity:0;scale:1.06}to{opacity:1;scale:1}}
 @keyframes shName{from{opacity:0;translate:0 .7rem}to{opacity:1;translate:0 0}}
 
@@ -187,7 +190,7 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
   background:#14110F;opacity:.42}
 .sh-fade__ground::before{content:"";position:absolute;left:0;right:0;bottom:9vh;height:1px;
   background:rgba(243,240,234,.34)}
-.sh-fade.is-on .sh-fade__ground{animation:shLine .5s cubic-bezier(.2,.7,.3,1) both}
+.sh-fade.is-on .sh-fade__ground{animation:shLine .66s cubic-bezier(.2,.7,.3,1) both}
 @keyframes shLine{from{opacity:0;scale:.2 1}to{opacity:1;scale:1 1}}
 
 /* 歩いて横切る人。脚は動かせないので、歩幅に合わせた上下・傾き・足元の影で歩きを作る */
@@ -210,7 +213,7 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 .sh-fade__p:nth-child(4){display:none;bottom:17vh;opacity:.84}
 .sh-fade__p:nth-child(4) img{height:11.5vh}
 @media (min-width:900px){ .sh-fade__p:nth-child(4){display:block} }
-.sh-fade.is-on .sh-fade__p:nth-child(4){animation-duration:2.98s;animation-delay:-1.17s}
+.sh-fade.is-on .sh-fade__p:nth-child(4){animation-duration:5.42s;animation-delay:-.98s}
 .sh-fade.is-on .sh-fade__p:nth-child(4) img,
 .sh-fade.is-on .sh-fade__p:nth-child(4) i{animation-duration:.55s}
 .sh-fade__p:nth-child(1) img{height:15vh}
@@ -227,17 +230,17 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 .sh-fade.is-on .sh-fade__p img{animation:shBob .52s ease-in-out infinite}
 .sh-fade.is-on .sh-fade__p i{animation:shStep .52s ease-in-out infinite}
 /* 負の遅れで出発点をずらす。3人が重ならないように横へ散らす */
-.sh-fade.is-on .sh-fade__p:nth-child(1){animation-duration:2.68s;animation-delay:-.3s}
-.sh-fade.is-on .sh-fade__p:nth-child(2){animation-duration:3.32s;animation-delay:-1s}
-.sh-fade.is-on .sh-fade__p:nth-child(3){animation-duration:2.4s;animation-delay:-1.04s}
-.sh-fade.is-on .sh-fade__p:nth-child(5){animation-duration:3.2s;animation-delay:-.67s}
+.sh-fade.is-on .sh-fade__p:nth-child(1){animation-duration:4.12s;animation-delay:-.32s}
+.sh-fade.is-on .sh-fade__p:nth-child(2){animation-duration:7.36s;animation-delay:-3.04s}
+.sh-fade.is-on .sh-fade__p:nth-child(3){animation-duration:2.82s;animation-delay:-1.18s}
+.sh-fade.is-on .sh-fade__p:nth-child(5){animation-duration:6.44s;animation-delay:-1.71s}
 /* 歩幅も1人ずつ変える。揃うと機械に見える */
 .sh-fade.is-on .sh-fade__p:nth-child(2) img,
 .sh-fade.is-on .sh-fade__p:nth-child(2) i{animation-duration:.58s}
 .sh-fade.is-on .sh-fade__p:nth-child(3) img,
 .sh-fade.is-on .sh-fade__p:nth-child(3) i{animation-duration:.47s}
 .sh-fade.is-on .sh-fade__p:nth-child(5) img,
-.sh-fade.is-on .sh-fade__p:nth-child(5) i{animation-duration:.61s}
+.sh-fade.is-on .sh-fade__p:nth-child(5) i{animation-duration:.55s}
 
 @keyframes shCross{from{translate:134vw 0}to{translate:-72vw 0}}
 /* 1周期＝2歩。0%と50%が着地で、いちばん低い */
