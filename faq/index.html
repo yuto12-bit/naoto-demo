@@ -269,10 +269,6 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 .steps label::after{content:"";position:absolute;right:.55em;top:50%;
   width:.4em;height:.4em;border-right:2.5px solid currentColor;
   border-top:2.5px solid currentColor;rotate:45deg;translate:0 -50%;opacity:.34}
-/* いちばん大事な2段は朱で立てる */
-.steps li.is-key em{color:var(--vermil)}
-.steps li.is-key b::after{content:"　いちばん大事";font-weight:400;
-  font-size:.64em;letter-spacing:.02em;color:var(--vermil);white-space:nowrap}
 
 /* ================ Q&A ================
    NN/g「Accordions」：中身の大半が要るならアコーディオンにせん。
@@ -341,7 +337,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 .pane--pic .ground{display:none}
 .pic{position:absolute;inset:0}
 .pic img{width:100%;height:100%;object-fit:cover;display:block}
-.pic__word{position:absolute;left:var(--pad);top:4cqh;
+.pic__word{position:absolute;left:var(--pad);top:calc(var(--safetop) + 3.4cqh);
   font-family:var(--font-en);font-size:13cqw;line-height:1;
   letter-spacing:.05em;pointer-events:none;user-select:none;color:rgba(255,255,255,.28)}
 @supports (-webkit-text-stroke:1px red){
@@ -354,7 +350,6 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
   font-size:2.7cqw;letter-spacing:.26em;color:#F0A18F;margin-bottom:1.4cqh}
 .pic__t b{display:block;font-weight:900;font-size:8cqw;line-height:1.3;letter-spacing:-.022em}
 .pic__t span{display:block;font-size:3.3cqw;line-height:2;opacity:.82;margin-top:1.4cqh}
-.pic__dis{display:block;font-size:2.3cqw;line-height:1.7;opacity:.6;margin-top:1.6cqh}
 .pane--pic .cue{color:#F7F5F1;border-top-color:rgba(255,255,255,.28);
   position:absolute;left:var(--pad);right:var(--pad);
   bottom:calc(var(--groundh) - 5cqh);z-index:21;display:none}
@@ -654,17 +649,6 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
   </div>
 </section>
 
-<section class="pane pane--pic" aria-label="料金と権利について">
-  <div class="pane__in">
-    <figure class="pic"><img src="../naoto-assets/composite/street-arcade.webp" alt="商店街で描かれた人物を合成したイメージ" loading="eager" decoding="async"><span class="pic__word" aria-hidden="true">PRICE</span></figure>
-    <div class="pic__t">
-      <em>PRICE &amp; RIGHTS</em>
-      <b>料金と権利について</b>
-      <span>金額が何で決まるのか、描いた絵をどこまで使えるのか。ご発注の前にお決めいただく項目です。</span>
-      <span class="pic__dis">合成イメージ。実際の掲出写真ではありません。</span>
-    </div>
-  </div>
-</section>
 
 <section class="pane pane--uses pane--paper tex-dot" id="uses" aria-label="対応できる用途">
   <div class="pane__in">
@@ -684,6 +668,17 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
       <li><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-use-face"></use></svg></span><span>ロゴ・似顔絵</span><em>PORTRAIT</em></li>
     </ul>
     <p class="qa__note">破線の2つは印刷・施工が関わるため、内容をうかがったうえで可否をご回答します。</p>
+  </div>
+</section>
+
+<section class="pane pane--pic" aria-label="制作の流れについて">
+  <div class="pane__in">
+    <figure class="pic"><img src="../naoto-assets/composite/street-crosswalk.webp" alt="交差点で描かれた人物を合成したイメージ" loading="eager" decoding="async"><span class="pic__word" aria-hidden="true">PROCESS</span></figure>
+    <div class="pic__t">
+      <em>PROCESS</em>
+      <b>制作の流れについて</b>
+      <span>お問い合わせから納品まで、9つの段階で進みます。どの段階で何を決めるのかをまとめています。</span>
+    </div>
   </div>
 </section>
 
@@ -730,7 +725,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
           <div class="qa__foot"><label class="qa__p" for="s-0">‹ 前</label><label class="qa__x" for="s-x">CLOSE</label><label class="qa__p" for="s-2">次 ›</label></div>
         </div>
         <div class="qa__a" id="a-s-2">
-          <p class="qa__ak">STEP 03 / 09　いちばん大事</p>
+          <p class="qa__ak">STEP 03 / 09</p>
           <p class="qa__aq">お見積り</p>
           <div class="qa__ab">金額・納期・使用範囲を書面でお出しします。無料です。ここで断っていただいても費用は発生しません。</div>
           <div class="qa__foot"><label class="qa__p" for="s-1">‹ 前</label><label class="qa__x" for="s-x">CLOSE</label><label class="qa__p" for="s-3">次 ›</label></div>
@@ -748,9 +743,9 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
           <div class="qa__foot"><label class="qa__p" for="s-3">‹ 前</label><label class="qa__x" for="s-x">CLOSE</label><label class="qa__p" for="s-5">次 ›</label></div>
         </div>
         <div class="qa__a" id="a-s-5">
-          <p class="qa__ak">STEP 06 / 09　いちばん大事</p>
+          <p class="qa__ak">STEP 06 / 09</p>
           <p class="qa__aq">ラフのご確認</p>
-          <div class="qa__ab">いちばん大事な段階です。直すならここで。方向が決まってから本制作に入ります。</div>
+          <div class="qa__ab">直すならこの段階で。方向が決まってから本制作に入ります。</div>
           <div class="qa__foot"><label class="qa__p" for="s-4">‹ 前</label><label class="qa__x" for="s-x">CLOSE</label><label class="qa__p" for="s-6">次 ›</label></div>
         </div>
         <div class="qa__a" id="a-s-6">
@@ -776,14 +771,14 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
   </div>
 </section>
 
-<section class="pane pane--pic" aria-label="制作の流れについて">
+
+<section class="pane pane--pic" aria-label="料金と権利について">
   <div class="pane__in">
-    <figure class="pic"><img src="../naoto-assets/composite/street-crosswalk.webp" alt="交差点で描かれた人物を合成したイメージ" loading="eager" decoding="async"><span class="pic__word" aria-hidden="true">PROCESS</span></figure>
+    <figure class="pic"><img src="../naoto-assets/composite/street-arcade.webp" alt="商店街で描かれた人物を合成したイメージ" loading="eager" decoding="async"><span class="pic__word" aria-hidden="true">PRICE</span></figure>
     <div class="pic__t">
-      <em>PROCESS</em>
-      <b>制作の流れについて</b>
-      <span>お問い合わせから納品まで、5つの段階で進みます。どの段階で何を決めるのかをまとめています。</span>
-      <span class="pic__dis">街の写真に、描かれた人物を実寸で合成したものです。納品物の写真ではありません。</span>
+      <em>PRICE &amp; RIGHTS</em>
+      <b>料金と権利について</b>
+      <span>金額が何で決まるのか、描いた絵をどこまで使えるのか。ご発注の前にお決めいただく項目です。</span>
     </div>
   </div>
 </section>
@@ -902,7 +897,6 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
       <em>PRODUCTION &amp; BUSINESS</em>
       <b>制作とお取引について</b>
       <span>修正や納品形式について。源泉徴収や支払期日など、経理に関わる項目もこちらにまとめています。</span>
-      <span class="pic__dis">合成イメージ。実際の掲出写真ではありません。</span>
     </div>
   </div>
 </section>
