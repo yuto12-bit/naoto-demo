@@ -27,16 +27,20 @@
   var hdr = document.querySelector('.sh');
   if (!hdr) return;
   var ON = 10, OFF = 4, tick = false;     /* 境目で点滅しないよう少しずらす */
+  /* FAQ のように、文書ではなく中の入れ物が動くページがある */
+  var box = document.querySelector("[data-sh-scroll]");
   function upd() {
     tick = false;
-    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    var y = Math.max(window.pageYOffset || document.documentElement.scrollTop || 0,
+                     box ? box.scrollTop : 0);
     var on = hdr.classList.contains('sh--solid');
     if (!on && y > ON) hdr.classList.add('sh--solid');
     else if (on && y < OFF) hdr.classList.remove('sh--solid');
   }
-  addEventListener('scroll', function () {
+  /* 入れ物の中のスクロールも拾えるよう、捕捉段階で見る */
+  document.addEventListener('scroll', function () {
     if (!tick) { tick = true; requestAnimationFrame(upd); }
-  }, { passive: true });
+  }, { passive: true, capture: true });
   addEventListener('resize', upd);
   upd();                                   /* 途中から読み込まれた場合に備える */
 })();

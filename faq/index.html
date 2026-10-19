@@ -33,9 +33,15 @@
 body{font-family:"Noto Sans JP",sans-serif;color:var(--ink);
   background:var(--paper) var(--im-paper) repeat;background-size:320px}
 html,body{overflow-x:hidden;overflow-x:clip}
-/* 1画面ずつ見せる。自前で滑らせると指の動きと喧嘩するので、ブラウザ標準に任せる */
-html{scroll-snap-type:y mandatory}
-@media (prefers-reduced-motion:reduce){ html{scroll-snap-type:y proximity} }
+/* 文書そのものは動かさない。動かすのは main の中だけ。
+   こうするとアドレスバーが伸縮しないので、面の高さが最後まで変わらない。
+   1画面ぴったりに収まり、スクロール中に組み直しも起きない */
+html,body{height:100%;overflow-y:hidden}
+.wall{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;
+  overscroll-behavior-y:contain;
+  scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+.wall::-webkit-scrollbar{display:none}
+@media (prefers-reduced-motion:reduce){ .wall{scroll-snap-type:y proximity} }
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   background:var(--im-grain) repeat;background-size:420px;opacity:.3;mix-blend-mode:multiply}
 
@@ -78,11 +84,11 @@ html,body{scrollbar-width:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 .rail,.stage{display:contents}
 .snap,.subsnap{display:none}
-.wall{display:block;width:100%}
+.wall{display:block;width:100%}   /* 上で位置を固定している */
 
 /* ---------------- 1本のショート ---------------- */
 .pane{--cardpad:clamp(.4rem,1.8vh,1.3rem);
-  width:100%;height:100dvh;position:relative;
+  width:100%;height:100%;position:relative;
   scroll-snap-align:start;scroll-snap-stop:always;
   display:grid;place-items:center;
   padding:var(--cardpad) var(--gut);
@@ -134,7 +140,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 .ground{position:absolute;left:0;right:0;bottom:0;z-index:30;height:var(--groundh);
   overflow:hidden;pointer-events:none;
   border-top:1.5px solid var(--ink-20);
-  background-image:linear-gradient(transparent,var(--paper) 38%),var(--im-crowd);
+  background-image:linear-gradient(to bottom,rgba(233,232,230,0) 0 90%,rgba(233,232,230,.5) 100%),var(--im-crowd);
   background-repeat:no-repeat,repeat-x;
   background-size:100% 100%,auto 100%;
   background-position:0 0,0 bottom;
@@ -170,7 +176,11 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 .pane--door .pane__in{grid-template-rows:auto minmax(0,1fr) auto;
   row-gap:calc(var(--v) * 2.2)}
 /* 袋文字は見出しの背後に置く印。見出しと取り合わないよう重ねて逃がす */
-.door__top{position:relative}
+.door__top{position:relative;flex:0 0 auto;min-height:0}
+/* 表紙だけ縦一列にする。格子だと場所が足りないときに行が重なり得る */
+.pane--door .pane__in{display:flex;flex-direction:column}
+.pane--door .door__idx{flex:1 1 auto;min-height:0}
+.pane--door .door__go{flex:0 0 auto}
 .door__big{display:block;font-family:var(--font-en);
   font-size:17cqw;line-height:1;letter-spacing:.1em;
   margin-bottom:1.2cqh;
@@ -586,7 +596,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 <p class="sh-menu__foot">OSUSHI JAPAN ART / NAOTO OTAKA<br>兵庫県加古郡播磨町</p></div>
 <script>document.documentElement.classList.add('js');</script>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-use-book" viewBox="0 0 24 24"><path d="M2.6 5.2h7.4a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H2.6z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M21.4 5.2H14a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7.4z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/></symbol><symbol id="i-use-ad" viewBox="0 0 24 24"><rect x="2.4" y="3.4" width="19.2" height="12.4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M12 15.8v5.2M7.6 21h8.8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M6 7.4h9M6 11.4h5.5" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol><symbol id="i-use-pkg" viewBox="0 0 24 24"><path d="M12 2.6 21.4 7v10L12 21.4 2.6 17V7z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M2.6 7 12 11.4 21.4 7M12 11.4v10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/></symbol><symbol id="i-use-wear" viewBox="0 0 24 24"><path d="M9 3.2 4 5.8l2 4 2-1v11.4h8V8.8l2 1 2-4-5-2.6a3.2 3.2 0 0 1-6 0z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/></symbol><symbol id="i-use-shop" viewBox="0 0 24 24"><path d="M3 9.2h18v11.6H3z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M2.4 9.2 4.6 3.4h14.8l2.2 5.8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M9 20.8v-6.4h6v6.4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/></symbol><symbol id="i-use-event" viewBox="0 0 24 24"><path d="M6 21.4V2.6l12 3.6-12 3.8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M2.8 21.4h8" fill="none" stroke="currentColor" stroke-width="3"/></symbol><symbol id="i-use-sns" viewBox="0 0 24 24"><rect x="6" y="2.4" width="12" height="19.2" rx="1.6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M10.4 18.6h3.2" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M8.6 6h6.8" fill="none" stroke="currentColor" stroke-width="2.2" opacity=".55"/></symbol><symbol id="i-use-face" viewBox="0 0 24 24"><path d="M12 2.8a9.2 9.2 0 1 1 0 18.4 9.2 9.2 0 0 1 0-18.4z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/><path d="M8.8 10.4h.1M15.1 10.4h.1" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><path d="M8.6 15.2c1.8 1.6 5 1.6 6.8 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"/></symbol><symbol id="i-arrow-off" viewBox="0 0 64 24"><g transform="translate(1.4 1.4)" opacity=".85"><path d="M2 12h52M44 4l8 8-8 8" fill="none" stroke="var(--vermil,#D3381C)" stroke-width="3.2" stroke-linecap="butt" stroke-linejoin="miter"/></g><path d="M2 12h52M44 4l8 8-8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="butt" stroke-linejoin="miter"/></symbol><symbol id="i-index-dot" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.6" fill="currentColor"/><path d="M11 12h11" fill="none" stroke="currentColor" stroke-width="3.2"/></symbol><symbol id="i-ruler-v" viewBox="0 0 46 800" preserveAspectRatio="none"><path d="M0 0v800" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 0h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 20h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 40h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 60h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 80h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 100h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 120h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 140h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 160h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 180h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 200h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 220h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 240h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 260h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 280h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 300h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 320h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 340h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 360h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 380h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 400h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 420h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 440h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 460h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 480h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 500h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 520h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 540h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 560h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 580h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 600h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 620h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 640h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 660h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 680h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 700h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 720h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 740h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 760h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 780h19" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M0 800h40" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"/></symbol><symbol id="i-stamp" viewBox="0 0 120 48"><rect x="2" y="2" width="116" height="44" fill="none" stroke="currentColor" stroke-width="4"/><rect x="9" y="9" width="102" height="30" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".6"/></symbol></svg>
-<main class="wall" aria-label="ご依頼について">
+<main class="wall" data-sh-scroll aria-label="ご依頼について">
 
 <section class="pane pane--door pane--paper tex-plain" id="top">
   <div class="pane__in">
@@ -1100,16 +1110,18 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
    NN/g「Scrolljacking 101」：速度も向きも横取りせん。escape route は常に残す。
    JS が動かんときは、ただの縦スクロールとして普通に読める。 */
 (function(){
+  var wall=document.querySelector('.wall');
   var panes=[].slice.call(document.querySelectorAll('.pane'));
-  if(!panes.length) return;
+  if(!panes.length||!wall) return;
+  function sy(){ return wall.scrollTop; }
 
   /* いま何枚目か。面の位置は実測する（画面の高さを掛けると端末でずれる） */
   var dots=[].slice.call(document.querySelectorAll('.dots i')),
       num=document.querySelector('.rail2__i'),
       tops=[], tick=false;
   function measure(){
-    var y=window.pageYOffset;
-    tops=panes.map(function(p){ return Math.round(p.getBoundingClientRect().top + y); });
+    var base=wall.getBoundingClientRect().top, y=sy();
+    tops=panes.map(function(p){ return Math.round(p.getBoundingClientRect().top - base + y); });
   }
   function nearest(y){
     var best=0, bd=Infinity;
@@ -1121,11 +1133,11 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
   }
   function mark(){
     tick=false;
-    var i=nearest(window.pageYOffset);
+    var i=nearest(sy());
     dots.forEach(function(d,k){ d.classList.toggle('on', k===i); });
     if(num) num.textContent=('0'+(i+1)).slice(-2);
   }
-  window.addEventListener('scroll',function(){
+  wall.addEventListener('scroll',function(){
     if(!tick){ tick=true; requestAnimationFrame(mark); }
   },{passive:true});
   window.addEventListener('resize',function(){ measure(); mark(); });
@@ -1135,15 +1147,15 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
   /* 矢印キーとPageUp/Downで1枚ずつ。送りはブラウザのスナップが受け止める */
   function go(d){
     measure();
-    var i=Math.max(0,Math.min(nearest(window.pageYOffset)+d,tops.length-1));
-    window.scrollTo({top:tops[i],behavior:'smooth'});
+    var i=Math.max(0,Math.min(nearest(sy())+d,tops.length-1));
+    wall.scrollTo({top:tops[i],behavior:'smooth'});
   }
   document.addEventListener('keydown',function(e){
-    if(document.documentElement.style.overflowY==='hidden') return;
+    if(wall.dataset.lock) return;
     var k=e.key;
     if(k==='ArrowDown'||k==='PageDown'){ e.preventDefault(); go(1); }
     else if(k==='ArrowUp'||k==='PageUp'){ e.preventDefault(); go(-1); }
-    else if(k==='Home'){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); }
+    else if(k==='Home'){ e.preventDefault(); wall.scrollTo({top:0,behavior:'smooth'}); }
   });
 })();
 
@@ -1173,7 +1185,8 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
   document.addEventListener('change',function(e){
     if(!e.target.classList.contains('qsel')) return;
     var open=e.target.id.indexOf('-x')<0;
-    document.documentElement.style.overflowY = open ? 'hidden' : '';
+    var w=document.querySelector('.wall');
+    if(w){ w.style.overflowY = open ? 'hidden' : ''; if(open) w.dataset.lock='1'; else delete w.dataset.lock; }
   });
 })();
 </script>
