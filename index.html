@@ -195,6 +195,9 @@ html.ready .scroll{opacity:.55}
 .rail{height:2px;background:var(--ink);opacity:.5;margin:0 -10vw;position:relative}
 .rail::after{content:"";position:absolute;left:0;right:0;top:5px;height:1px;background:var(--vermil)}
 .empty{height:40vh}
+/* 皿のレーンの下は詰める。空いた紙が続くと流れが切れる */
+.gate+.empty{display:none}
+.gate{padding-bottom:clamp(1.2rem,4vh,2.4rem)}
 @media(max-width:760px){ .nav a{display:none} .garden{height:700vh}
   .fg{height:calc(var(--h) * .52)}
   .say{width:62vw}
@@ -316,6 +319,8 @@ html.ready .scroll{opacity:.55}
 
 /* ===== 何も置かない区間 ===== */
 .void{height:44vh}
+/* 皿のレーンの直後だけは詰める。紙が続くと流れが切れる */
+.gate ~ .void{height:clamp(1.5rem,5vh,3rem)}
 
 /* ===== フッター ===== */
 .foot{border-top:2px solid rgba(20,17,15,.2);
