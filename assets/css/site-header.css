@@ -212,21 +212,26 @@ html.sh-arrive body::before{position:fixed;left:0;right:0;
 .sh-fade.is-out .sh-fade__ghost,
 .sh-fade.is-out .sh-fade__ground,
 .sh-fade.is-out .sh-fade__walk{animation:shOut .26s ease both}
+/* 文字もここから落ち始める。消しきらず、着いた先へこの濃さのまま渡す */
+.sh-fade.is-out .sh-fade__name,
+.sh-fade.is-out .sh-fade__jp{animation:shDim .26s ease both}
 @keyframes shOut{from{opacity:1}to{opacity:0}}
+@keyframes shDim{from{opacity:1}to{opacity:.72}}
 
 /* 着いた先。去りぎわと同じ朱の面から始めて、じんわり引く */
 html.sh-arrive::before{content:"";position:fixed;inset:0;z-index:500;pointer-events:none;
   background:var(--sh-curtain);
   background-size:var(--sh-curtain-size);
   background-blend-mode:var(--sh-curtain-blend);
-  animation:shArrive .86s cubic-bezier(.4,0,.25,1) both}
+  animation:shArrive .62s cubic-bezier(.45,0,.9,.85) both}
 /* 行き先の文字も同じ場所に出して、地と一緒に引く。文字のほうが少しだけ長く残る */
 html.sh-arrive::after{content:var(--sh-to,"");z-index:501;
-  animation:shArriveText .98s cubic-bezier(.4,0,.25,1) both}
+  animation:shArriveText .62s cubic-bezier(.45,0,.9,.85) both}
 html.sh-arrive body::before{content:var(--sh-jp,"");z-index:501;
-  animation:shArriveText .98s cubic-bezier(.4,0,.25,1) both}
-@keyframes shArrive{0%,16%{opacity:1}100%{opacity:0}}
-@keyframes shArriveText{0%,22%{opacity:1}100%{opacity:0}}
+  animation:shArriveText .62s cubic-bezier(.45,0,.9,.85) both}
+/* 地と文字は同じ時間・同じ曲がり方。濃さが違うだけなので、画面全体が一度に引く */
+@keyframes shArrive{0%,8%{opacity:1}100%{opacity:0}}
+@keyframes shArriveText{0%,8%{opacity:.72}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){
   html.sh-arrive::before,
   html.sh-arrive::after,
