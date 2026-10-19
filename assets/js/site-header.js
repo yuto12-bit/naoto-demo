@@ -109,11 +109,17 @@
   var walk = document.createElement('div');
   walk.className = 'sh-fade__walk';
   pick(3).forEach(function (f) {
+    /* 横へ運ぶ箱・上下する絵・足元の影、で役割を分ける */
+    var box = document.createElement('span');
+    box.className = 'sh-fade__p';
+    var sh = document.createElement('i');
     var im = document.createElement('img');
     im.src = UP + 'naoto-works/figures-solid/' + f + '@160w.webp';
     im.alt = '';
     im.decoding = 'async';
-    walk.appendChild(im);
+    box.appendChild(sh);
+    box.appendChild(im);
+    walk.appendChild(box);
   });
   fade.appendChild(name);
   fade.appendChild(walk);

@@ -164,24 +164,64 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 .sh-fade.is-on .sh-fade__name{animation:shName .5s cubic-bezier(.2,.7,.3,1) .04s both}
 @keyframes shName{from{opacity:0;translate:0 -46%}to{opacity:1;translate:0 -58%}}
 
-/* 歩いて横切る人。画面の下寄りを右から左へ */
-.sh-fade__walk{position:absolute;left:0;right:0;bottom:0;height:46vh;pointer-events:none}
-.sh-fade__walk img{position:absolute;bottom:0;left:0;width:auto;display:block;
-  filter:drop-shadow(0 6px 10px rgba(20,17,15,.16));
-  will-change:transform;translate:110vw 0}
-.sh-fade__walk img:nth-child(1){height:40vh}
-.sh-fade__walk img:nth-child(2){height:31vh}
-.sh-fade__walk img:nth-child(3){height:46vh}
-.sh-fade.is-on .sh-fade__walk img{animation:shWalk 1.25s linear both}
-.sh-fade.is-on .sh-fade__walk img:nth-child(1){animation-delay:0s}
-.sh-fade.is-on .sh-fade__walk img:nth-child(2){animation-delay:.1s;animation-duration:1.45s}
-.sh-fade.is-on .sh-fade__walk img:nth-child(3){animation-delay:.2s;animation-duration:1.1s}
-@keyframes shWalk{from{translate:108vw 0}to{translate:-55vw 0}}
+/* 歩いて横切る人。画面の下寄りを右から左へ。
+   脚は動かせないので、歩幅に合わせた上下・傾き・足元の影で歩きを作る */
+.sh-fade__walk{position:absolute;left:0;right:0;bottom:0;height:48vh;pointer-events:none}
+/* 横へ運ぶのは外側。中の上下と傾きとぶつからないよう役割を分ける */
+.sh-fade__p{position:absolute;bottom:0;left:0;translate:100vw 0;will-change:transform}
+.sh-fade__p img{display:block;width:auto;transform-origin:50% 100%;
+  filter:drop-shadow(0 3px 5px rgba(20,17,15,.1))}
+/* 足元の影。接地している感じを出す */
+.sh-fade__p i{position:absolute;left:50%;bottom:-.6vh;z-index:-1;
+  width:56%;height:2vh;transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(closest-side,rgba(20,17,15,.46),rgba(20,17,15,0))}
+
+/* 大きさと立つ位置を変えて奥行きを出す。足元と影が見えるよう底を少し上げる */
+.sh-fade__p:nth-child(1){bottom:7vh}
+.sh-fade__p:nth-child(2){bottom:11vh}
+.sh-fade__p:nth-child(3){bottom:4vh}
+.sh-fade__p:nth-child(1) img{height:31vh}
+.sh-fade__p:nth-child(2) img{height:24vh}
+.sh-fade__p:nth-child(3) img{height:37vh}
+
+.sh-fade.is-on .sh-fade__p{animation:shCross 2.1s linear both}
+.sh-fade.is-on .sh-fade__p img{animation:shBob .52s ease-in-out infinite}
+.sh-fade.is-on .sh-fade__p i{animation:shStep .52s ease-in-out infinite}
+/* 負の遅れで出発点をずらす。3人が重ならないように横へ散らす */
+.sh-fade.is-on .sh-fade__p:nth-child(1){animation-duration:2.0s;animation-delay:0s}
+.sh-fade.is-on .sh-fade__p:nth-child(2){animation-duration:2.3s;animation-delay:-.4s}
+.sh-fade.is-on .sh-fade__p:nth-child(3){animation-duration:1.85s;animation-delay:-.75s}
+/* 歩幅も1人ずつ変える。揃うと機械に見える */
+.sh-fade.is-on .sh-fade__p:nth-child(2) img,
+.sh-fade.is-on .sh-fade__p:nth-child(2) i{animation-duration:.58s}
+.sh-fade.is-on .sh-fade__p:nth-child(3) img,
+.sh-fade.is-on .sh-fade__p:nth-child(3) i{animation-duration:.47s}
+
+@keyframes shCross{from{translate:96vw 0}to{translate:-58vw 0}}
+/* 1周期＝2歩。0%と50%が着地で、いちばん低い */
+@keyframes shBob{
+  0%   {transform:translateY(0)     rotate(-1.9deg)}
+  12.5%{transform:translateY(-2.9%) rotate(-1deg)}
+  25%  {transform:translateY(-4.3%) rotate(0deg)}
+  37.5%{transform:translateY(-2.9%) rotate(1deg)}
+  50%  {transform:translateY(0)     rotate(1.9deg)}
+  62.5%{transform:translateY(-2.9%) rotate(1deg)}
+  75%  {transform:translateY(-4.3%) rotate(0deg)}
+  87.5%{transform:translateY(-2.9%) rotate(-1deg)}
+  100% {transform:translateY(0)     rotate(-1.9deg)}
+}
+/* 影は着地で濃く広く、浮いているあいだは薄く小さく */
+@keyframes shStep{
+  0%,50%,100%{opacity:1;transform:translateX(-50%) scale(1,1)}
+  25%,75%    {opacity:.36;transform:translateX(-50%) scale(.66,.7)}
+}
 
 @media (prefers-reduced-motion:reduce){
   .sh-fade{transition:opacity .01s linear}
   .sh-fade.is-on .sh-fade__name{animation:none;opacity:1}
-  .sh-fade.is-on .sh-fade__walk img{animation:none;translate:50vw 0}
+  .sh-fade.is-on .sh-fade__p{animation:none;translate:34vw 0}
+  .sh-fade.is-on .sh-fade__p img,
+  .sh-fade.is-on .sh-fade__p i{animation:none}
 }
 
 /* メニューの出入りもひと呼吸つなぐ */
