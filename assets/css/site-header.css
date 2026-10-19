@@ -144,45 +144,69 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 
 
 /* ===== ページの切り替え ===== */
-/* 紙の上に行き先の名前を出し、その手前を人が歩いて横切る。
-   移動のたびに必ず作品が目に入るようにする */
+/* ナオトさんのスケッチブックの見立て。方眼の紙に地面の線を引き、
+   その上を街の人が歩いて横切る。行き先は袋文字・英字・日本語の3段で示す */
 .sh-fade{position:fixed;inset:0;z-index:400;pointer-events:none;overflow:hidden;
-  background:#E9E8E6 url("../../naoto-assets/tile/paper-white@512w.webp") repeat;
-  background-size:320px;
+  --cell:clamp(26px,7.2vw,40px);
+  /* 方眼。5マスごとに太い線を入れて、方眼紙らしさを出す */
+  background:
+    repeating-linear-gradient(90deg,rgba(20,17,15,.14) 0 1px,transparent 1px calc(var(--cell) * 5)),
+    repeating-linear-gradient(0deg,rgba(20,17,15,.14) 0 1px,transparent 1px calc(var(--cell) * 5)),
+    repeating-linear-gradient(90deg,rgba(20,17,15,.065) 0 1px,transparent 1px var(--cell)),
+    repeating-linear-gradient(0deg,rgba(20,17,15,.065) 0 1px,transparent 1px var(--cell)),
+    #E9E8E6 url("../../naoto-assets/tile/paper-white@512w.webp") repeat;
+  background-size:auto,auto,auto,auto,320px;
   opacity:0;visibility:hidden;
   transition:opacity .2s ease,visibility 0s linear .2s}
 .sh-fade.is-on{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
 
-/* 行き先の名前 */
-.sh-fade__name{position:absolute;left:0;right:0;top:50%;translate:0 -58%;
-  margin:0;text-align:center;
-  font-family:Anton,sans-serif;font-weight:400;
-  font-size:clamp(2.6rem,15vw,8rem);line-height:.96;letter-spacing:.03em;
+/* 行き先。後ろに大きな袋文字、手前に英字と日本語 */
+.sh-fade__ghost{position:absolute;left:50%;top:42%;translate:-50% -50%;
+  font-family:Anton,sans-serif;font-size:min(32vw,28vh);line-height:.8;
+  letter-spacing:.02em;white-space:nowrap;
+  color:transparent;-webkit-text-stroke:2px rgba(20,17,15,.16);
+  opacity:0;pointer-events:none}
+.sh-fade__mid{position:absolute;left:0;right:0;top:42%;translate:0 -50%;
+  text-align:center;pointer-events:none}
+.sh-fade__name{margin:0;font-family:Anton,sans-serif;font-weight:400;
+  font-size:clamp(2rem,11vw,5.4rem);line-height:1;letter-spacing:.04em;
   color:#14110F;opacity:0}
-.sh-fade__name::after{content:"";display:block;width:clamp(3rem,12vw,7rem);height:4px;
-  background:#D3381C;margin:clamp(.6rem,2.2vh,1.2rem) auto 0}
-.sh-fade.is-on .sh-fade__name{animation:shName .5s cubic-bezier(.2,.7,.3,1) .04s both}
-@keyframes shName{from{opacity:0;translate:0 -46%}to{opacity:1;translate:0 -58%}}
+.sh-fade__jp{margin:clamp(.5rem,1.6vh,.9rem) 0 0;
+  font-family:"Noto Sans JP",sans-serif;font-weight:900;
+  font-size:clamp(.74rem,2.6vw,1rem);letter-spacing:.14em;
+  color:#D3381C;opacity:0}
+.sh-fade.is-on .sh-fade__ghost{animation:shGhost .6s cubic-bezier(.2,.7,.3,1) both}
+.sh-fade.is-on .sh-fade__name{animation:shName .46s cubic-bezier(.2,.7,.3,1) .05s both}
+.sh-fade.is-on .sh-fade__jp{animation:shName .46s cubic-bezier(.2,.7,.3,1) .14s both}
+@keyframes shGhost{from{opacity:0;scale:1.06}to{opacity:1;scale:1}}
+@keyframes shName{from{opacity:0;translate:0 .7rem}to{opacity:1;translate:0 0}}
 
-/* 歩いて横切る人。画面の下寄りを右から左へ。
-   脚は動かせないので、歩幅に合わせた上下・傾き・足元の影で歩きを作る */
-.sh-fade__walk{position:absolute;left:0;right:0;bottom:0;height:48vh;pointer-events:none}
+/* 地面の線。人はこの上を歩く */
+.sh-fade__ground{position:absolute;left:0;right:0;bottom:13vh;height:2px;
+  background:rgba(20,17,15,.5);opacity:0}
+.sh-fade__ground::after{content:"";position:absolute;left:0;right:0;top:5px;height:1px;
+  background:#D3381C;opacity:.5}
+.sh-fade.is-on .sh-fade__ground{animation:shLine .5s cubic-bezier(.2,.7,.3,1) both}
+@keyframes shLine{from{opacity:0;scale:.2 1}to{opacity:1;scale:1 1}}
+
+/* 歩いて横切る人。脚は動かせないので、歩幅に合わせた上下・傾き・足元の影で歩きを作る */
+.sh-fade__walk{position:absolute;left:0;right:0;bottom:0;top:0;pointer-events:none}
 /* 横へ運ぶのは外側。中の上下と傾きとぶつからないよう役割を分ける */
-.sh-fade__p{position:absolute;bottom:0;left:0;translate:100vw 0;will-change:transform}
+.sh-fade__p{position:absolute;bottom:13vh;left:0;translate:100vw 0;will-change:transform}
 .sh-fade__p img{display:block;width:auto;transform-origin:50% 100%;
-  filter:drop-shadow(0 3px 5px rgba(20,17,15,.1))}
-/* 足元の影。接地している感じを出す */
-.sh-fade__p i{position:absolute;left:50%;bottom:-.6vh;z-index:-1;
-  width:56%;height:2vh;transform:translateX(-50%);border-radius:50%;
-  background:radial-gradient(closest-side,rgba(20,17,15,.46),rgba(20,17,15,0))}
+  filter:drop-shadow(0 2px 4px rgba(20,17,15,.1))}
+/* 足元の影。地面の線に接している感じを出す */
+.sh-fade__p i{position:absolute;left:50%;bottom:-.5vh;z-index:-1;
+  width:60%;height:1.4vh;transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(closest-side,rgba(20,17,15,.42),rgba(20,17,15,0))}
 
-/* 大きさと立つ位置を変えて奥行きを出す。足元と影が見えるよう底を少し上げる */
-.sh-fade__p:nth-child(1){bottom:7vh}
-.sh-fade__p:nth-child(2){bottom:11vh}
-.sh-fade__p:nth-child(3){bottom:4vh}
-.sh-fade__p:nth-child(1) img{height:31vh}
-.sh-fade__p:nth-child(2) img{height:24vh}
-.sh-fade__p:nth-child(3) img{height:37vh}
+/* 大きさと立つ位置を変えて奥行きを出す。街の人の縮尺に寄せて小さめに */
+.sh-fade__p:nth-child(1){bottom:13vh}
+.sh-fade__p:nth-child(2){bottom:16.5vh}
+.sh-fade__p:nth-child(3){bottom:10.5vh}
+.sh-fade__p:nth-child(1) img{height:21vh}
+.sh-fade__p:nth-child(2) img{height:16vh}
+.sh-fade__p:nth-child(3) img{height:25vh}
 
 .sh-fade.is-on .sh-fade__p{animation:shCross 2.1s linear both}
 .sh-fade.is-on .sh-fade__p img{animation:shBob .52s ease-in-out infinite}
@@ -218,7 +242,11 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 
 @media (prefers-reduced-motion:reduce){
   .sh-fade{transition:opacity .01s linear}
-  .sh-fade.is-on .sh-fade__name{animation:none;opacity:1}
+  .sh-fade.is-on .sh-fade__ghost,
+  .sh-fade.is-on .sh-fade__name,
+  .sh-fade.is-on .sh-fade__jp,
+  .sh-fade.is-on .sh-fade__ground{animation:none;opacity:1;scale:1 1;translate:none}
+  .sh-fade.is-on .sh-fade__ghost{translate:-50% -50%}
   .sh-fade.is-on .sh-fade__p{animation:none;translate:34vw 0}
   .sh-fade.is-on .sh-fade__p img,
   .sh-fade.is-on .sh-fade__p i{animation:none}

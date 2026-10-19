@@ -90,6 +90,11 @@
     }
     return out;
   }
+  /* 行き先。英字と日本語を組にする（メニューと同じ言い方に揃える） */
+  var NAMES = {
+    HOME: 'トップ', WORKS: '作品', FAQ: 'ご依頼について',
+    ABOUT: '大高直人について', CONTACT: 'お問い合わせ'
+  };
   function label(href) {
     try {
       var p = new URL(href, location.href).pathname;
@@ -98,14 +103,24 @@
       if (/\/about\//.test(p)) return 'ABOUT';
       if (/\/contact\//.test(p)) return 'CONTACT';
       return 'HOME';
-    } catch (e) { return ''; }
+    } catch (e) { return 'HOME'; }
   }
 
   var fade = document.createElement('div');
   fade.className = 'sh-fade';
   fade.setAttribute('aria-hidden', 'true');
+  var ghost = document.createElement('span');
+  ghost.className = 'sh-fade__ghost';
+  var mid = document.createElement('div');
+  mid.className = 'sh-fade__mid';
   var name = document.createElement('p');
   name.className = 'sh-fade__name';
+  var jp = document.createElement('p');
+  jp.className = 'sh-fade__jp';
+  mid.appendChild(name);
+  mid.appendChild(jp);
+  var ground = document.createElement('i');
+  ground.className = 'sh-fade__ground';
   var walk = document.createElement('div');
   walk.className = 'sh-fade__walk';
   pick(3).forEach(function (f) {
@@ -121,7 +136,9 @@
     box.appendChild(im);
     walk.appendChild(box);
   });
-  fade.appendChild(name);
+  fade.appendChild(ghost);
+  fade.appendChild(mid);
+  fade.appendChild(ground);
   fade.appendChild(walk);
 
   function attach() { if (document.body && !fade.parentNode) document.body.appendChild(fade); }
@@ -145,7 +162,10 @@
     if (!internal(a)) return;
     if (a.href.split('#')[0] === location.href.split('#')[0]) return;   /* 同じページ */
     e.preventDefault();
-    name.textContent = label(a.href);
+    var key = label(a.href);
+    ghost.textContent = key;
+    name.textContent = key;
+    jp.textContent = NAMES[key] || '';
     attach();
     /* いったん消してから付け直して、2回目以降も最初から動かす */
     fade.classList.remove('is-on');
