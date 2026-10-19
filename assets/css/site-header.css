@@ -14,9 +14,11 @@
 /* 地は擬似要素に持たせて不透明度だけ動かす。
    mix-blend-mode は補間できないので、地が出るのと同時に normal へ切り替える */
 .sh::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:#E9E8E6 url("../../naoto-assets/tile/paper-white@512w.webp") repeat;
-  background-size:320px;
-  border-bottom:1px solid rgba(20,17,15,.14);
+  /* ページの紙色（#E9E8E6）より一段濃くして、帯としてはっきり分かるようにする */
+  background:#DAD5CB url("../../naoto-assets/tile/paper-white@512w.webp") repeat;
+  background-size:320px;background-blend-mode:multiply;
+  border-bottom:1.5px solid rgba(20,17,15,.28);
+  box-shadow:0 6px 18px rgba(20,17,15,.1);
   opacity:0;transition:opacity .28s ease}
 .sh--solid::before{opacity:1}
 /* multiply のままだと紙の地が濃い写真に負けて透けるので、地が出たら normal */
@@ -95,6 +97,10 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 .sh-menu a::after{content:"";position:absolute;left:0;right:0;bottom:clamp(.35rem,1.1vh,.7rem);
   height:3px;background:#D3381C;scale:0 1;transform-origin:left center;
   transition:scale .24s cubic-bezier(.2,.6,.2,1)}
+/* 開いたときに出る初期の枠を消す。キーボード操作のときだけ朱で示す */
+.sh-menu:focus{outline:none}
+.sh-menu a:focus{outline:none}
+.sh-menu a:focus-visible{outline:3px solid #D3381C;outline-offset:4px}
 .sh-menu a:hover em,.sh-menu a:focus-visible em{color:#D3381C;translate:.25rem 0}
 .sh-menu a:hover::after,.sh-menu a:focus-visible::after{scale:1 1}
 .sh-menu a[aria-current="page"] em{color:#D3381C}
