@@ -173,20 +173,30 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
   letter-spacing:.02em;white-space:nowrap;
   color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.34);
   opacity:0;pointer-events:none}
-.sh-fade__mid{position:absolute;left:0;right:0;top:38%;translate:0 -50%;
-  text-align:center;pointer-events:none}
-.sh-fade__name{margin:0;font-family:Anton,sans-serif;font-weight:400;
+/* 入れ物は場所を取らない。中の2行をそれぞれ画面に対して置く */
+.sh-fade__mid{display:contents}
+/* 英字。去る幕と着いた先の幕で、まったく同じ置き方・同じ大きさにする */
+.sh-fade__name,
+html.sh-arrive::after{position:fixed;left:0;right:0;top:38%;translate:0 -50%;
+  margin:0;text-align:center;pointer-events:none;
+  font-family:Anton,sans-serif;font-weight:400;
   font-size:clamp(2rem,11vw,5.4rem);line-height:1;letter-spacing:.04em;
-  color:#F3F0EA;opacity:0}
-.sh-fade__jp{margin:clamp(.5rem,1.6vh,.9rem) 0 0;
+  color:#F3F0EA}
+/* 日本語。英字の下に、英字の高さの半分＋ひと息ぶん下げて置く */
+.sh-fade__jp,
+html.sh-arrive body::before{position:fixed;left:0;right:0;
+  top:calc(38% + clamp(2rem,11vw,5.4rem) * .5 + clamp(.55rem,1.8vh,1rem));
+  margin:0;text-align:center;pointer-events:none;
   font-family:"Noto Sans JP",sans-serif;font-weight:900;
   font-size:clamp(.74rem,2.6vw,1rem);letter-spacing:.14em;
-  color:#14110F;opacity:0}
+  color:#14110F}
+.sh-fade__name,.sh-fade__jp{opacity:0}
 .sh-fade.is-on .sh-fade__ghost{animation:shGhost .78s cubic-bezier(.2,.7,.3,1) both}
-.sh-fade.is-on .sh-fade__name{animation:shName .58s cubic-bezier(.2,.7,.3,1) .08s both}
-.sh-fade.is-on .sh-fade__jp{animation:shName .58s cubic-bezier(.2,.7,.3,1) .24s both}
+.sh-fade.is-on .sh-fade__name{animation:shNameIn .58s cubic-bezier(.2,.7,.3,1) .08s both}
+.sh-fade.is-on .sh-fade__jp{animation:shJpIn .58s cubic-bezier(.2,.7,.3,1) .24s both}
 @keyframes shGhost{from{opacity:0;scale:1.06}to{opacity:1;scale:1}}
-@keyframes shName{from{opacity:0;translate:0 .7rem}to{opacity:1;translate:0 0}}
+@keyframes shNameIn{from{opacity:0;translate:0 calc(-50% + .7rem)}to{opacity:1;translate:0 -50%}}
+@keyframes shJpIn{from{opacity:0;translate:0 .7rem}to{opacity:1;translate:0 0}}
 
 /* 地面の線。手前の1本と、奥にもう1本。奥の人はそちらを歩く */
 .sh-fade__ground{position:absolute;left:0;right:0;bottom:13vh;height:2px;
@@ -200,7 +210,6 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 
 /* 去りぎわ。文字も人も線も引いて、朱の面だけ残してから次のページへ渡す */
 .sh-fade.is-out .sh-fade__ghost,
-.sh-fade.is-out .sh-fade__mid,
 .sh-fade.is-out .sh-fade__ground,
 .sh-fade.is-out .sh-fade__walk{animation:shOut .26s ease both}
 @keyframes shOut{from{opacity:1}to{opacity:0}}
@@ -211,9 +220,17 @@ html.sh-arrive::before{content:"";position:fixed;inset:0;z-index:500;pointer-eve
   background-size:var(--sh-curtain-size);
   background-blend-mode:var(--sh-curtain-blend);
   animation:shArrive .86s cubic-bezier(.4,0,.25,1) both}
+/* 行き先の文字も同じ場所に出して、地と一緒に引く。文字のほうが少しだけ長く残る */
+html.sh-arrive::after{content:var(--sh-to,"");z-index:501;
+  animation:shArriveText .98s cubic-bezier(.4,0,.25,1) both}
+html.sh-arrive body::before{content:var(--sh-jp,"");z-index:501;
+  animation:shArriveText .98s cubic-bezier(.4,0,.25,1) both}
 @keyframes shArrive{0%,16%{opacity:1}100%{opacity:0}}
+@keyframes shArriveText{0%,22%{opacity:1}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){
-  html.sh-arrive::before{animation-duration:.3s}
+  html.sh-arrive::before,
+  html.sh-arrive::after,
+  html.sh-arrive body::before{animation-duration:.3s}
 }
 
 /* 歩いて横切る人。脚は動かせないので、歩幅に合わせた上下・傾き・足元の影で歩きを作る */

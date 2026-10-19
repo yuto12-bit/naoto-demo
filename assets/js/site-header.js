@@ -187,7 +187,8 @@
     /* 渡す前に場面を引いて、朱の面だけにしておく */
     setTimeout(function () { fade.classList.add('is-out'); }, WAIT - OUT);
     setTimeout(function () {
-      try { sessionStorage.setItem('sh-nav', '1'); } catch (e) {}
+      /* 着いた先でも同じ文字を出せるよう、行き先の名前を持たせて渡す */
+      try { sessionStorage.setItem('sh-nav', JSON.stringify([key, NAMES[key] || ''])); } catch (e) {}
       location.href = a.href;
     }, WAIT);
   });
