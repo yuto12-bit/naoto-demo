@@ -74,26 +74,62 @@
 })();
 
 
-/* ===== ページの切り替え。HOME 以外へ移るときに短い幕を挟む ===== */
+/* ===== ページの切り替え。行き先の名前を出し、人が歩いて横切る ===== */
 (function () {
+  var WAIT = 700;                       /* 幕を見せている時間 */
+  /* 全身が描かれていて、横から見ても形が分かる人を選んである */
+  var CAST = ['fig-b-10','fig-b-09','fig-b-13','fig-b-08',
+              'fig-b-11','fig-b-24','fig-a-05','fig-b-14'];
+  /* ページの場所から素材までの道のり。下の階層なら1つ上がる */
+  var UP = /\/(works|faq|about|contact)\//.test(location.pathname) ? '../' : '';
+
+  function pick(n) {
+    var pool = CAST.slice(), out = [];
+    while (out.length < n && pool.length) {
+      out.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+    }
+    return out;
+  }
+  function label(href) {
+    try {
+      var p = new URL(href, location.href).pathname;
+      if (/\/works\//.test(p)) return 'WORKS';
+      if (/\/faq\//.test(p)) return 'FAQ';
+      if (/\/about\//.test(p)) return 'ABOUT';
+      if (/\/contact\//.test(p)) return 'CONTACT';
+      return 'HOME';
+    } catch (e) { return ''; }
+  }
+
   var fade = document.createElement('div');
   fade.className = 'sh-fade';
   fade.setAttribute('aria-hidden', 'true');
-  fade.innerHTML = '<i></i>';
-  document.addEventListener('DOMContentLoaded', function () {
-    document.body.appendChild(fade);
+  var name = document.createElement('p');
+  name.className = 'sh-fade__name';
+  var walk = document.createElement('div');
+  walk.className = 'sh-fade__walk';
+  pick(3).forEach(function (f) {
+    var im = document.createElement('img');
+    im.src = UP + 'naoto-works/figures-solid/' + f + '@160w.webp';
+    im.alt = '';
+    im.decoding = 'async';
+    walk.appendChild(im);
   });
-  if (document.body) document.body.appendChild(fade);
+  fade.appendChild(name);
+  fade.appendChild(walk);
 
-  /* 入ってきたときは幕を上げる */
+  function attach() { if (document.body && !fade.parentNode) document.body.appendChild(fade); }
+  if (document.body) attach(); else document.addEventListener('DOMContentLoaded', attach);
+
+  /* 入ってきたら幕を上げる（戻る・進むで戻ってきたときも） */
   addEventListener('pageshow', function () { fade.classList.remove('is-on'); });
 
-  /* サイト内のページへ移るときだけ幕を下ろす */
   function internal(a) {
     if (!a || !a.getAttribute) return false;
     var href = a.getAttribute('href') || '';
     if (!href || href.charAt(0) === '#' || /^(mailto|tel|javascript):/i.test(href)) return false;
     if (a.target && a.target !== '_self') return false;
+    if (a.hasAttribute('download')) return false;
     try { return new URL(a.href, location.href).origin === location.origin; }
     catch (e) { return false; }
   }
@@ -101,10 +137,14 @@
     if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     var a = e.target.closest ? e.target.closest('a') : null;
     if (!internal(a)) return;
-    var here = location.href.split('#')[0];
-    if (a.href.split('#')[0] === here) return;      /* 同じページなら何もしない */
+    if (a.href.split('#')[0] === location.href.split('#')[0]) return;   /* 同じページ */
     e.preventDefault();
+    name.textContent = label(a.href);
+    attach();
+    /* いったん消してから付け直して、2回目以降も最初から動かす */
+    fade.classList.remove('is-on');
+    void fade.offsetWidth;
     fade.classList.add('is-on');
-    setTimeout(function () { location.href = a.href; }, 210);
+    setTimeout(function () { location.href = a.href; }, WAIT);
   });
 })();
