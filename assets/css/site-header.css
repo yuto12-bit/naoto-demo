@@ -75,7 +75,13 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 .sh-menu a{display:flex;align-items:baseline;gap:.8rem;text-decoration:none;color:#14110F;
   padding:clamp(.55rem,1.7vh,.95rem) 0;position:relative;width:max-content;max-width:100%;
   text-shadow:0 0 10px #E9E8E6,0 0 10px #E9E8E6,0 0 22px #E9E8E6,0 0 22px #E9E8E6}
-/* 大きさだけ1行ずつ振る。寄せは中心に揃える */
+/* 大きさも寄せも傾きも1行ずつ振る。紙の上に手で置いたように散らす。
+   横のずれは left（動きの translate とぶつからない）、間隔は上の余白で作る */
+.sh-menu a:nth-of-type(1){left:-12%;rotate:-1.1deg}
+.sh-menu a:nth-of-type(2){left:15%;rotate:.7deg;margin-top:clamp(.1rem,1.1vh,.8rem)}
+.sh-menu a:nth-of-type(3){left:-17%;rotate:-.5deg}
+.sh-menu a:nth-of-type(4){left:11%;rotate:1.2deg;margin-top:clamp(.2rem,1.5vh,1.1rem)}
+.sh-menu a:nth-of-type(5){left:-6%;rotate:-.8deg}
 .sh-menu em{font-family:Anton,sans-serif;font-style:normal;
   font-size:clamp(2rem,11vw,4.2rem);letter-spacing:.02em;line-height:.96;
   transition:color .18s ease,translate .18s ease}
