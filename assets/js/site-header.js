@@ -121,14 +121,6 @@
   mid.appendChild(jp);
   var ground = document.createElement('i');
   ground.className = 'sh-fade__ground';
-  var meta = document.createElement('p');
-  meta.className = 'sh-fade__meta';
-  meta.textContent = 'OSUSHI JAPAN ART';
-  var meta2 = document.createElement('p');
-  meta2.className = 'sh-fade__meta2';
-  meta2.textContent = 'NAOTO OTAKA';
-  var sign = document.createElement('i');
-  sign.className = 'sh-fade__sign';
   var walk = document.createElement('div');
   walk.className = 'sh-fade__walk';
   pick(4).forEach(function (f) {
@@ -147,9 +139,6 @@
   fade.appendChild(ghost);
   fade.appendChild(mid);
   fade.appendChild(ground);
-  fade.appendChild(meta);
-  fade.appendChild(meta2);
-  fade.appendChild(sign);
   fade.appendChild(walk);
 
   function attach() { if (document.body && !fade.parentNode) document.body.appendChild(fade); }
