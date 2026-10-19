@@ -257,9 +257,9 @@ html.sh-arrive body::before{content:var(--sh-jp,"");z-index:501;
 .sh-fade__p:nth-child(4){display:none;bottom:17vh;opacity:.84}
 .sh-fade__p:nth-child(4) img{height:11.5vh}
 @media (min-width:900px){ .sh-fade__p:nth-child(4){display:block} }
-.sh-fade.is-on .sh-fade__p:nth-child(4){animation-duration:5.42s;animation-delay:-.98s}
+.sh-fade.is-on .sh-fade__p:nth-child(4){animation-duration:4.48s;animation-delay:-.51s}
 .sh-fade.is-on .sh-fade__p:nth-child(4) img,
-.sh-fade.is-on .sh-fade__p:nth-child(4) i{animation-duration:.55s}
+.sh-fade.is-on .sh-fade__p:nth-child(4) i{animation-duration:.46s}
 .sh-fade__p:nth-child(1) img{height:15vh}
 .sh-fade__p:nth-child(2) img{height:8.5vh}
 .sh-fade__p:nth-child(3) img{height:22vh}
@@ -271,20 +271,22 @@ html.sh-arrive body::before{content:var(--sh-jp,"");z-index:501;
 .sh-fade__p:nth-child(5) i{opacity:.46;height:.9vh}
 
 .sh-fade.is-on .sh-fade__p{animation:shCross 2.1s linear both}
-.sh-fade.is-on .sh-fade__p img{animation:shBob .52s ease-in-out infinite}
-.sh-fade.is-on .sh-fade__p i{animation:shStep .52s ease-in-out infinite}
+.sh-fade.is-on .sh-fade__p img{animation:shBob .45s ease-in-out infinite}
+.sh-fade.is-on .sh-fade__p i{animation:shStep .45s ease-in-out infinite}
 /* 負の遅れで出発点をずらす。3人が重ならないように横へ散らす */
-.sh-fade.is-on .sh-fade__p:nth-child(1){animation-duration:4.12s;animation-delay:-.32s}
-.sh-fade.is-on .sh-fade__p:nth-child(2){animation-duration:7.36s;animation-delay:-3.04s}
-.sh-fade.is-on .sh-fade__p:nth-child(3){animation-duration:2.82s;animation-delay:-1.18s}
-.sh-fade.is-on .sh-fade__p:nth-child(5){animation-duration:6.44s;animation-delay:-1.71s}
+/* 全員いったん画面の右の外。遅れは小さく、入ってくる順だけを作る。
+   速さは背丈なりなので、手前の人から先に入ってきて自然にばらける */
+.sh-fade.is-on .sh-fade__p:nth-child(1){animation-duration:3.55s;animation-delay:-.37s}
+.sh-fade.is-on .sh-fade__p:nth-child(2){animation-duration:6.06s;animation-delay:-.15s}
+.sh-fade.is-on .sh-fade__p:nth-child(3){animation-duration:2.64s;animation-delay:-.32s}
+.sh-fade.is-on .sh-fade__p:nth-child(5){animation-duration:5.15s;animation-delay:-.4s}
 /* 歩幅も1人ずつ変える。揃うと機械に見える */
 .sh-fade.is-on .sh-fade__p:nth-child(2) img,
-.sh-fade.is-on .sh-fade__p:nth-child(2) i{animation-duration:.58s}
+.sh-fade.is-on .sh-fade__p:nth-child(2) i{animation-duration:.44s}
 .sh-fade.is-on .sh-fade__p:nth-child(3) img,
-.sh-fade.is-on .sh-fade__p:nth-child(3) i{animation-duration:.47s}
+.sh-fade.is-on .sh-fade__p:nth-child(3) i{animation-duration:.42s}
 .sh-fade.is-on .sh-fade__p:nth-child(5) img,
-.sh-fade.is-on .sh-fade__p:nth-child(5) i{animation-duration:.55s}
+.sh-fade.is-on .sh-fade__p:nth-child(5) i{animation-duration:.45s}
 
 @keyframes shCross{from{translate:134vw 0}to{translate:-72vw 0}}
 /* 1周期＝2歩。0%と50%が着地で、いちばん低い */

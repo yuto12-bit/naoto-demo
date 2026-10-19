@@ -148,6 +148,18 @@
   fade.appendChild(walk);
 
   function attach() { if (document.body && !fade.parentNode) document.body.appendChild(fade); }
+
+  /* 引き継ぎで入れた「動きの送り」を消して、はじめから歩かせる。
+     残したままだと、次に幕を出したとき進みすぎた位置から始まってしまう */
+  function resetWalk() {
+    var ps = fade.querySelectorAll('.sh-fade__p');
+    for (var i = 0; i < ps.length; i++) {
+      ps[i].style.animationDelay = '';
+      var im = ps[i].querySelector('img'), sh = ps[i].querySelector('i');
+      if (im) im.style.animationDelay = '';
+      if (sh) sh.style.animationDelay = '';
+    }
+  }
   if (document.body) attach(); else document.addEventListener('DOMContentLoaded', attach);
 
   /* 入ってきたら幕を上げる（戻る・進むで戻ってきたときも） */
@@ -182,6 +194,7 @@
     });
     setTimeout(function () {
       fade.classList.remove('is-on', 'is-cont', 'is-leave');
+      resetWalk();
       de.removeAttribute('data-sh-nav');
     }, 900);
   }
@@ -217,6 +230,7 @@
     attach();
     /* いったん消してから付け直して、2回目以降も最初から動かす */
     fade.classList.remove('is-on', 'is-cont', 'is-leave');
+    resetWalk();
     void fade.offsetWidth;
     fade.classList.add('is-on');
     var started = Date.now();
