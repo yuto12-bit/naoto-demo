@@ -44,14 +44,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .intro h1{font-weight:900;font-size:clamp(1.7rem,5.2vw,3.4rem);line-height:1.3}
 .intro .en{display:block;font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.34em;
   color:var(--vermil);margin-top:1.1em}
-.intro .cue{position:absolute;left:50%;translate:-50% 0;bottom:2.6rem;
-  font-family:Anton,sans-serif;font-size:.62rem;letter-spacing:.3em;opacity:.5;
-  display:flex;flex-direction:column;align-items:center;gap:.7rem}
-.intro .cue::after{content:"";width:1.5px;height:44px;background:var(--ink);
-  animation:drop 2.1s ease-in-out infinite}
-@keyframes drop{0%{transform:scaleY(.15);transform-origin:top}
- 55%{transform:scaleY(1);transform-origin:top}56%{transform:scaleY(1);transform-origin:bottom}
- 100%{transform:scaleY(0);transform-origin:bottom}}
 
 /* ===== 1点ずつ。壁に掛かった額 ===== */
 .viewer{position:relative}
@@ -123,7 +115,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   color:transparent;-webkit-text-stroke:1.6px var(--ink)}
 .belt__count span{font-family:Anton,sans-serif;font-size:.66rem;letter-spacing:.26em;color:var(--vermil)}
 .lane{display:flex;align-items:flex-end;gap:clamp(1rem,2.6vw,2rem);width:max-content;
-  will-change:transform;padding:0 2vw}
+  padding:0 2vw}
+/* 横へ流す受け皿。縦か横かの判定はブラウザに任せる */
+.lane-wrap{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.lane-wrap::-webkit-scrollbar{display:none}
 .bfig{flex:0 0 auto;margin:0;display:flex;flex-direction:column;align-items:center;
   width:clamp(74px,8.5vw,118px)}
 .bfig:nth-child(2n){translate:0 -12px}
@@ -265,7 +260,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 
 <section class="intro">
   <div><h1>これまで描いてきたもの</h1><span class="en">WORKS</span></div>
-  <p class="cue">SCROLL</p>
 </section>
 
 <div class="viewer">
@@ -569,20 +563,41 @@ document.querySelectorAll('.slide').forEach(function(el){io.observe(el);});
 
 
 (function(){
-  var lane=document.getElementById('lane'),x=0,half=0,raf;
+  var lane=document.getElementById('lane');
+  if(!lane) return;
+  /* 受け皿が無いので、その場で1枚かぶせる */
+  var wrap=lane.parentElement;
+  if(!wrap.classList.contains('lane-wrap')){
+    wrap=document.createElement('div');
+    wrap.className='lane-wrap';
+    lane.parentNode.insertBefore(wrap,lane);
+    wrap.appendChild(lane);
+  }
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  function m(){half=lane.scrollWidth/2;} addEventListener('resize',m); m();
-  function ap(){ if(half) x=((x%half)+half)%half; lane.style.transform='translateX('+(-x)+'px)'; }
-  addEventListener('wheel',function(e){
-    x+=(Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)*.3;
-    if(!raf) raf=requestAnimationFrame(function(){raf=null;ap();});
-  },{passive:true});
-  var d=false,sx=0,s0=0;
-  lane.addEventListener('pointerdown',function(e){d=true;sx=e.clientX;s0=x;lane.setPointerCapture(e.pointerId);});
-  lane.addEventListener('pointermove',function(e){if(d){x=s0-(e.clientX-sx);ap();}});
-  lane.addEventListener('pointerup',function(){d=false;});
-  if(!reduce)(function dr(){ if(!d){x+=.22;ap();} requestAnimationFrame(dr); })();
-  ap();
+  /* 同じ並びを2周ぶん置いてあるので、半分進んだら黙って戻す（見た目は変わらない） */
+  function half(){ return lane.scrollWidth/2; }
+  function loop(){
+    var h=half(); if(h<=0) return;
+    if(wrap.scrollLeft>=h) wrap.scrollLeft-=h;
+    else if(wrap.scrollLeft<=0) wrap.scrollLeft+=h;
+  }
+  wrap.addEventListener('scroll',loop,{passive:true});
+  /* 触っているあいだは自走を止める。指の動きと競合させない */
+  var until=0;
+  function hold(){ until=Date.now()+1600; }
+  ['pointerdown','touchstart','wheel'].forEach(function(t){
+    wrap.addEventListener(t,hold,{passive:true});
+  });
+  function startAt(){ if(wrap.scrollLeft<1) wrap.scrollLeft=1; }
+  addEventListener('load',startAt);
+  [].slice.call(lane.querySelectorAll('img')).forEach(function(im){
+    if(!im.complete) im.addEventListener('load',startAt,{once:true});
+  });
+  startAt();
+  if(!reduce)(function dr(){
+    if(Date.now()>until){ wrap.scrollLeft+=.3; loop(); }
+    requestAnimationFrame(dr);
+  })();
 })();
 </script>
 </body></html>

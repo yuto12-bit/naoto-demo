@@ -101,17 +101,6 @@ html.ready .nav{opacity:1}
 .sign{width:min(426px,54vw);aspect-ratio:568/367;
   background:var(--im-sign) no-repeat center/contain;
   transform:translateY(-3.2vmin)}
-.scroll{position:absolute;left:50%;translate:-50% 0;bottom:2.6rem;
-  font-family:Anton,sans-serif;font-size:.62rem;letter-spacing:.3em;
-  display:flex;flex-direction:column;align-items:center;gap:.7rem;opacity:0;
-  transition:opacity .6s ease .45s}
-html.ready .scroll{opacity:.55}
-.scroll::after{content:"";width:1.5px;height:44px;background:var(--ink);
-  animation:drop 2.1s ease-in-out infinite}
-@keyframes drop{0%{transform:scaleY(.15);transform-origin:top}
- 55%{transform:scaleY(1);transform-origin:top}
- 56%{transform:scaleY(1);transform-origin:bottom}
- 100%{transform:scaleY(0);transform-origin:bottom}}
 
 
 /* ===== 街：実写。人物の手描きと質感を対比させる ===== */
@@ -164,7 +153,9 @@ html.ready .scroll{opacity:.55}
 .gate h2{font-weight:900;font-size:clamp(1.3rem,4.2vw,2.8rem);line-height:1.35}
 .gate .en{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.34em;
   color:var(--vermil);margin-top:.9em}
-.lane-wrap{margin-top:clamp(2rem,7vh,4rem);overflow:hidden;padding-bottom:3.5rem}
+.lane-wrap{margin-top:clamp(2rem,7vh,4rem);padding-bottom:3.5rem;
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.lane-wrap::-webkit-scrollbar{display:none}
 .lane{display:flex;align-items:flex-end;gap:clamp(.9rem,2.6vw,2.2rem);will-change:transform}
 /* 皿は作品の幅に合わせる。だから器は中身なりの幅にしておく */
 .dish{flex:0 0 auto;width:max-content;display:flex;flex-direction:column;align-items:center}
@@ -354,7 +345,6 @@ html.ready .scroll{opacity:.55}
 
 <section class="hero">
   <h1 class="sign" role="img" aria-label="NAOTO OTAKA"></h1>
-  <p class="scroll">SCROLL</p>
 </section>
 
 <section class="garden" id="garden" aria-hidden="true">
@@ -498,28 +488,42 @@ figs.forEach(function(el){io.observe(el);});
 })();
 
 (function(){
-  var lane=document.getElementById('lane'),x=0,half=0,raf;
+  var lane=document.getElementById('lane');
+  if(!lane) return;
+  var wrap=lane.parentElement;      /* .lane-wrap。ここを横に動かす */
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  function m(){half=lane.scrollWidth/2;} addEventListener('resize',m); m();
-  /* 皿の画像は後から読み込まれる。読み終えるたびに長さを測り直さないと、
-     一周の継ぎ目がずれる */
-  [].slice.call(lane.querySelectorAll('img')).forEach(function(im){
-    if(!im.complete) im.addEventListener('load', m, {once:true});
+  /* 同じ並びを2周ぶん置いてあるので、半分進んだら黙って戻す（見た目は変わらない） */
+  function half(){ return lane.scrollWidth/2; }
+  function loop(){
+    var h=half(); if(h<=0) return;
+    if(wrap.scrollLeft>=h) wrap.scrollLeft-=h;
+    else if(wrap.scrollLeft<=0) wrap.scrollLeft+=h;
+  }
+  var tk=document.getElementById('ticker');
+  function follow(){
+    if(!tk) return;
+    var th=tk.scrollWidth/2; if(th<=0) return;
+    var tx=((wrap.scrollLeft*.55 % th)+th)%th;
+    tk.style.transform='translateX('+(-tx)+'px)';
+  }
+  wrap.addEventListener('scroll',function(){ loop(); follow(); },{passive:true});
+  /* 触っているあいだは自走を止める。指の動きと競合させない */
+  var until=0;
+  function hold(){ until=Date.now()+1600; }
+  ['pointerdown','touchstart','wheel'].forEach(function(t){
+    wrap.addEventListener(t,hold,{passive:true});
   });
-  function ap(){ if(half) x=((x%half)+half)%half; lane.style.transform='translateX('+(-x)+'px)'; }
-  addEventListener('wheel',function(e){ x+=(Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)*.35;
-    if(!raf) raf=requestAnimationFrame(function(){raf=null;ap();}); },{passive:true});
-  var d=false,sx=0,s0=0;
-  lane.addEventListener('pointerdown',function(e){d=true;sx=e.clientX;s0=x;lane.setPointerCapture(e.pointerId);});
-  lane.addEventListener('pointermove',function(e){if(d){x=s0-(e.clientX-sx);ap();}});
-  lane.addEventListener('pointerup',function(){d=false;});
-  var tk=document.getElementById('ticker'), thalf=0;
-  function tm(){ thalf=tk.scrollWidth/2; } addEventListener('resize',tm); tm();
-  var _ap=ap;
-  ap=function(){ _ap();
-    if(thalf){ var tx=((x*.55 % thalf)+thalf)%thalf; tk.style.transform='translateX('+(-tx)+'px)'; } };
-  if(!reduce)(function dr(){ if(!d){x+=.25;ap();} requestAnimationFrame(dr); })();
-  ap();
+  /* 皿の画像は後から入る。長さが決まってから位置を整える */
+  function startAt(){ if(wrap.scrollLeft<1) wrap.scrollLeft=1; follow(); }
+  addEventListener('load',startAt);
+  [].slice.call(lane.querySelectorAll('img')).forEach(function(im){
+    if(!im.complete) im.addEventListener('load',startAt,{once:true});
+  });
+  startAt();
+  if(!reduce)(function dr(){
+    if(Date.now()>until){ wrap.scrollLeft+=.35; loop(); follow(); }
+    requestAnimationFrame(dr);
+  })();
 })();
 </script>
 

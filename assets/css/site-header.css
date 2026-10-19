@@ -135,3 +135,27 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
   .sh-menu a,.sh-menu__foot{animation:none}
   .sh-menu em,.sh-menu a::after{transition:none}
 }
+
+
+/* ===== ページの切り替え。白く抜けるのを防ぎ、動きをひと呼吸つなぐ ===== */
+.sh-fade{position:fixed;inset:0;z-index:400;pointer-events:none;
+  background:#E9E8E6 url("../../naoto-assets/tile/paper-white@512w.webp") repeat;
+  background-size:320px;
+  display:grid;place-items:center;
+  opacity:0;visibility:hidden;
+  transition:opacity .22s ease,visibility 0s linear .22s}
+.sh-fade.is-on{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
+/* 皿が1枚流れる。読み込み画面と同じ絵柄でそろえる */
+.sh-fade i{display:block;width:min(38vw,190px);aspect-ratio:993/407;
+  background:url("../../naoto-hand/hand/sushi-plate@400w.webp") center/contain no-repeat;
+  opacity:.55;translate:-14% 0}
+.sh-fade.is-on i{animation:shPlate .5s cubic-bezier(.3,.7,.4,1) both}
+@keyframes shPlate{from{translate:-34% 0;opacity:0}to{translate:-6% 0;opacity:.55}}
+@media (prefers-reduced-motion:reduce){
+  .sh-fade{transition:opacity .01s linear}
+  .sh-fade.is-on i{animation:none}
+}
+
+/* メニューの出入りもひと呼吸つなぐ */
+.sh-menu{opacity:0;transition:opacity .2s ease}
+.sh-menu.is-open{opacity:1}
