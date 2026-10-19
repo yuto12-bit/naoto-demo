@@ -161,12 +161,12 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 .sh-fade.is-on{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
 
 /* 行き先。後ろに大きな袋文字、手前に英字と日本語 */
-.sh-fade__ghost{position:absolute;left:50%;top:42%;translate:-50% -50%;
+.sh-fade__ghost{position:absolute;left:50%;top:38%;translate:-50% -50%;
   font-family:Anton,sans-serif;font-size:min(32vw,28vh);line-height:.8;
   letter-spacing:.02em;white-space:nowrap;
   color:transparent;-webkit-text-stroke:2px rgba(20,17,15,.16);
   opacity:0;pointer-events:none}
-.sh-fade__mid{position:absolute;left:0;right:0;top:42%;translate:0 -50%;
+.sh-fade__mid{position:absolute;left:0;right:0;top:38%;translate:0 -50%;
   text-align:center;pointer-events:none}
 .sh-fade__name{margin:0;font-family:Anton,sans-serif;font-weight:400;
   font-size:clamp(2rem,11vw,5.4rem);line-height:1;letter-spacing:.04em;
@@ -181,12 +181,32 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
 @keyframes shGhost{from{opacity:0;scale:1.06}to{opacity:1;scale:1}}
 @keyframes shName{from{opacity:0;translate:0 .7rem}to{opacity:1;translate:0 0}}
 
-/* 地面の線。人はこの上を歩く */
+/* 地面の線。手前の1本と、奥にもう1本。奥の人はそちらを歩く */
 .sh-fade__ground{position:absolute;left:0;right:0;bottom:13vh;height:2px;
   background:rgba(20,17,15,.5);opacity:0}
 .sh-fade__ground::after{content:"";position:absolute;left:0;right:0;top:5px;height:1px;
   background:#D3381C;opacity:.5}
+.sh-fade__ground::before{content:"";position:absolute;left:0;right:0;bottom:9vh;height:1px;
+  background:rgba(20,17,15,.2)}
 .sh-fade.is-on .sh-fade__ground{animation:shLine .5s cubic-bezier(.2,.7,.3,1) both}
+/* 隅の小さな文字と手書きの署名。読み込み画面と同じ言い方 */
+/* 左の余白罫。方眼紙の綴じ側に引いてある線の見立て */
+.sh-fade::after{content:"";position:absolute;left:clamp(2.2rem,11vw,5rem);top:0;bottom:0;
+  width:1.5px;background:rgba(211,56,28,.3)}
+.sh-fade__meta{position:absolute;left:clamp(1rem,4vw,2.6rem);top:clamp(1rem,3.4vh,2rem);
+  font-family:Anton,sans-serif;font-size:.58rem;letter-spacing:.26em;
+  color:rgba(20,17,15,.52);opacity:0}
+.sh-fade__meta2{position:absolute;right:clamp(1rem,4vw,2.6rem);top:clamp(1rem,3.4vh,2rem);
+  font-family:Anton,sans-serif;font-size:.58rem;letter-spacing:.26em;
+  color:rgba(20,17,15,.44);opacity:0;margin:0}
+.sh-fade.is-on .sh-fade__meta2{animation:shName .5s ease .24s both}
+.sh-fade__sign{position:absolute;right:clamp(1.2rem,5vw,3.4rem);top:clamp(4.5rem,13vh,8rem);
+  width:clamp(7rem,30vw,13rem);aspect-ratio:400/150;opacity:0;
+  background:url("../../naoto-hand/hand/naoto-otaka-signature@400w.webp") right top/contain no-repeat;
+  mix-blend-mode:multiply}
+.sh-fade.is-on .sh-fade__meta{animation:shName .5s ease .18s both}
+.sh-fade.is-on .sh-fade__sign{animation:shSign .55s ease .22s both}
+@keyframes shSign{from{opacity:0;translate:0 .5rem}to{opacity:.72;translate:0 0}}
 @keyframes shLine{from{opacity:0;scale:.2 1}to{opacity:1;scale:1 1}}
 
 /* 歩いて横切る人。脚は動かせないので、歩幅に合わせた上下・傾き・足元の影で歩きを作る */
@@ -200,28 +220,38 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
   width:60%;height:1.4vh;transform:translateX(-50%);border-radius:50%;
   background:radial-gradient(closest-side,rgba(20,17,15,.42),rgba(20,17,15,0))}
 
-/* 大きさと立つ位置を変えて奥行きを出す。街の人の縮尺に寄せて小さめに */
-.sh-fade__p:nth-child(1){bottom:13vh}
-.sh-fade__p:nth-child(2){bottom:16.5vh}
-.sh-fade__p:nth-child(3){bottom:10.5vh}
-.sh-fade__p:nth-child(1) img{height:21vh}
-.sh-fade__p:nth-child(2) img{height:16vh}
-.sh-fade__p:nth-child(3) img{height:25vh}
+/* 大きさ・立つ高さ・濃さの3つで奥行きを作る。
+   2人目がいちばん奥（小さく・高く・薄い）、3人目が手前。最大でも22vh に抑える */
+.sh-fade__p:nth-child(1){bottom:13vh}                 /* 中ほど。手前の線の上 */
+.sh-fade__p:nth-child(2){bottom:22vh;opacity:.68}     /* 奥。奥の線の上。空気に溶かす */
+.sh-fade__p:nth-child(3){bottom:9vh}                  /* 手前。線より少し下 */
+/* 4人目は広い画面のときだけ。狭い画面では場所がないので出さない */
+.sh-fade__p:nth-child(4){display:none;bottom:17vh;opacity:.84}
+.sh-fade__p:nth-child(4) img{height:11.5vh}
+@media (min-width:900px){ .sh-fade__p:nth-child(4){display:block} }
+.sh-fade.is-on .sh-fade__p:nth-child(4){animation-duration:2.6s;animation-delay:-.87s}
+.sh-fade.is-on .sh-fade__p:nth-child(4) img,
+.sh-fade.is-on .sh-fade__p:nth-child(4) i{animation-duration:.55s}
+.sh-fade__p:nth-child(1) img{height:15vh}
+.sh-fade__p:nth-child(2) img{height:8.5vh}
+.sh-fade__p:nth-child(3) img{height:22vh}
+/* 奥の人は影も薄く小さく */
+.sh-fade__p:nth-child(2) i{opacity:.5;height:.9vh}
 
 .sh-fade.is-on .sh-fade__p{animation:shCross 2.1s linear both}
 .sh-fade.is-on .sh-fade__p img{animation:shBob .52s ease-in-out infinite}
 .sh-fade.is-on .sh-fade__p i{animation:shStep .52s ease-in-out infinite}
 /* 負の遅れで出発点をずらす。3人が重ならないように横へ散らす */
-.sh-fade.is-on .sh-fade__p:nth-child(1){animation-duration:2.0s;animation-delay:0s}
-.sh-fade.is-on .sh-fade__p:nth-child(2){animation-duration:2.3s;animation-delay:-.4s}
-.sh-fade.is-on .sh-fade__p:nth-child(3){animation-duration:1.85s;animation-delay:-.75s}
+.sh-fade.is-on .sh-fade__p:nth-child(1){animation-duration:2.34s;animation-delay:0s}
+.sh-fade.is-on .sh-fade__p:nth-child(2){animation-duration:2.9s;animation-delay:-.62s}
+.sh-fade.is-on .sh-fade__p:nth-child(3){animation-duration:2.1s;animation-delay:-.98s}
 /* 歩幅も1人ずつ変える。揃うと機械に見える */
 .sh-fade.is-on .sh-fade__p:nth-child(2) img,
 .sh-fade.is-on .sh-fade__p:nth-child(2) i{animation-duration:.58s}
 .sh-fade.is-on .sh-fade__p:nth-child(3) img,
 .sh-fade.is-on .sh-fade__p:nth-child(3) i{animation-duration:.47s}
 
-@keyframes shCross{from{translate:96vw 0}to{translate:-58vw 0}}
+@keyframes shCross{from{translate:118vw 0}to{translate:-62vw 0}}
 /* 1周期＝2歩。0%と50%が着地で、いちばん低い */
 @keyframes shBob{
   0%   {transform:translateY(0)     rotate(-1.9deg)}
@@ -245,7 +275,9 @@ html.ready .sh{opacity:1;transition:opacity .6s ease .2s}
   .sh-fade.is-on .sh-fade__ghost,
   .sh-fade.is-on .sh-fade__name,
   .sh-fade.is-on .sh-fade__jp,
-  .sh-fade.is-on .sh-fade__ground{animation:none;opacity:1;scale:1 1;translate:none}
+  .sh-fade.is-on .sh-fade__ground,
+  .sh-fade.is-on .sh-fade__meta{animation:none;opacity:1;scale:1 1;translate:none}
+  .sh-fade.is-on .sh-fade__sign{animation:none;opacity:.72;translate:none}
   .sh-fade.is-on .sh-fade__ghost{translate:-50% -50%}
   .sh-fade.is-on .sh-fade__p{animation:none;translate:34vw 0}
   .sh-fade.is-on .sh-fade__p img,
