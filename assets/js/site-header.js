@@ -97,7 +97,7 @@
   /* 行き先。英字と日本語を組にする（メニューと同じ言い方に揃える） */
   var NAMES = {
     HOME: 'トップ', WORKS: '作品', FAQ: 'ご依頼について',
-    ABOUT: '大高直人について', CONTACT: 'お問い合わせ'
+    ABOUT: '大高成について', CONTACT: 'お問い合わせ'
   };
   function label(href) {
     try {
