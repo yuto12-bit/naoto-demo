@@ -261,7 +261,7 @@
   var a = document.createElement('a');
   a.className = 'sh-cta';
   a.href = up + 'contact/';
-  a.innerHTML = '<b>ご相談・お見積り</b><em>無料</em><i aria-hidden="true"></i>';
+  a.innerHTML = '<b>相談する</b><i aria-hidden="true"></i>';
 
   function attach() { if (document.body && !a.parentNode) document.body.appendChild(a); }
   if (document.body) attach(); else document.addEventListener('DOMContentLoaded', attach);
