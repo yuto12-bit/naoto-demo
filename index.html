@@ -104,7 +104,7 @@ html.ready .nav{opacity:1}
 
 
 /* ===== 街：実写。人物の手描きと質感を対比させる ===== */
-.garden{height:820vh;--street-op:.92}
+.garden{height:200vh;--street-op:.92}
 
 .street{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 92%,transparent 100%);
@@ -131,12 +131,6 @@ html.ready .nav{opacity:1}
 .say.on{opacity:1;transform:none;transition-delay:.1s}
 /* 色付きの街の上では墨が沈む。紙色のにじみで文字を浮かせる */
 .say{text-shadow:0 0 8px var(--paper),0 0 8px var(--paper),0 0 16px var(--paper),0 0 16px var(--paper),0 0 30px var(--paper),0 0 44px var(--paper)}
-/* 夜の街のあいだは逆に。紙色の文字を墨のにじみで浮かせる */
-.garden.is-night .say{color:var(--paper);
-  text-shadow:0 0 8px var(--ink),0 0 8px var(--ink),0 0 16px var(--ink),0 0 16px var(--ink),0 0 30px var(--ink),0 0 44px var(--ink)}
-/* 夜の街が画面を占めるあいだ、ヘッダーも紙色にする目印（6枚目を入れたら置く） */
-.nightzone{position:absolute;left:0;right:0;top:calc(83.333% - 83.333vh);bottom:0;
-  z-index:0;pointer-events:none}
 .say--jp{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;
   font-size:clamp(1rem,2.2vw,1.8rem);line-height:1.7;letter-spacing:.02em}
 .say--en{font-family:Anton,sans-serif;letter-spacing:.26em;
@@ -189,7 +183,7 @@ html.ready .nav{opacity:1}
 /* 皿のレーンの下は詰める。空いた紙が続くと流れが切れる */
 .gate+.empty{display:none}
 .gate{padding-bottom:clamp(1.2rem,4vh,2.4rem)}
-@media(max-width:760px){ .nav a{display:none} .garden{height:700vh}
+@media(max-width:760px){ .nav a{display:none} .garden{height:170vh}
   .fg{height:calc(var(--h) * .52)}
   .say{width:62vw}
   .say--jp{font-size:.8rem}
@@ -349,9 +343,8 @@ html.ready .nav{opacity:1}
 </section>
 
 <section class="garden" id="garden" aria-hidden="true">
-  <i class="nightzone" data-sh-dark aria-hidden="true"></i>
-  <div class="street"><i data-street="1"></i><i data-street="2"></i><i data-street="4"></i><i data-street="3"></i><i data-street="5"></i><i data-street="6" data-night></i></div>
-    <p class="say say--jp">街で見かけた人を、<br>そのまま描いています。</p><p class="say say--en">PEOPLE / FASHION / CITY</p><p class="say say--jp">服ではなく、着ている人の空気を。</p><p class="say say--en">DRAW PEOPLE.<br>CAPTURE MOMENTS.</p><p class="say say--jp">その一瞬を、線で残す。</p><p class="say say--jp">今日見た誰かが、<br>明日の絵になる。</p>
+  <div class="street"><i data-street="2"></i></div>
+    <p class="say say--en">PEOPLE / FASHION / CITY</p>
 
   
 
@@ -422,7 +415,7 @@ addEventListener('load',function(){ clearTimeout(t); setTimeout(go,3500); });
     el.style.backgroundImage='url("'+src(el.dataset.street)+'")';
   }
   var says=[].slice.call(g.querySelectorAll('.say'));
-  var marks=[0,.16667,.33333,.5,.66667,.83333];   /* 街と言葉の切り替わり位置。6つとも同じ長さ */
+  var marks=[0];                                  /* 街は1枚。区切りも1つ */
   /* 街と文は一組。1つの区間の中を、割合で次のように配る。
        0〜12%  街が入れ替わる。文は出さない（前の文はもう引いている）
       12〜86%  文が出ていて読める時間
@@ -444,7 +437,6 @@ addEventListener('load',function(){ clearTimeout(t); setTimeout(go,3500); });
       cur=i;
       load(i); load(i+1);             /* いま要る分と次の分だけ */
       layers.forEach(function(el,k){ el.classList.toggle('on', k===i); });
-      g.classList.toggle('is-night', layers[i].hasAttribute('data-night'));   /* data-night を付けた街だけ夜 */
     }
     /* いまの区間の中でどこまで来たか（0〜1）。これで文の出入りを決める */
     var from=marks[i], to=(i+1<marks.length ? marks[i+1] : 1);

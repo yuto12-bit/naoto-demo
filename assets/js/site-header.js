@@ -251,3 +251,44 @@
     }, WAIT);
   });
 })();
+
+/* ===== 画面に残る相談ボタン ===== */
+(function () {
+  var p = location.pathname;
+  /* 問い合わせ自身と、横に同じ導線があるFAQには出さない */
+  if (/\/(contact|faq)\//.test(p)) return;
+  var up = /\/(works|about)\//.test(p) ? '../' : '';
+  var a = document.createElement('a');
+  a.className = 'sh-cta';
+  a.href = up + 'contact/';
+  a.innerHTML = '<b>ご相談・お見積り</b><em>無料</em><i aria-hidden="true"></i>';
+
+  function attach() { if (document.body && !a.parentNode) document.body.appendChild(a); }
+  if (document.body) attach(); else document.addEventListener('DOMContentLoaded', attach);
+
+  var on = false, tick = false, own = null;
+  function links() {
+    if (own) return own;
+    own = [].slice.call(document.querySelectorAll('a[href*="contact/"]'))
+      .filter(function (x) { return x !== a && !x.closest('.sh,.sh-menu'); });
+    return own;
+  }
+  function upd() {
+    tick = false;
+    if (!document.body) return;
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    /* ページ自身の相談リンクが見えているあいだは引っ込める（同じ導線を二重に出さない） */
+    var near = links().some(function (x) {
+      var r = x.getBoundingClientRect();
+      return r.width > 0 && r.top < window.innerHeight && r.bottom > 0;
+    });
+    var show = y > window.innerHeight * 0.6 && !near;
+    if (show !== on) { on = show; a.classList.toggle('is-on', on); }
+  }
+  addEventListener('scroll', function () {
+    if (!tick) { tick = true; requestAnimationFrame(upd); }
+  }, { passive: true });
+  addEventListener('resize', upd);
+  addEventListener('load', upd);
+  upd();
+})();

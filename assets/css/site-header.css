@@ -319,3 +319,23 @@ html.sh-arrive body::before{content:var(--sh-jp,"");z-index:501;
 /* メニューの出入りもひと呼吸つなぐ */
 .sh-menu{opacity:0;transition:opacity .2s ease}
 .sh-menu.is-open{opacity:1}
+
+/* ===== 画面に残る相談ボタン ===== */
+/* 読み進めている途中でも、いつでも相談へ行ける。
+   メニュー（300）より下に置いて、開いているあいだは隠れるようにする */
+.sh-cta{position:fixed;right:clamp(.7rem,3vw,1.6rem);bottom:clamp(.7rem,2.6vh,1.5rem);z-index:290;
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.78rem 1rem;text-decoration:none;
+  background:#D3381C;color:#FAF8F5;border:1.5px solid #14110F;
+  box-shadow:0 .5rem 1.4rem rgba(20,17,15,.26);
+  opacity:0;visibility:hidden;translate:0 .7rem;
+  transition:opacity .28s ease,translate .28s ease,visibility 0s linear .28s,background .18s ease}
+.sh-cta.is-on{opacity:1;visibility:visible;translate:0 0;transition-delay:0s}
+.sh-cta b{font-weight:900;font-size:.78rem;letter-spacing:.04em;white-space:nowrap;line-height:1.2}
+.sh-cta em{font-style:normal;font-family:Anton,sans-serif;font-size:.56rem;letter-spacing:.14em;
+  background:#FAF8F5;color:#D3381C;padding:.22em .45em;line-height:1}
+.sh-cta i{width:.4em;height:.4em;border-top:2px solid currentColor;border-right:2px solid currentColor;
+  rotate:45deg;margin-left:.05rem}
+.sh-cta:hover,.sh-cta:focus-visible{background:#14110F}
+.sh-cta:focus-visible{outline:3px solid #D3381C;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){ .sh-cta{transition:opacity .01s linear} }
