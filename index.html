@@ -112,11 +112,24 @@ html.ready .nav{opacity:1}
 .street i{position:fixed;inset:0;background-position:center;background-size:cover;
   background-repeat:no-repeat;opacity:0;transition:opacity .9s ease}
 .street i.on{opacity:var(--street-op)}
-/* 街に立つ人。写真に焼き込むと切り取られて見えなくなるので、画面に対して置く。
-   下にいるほど大きく、上にいるほど小さい＝遠近。真ん中の文には重ねない */
-.persons{position:absolute;inset:0;z-index:1;pointer-events:none}
-.pers{position:fixed;width:auto;pointer-events:none;
-  filter:drop-shadow(0 .6vh .7vh rgba(20,17,15,.2))}
+/* 街に立つ人。
+   写真に焼き込むと画面ごとの切り取られ方で消えるので、画面に対して置く。
+   位置と背丈は下の台本で計算する。写真と同じように端を透かして、
+   区間の出入りで人だけが浮き上がらないようにする */
+.persons{position:absolute;inset:0;z-index:1;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 92%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 7%,#000 92%,transparent 100%)}
+.pers{position:fixed;display:block;pointer-events:none;opacity:var(--air,1)}
+.pers img{display:block;width:100%;height:100%;
+  /* 晴れた街の光に寄せる。墨を少しゆるめ、白をわずかに乗せる */
+  filter:saturate(var(--sat,1)) contrast(var(--con,1)) brightness(1.03) blur(var(--sof,0px))
+    drop-shadow(0 1px 1px rgba(20,17,15,.16))}
+/* 足元の影。地面に触れている一点を濃く、まわりへ薄く逃がす。
+   近い人ほど濃く締まり、遠い人ほど薄く広がって消える */
+.pers::after{content:"";position:absolute;left:50%;bottom:0;translate:-44% var(--shy,40%);z-index:-1;
+  width:var(--shw,64%);aspect-ratio:4.6/1;border-radius:50%;opacity:var(--sho,1);
+  background:radial-gradient(closest-side,rgba(20,17,15,.5),rgba(20,17,15,.17) 54%,rgba(20,17,15,0));
+  filter:blur(var(--shb,2.5px))}
 @media (prefers-reduced-motion:reduce){.street i{transition:none}}
 /* 切替UI（確認用。本番では削除） */
 /* ===== ② 人が出てくる区間 ===== */
@@ -128,7 +141,7 @@ html.ready .nav{opacity:1}
 .fg.on{opacity:1;transform:translate3d(0,var(--px),0)}
 
 /* 文言：中央。左右に人物が立ち、その間を読ませる */
-.say{position:fixed;left:50%;top:50%;translate:-50% -50%;z-index:3;margin:0;
+.say{position:fixed;left:50%;top:37%;translate:-50% -50%;z-index:3;margin:0;
   width:min(46vw,520px);text-align:center;color:var(--ink);
   opacity:0;transform:translateY(12px);
   transition:opacity .55s ease, transform .55s cubic-bezier(.2,.6,.2,1)}
@@ -332,7 +345,14 @@ html.ready .nav{opacity:1}
 
 <section class="garden" id="garden" aria-hidden="true">
   <div class="street"><i data-street="street-02-plain"></i></div>
-  <div class="persons" aria-hidden="true"><img class="pers" style="left:36%;bottom:40%;height:6.5vh" src="naoto-works/figures-city/city-03@280w.webp" srcset="naoto-works/figures-city/city-03@280w.webp 280w, naoto-works/figures-city/city-03@560w.webp 560w" sizes="30vh" alt="" loading="lazy" decoding="async"><img class="pers" style="left:57%;bottom:38.5%;height:7.5vh" src="naoto-works/figures-city/city-02@280w.webp" srcset="naoto-works/figures-city/city-02@280w.webp 280w, naoto-works/figures-city/city-02@560w.webp 560w" sizes="30vh" alt="" loading="lazy" decoding="async"><img class="pers" style="left:73%;bottom:30%;height:12vh" src="naoto-works/figures-city/city-06@280w.webp" srcset="naoto-works/figures-city/city-06@280w.webp 280w, naoto-works/figures-city/city-06@560w.webp 560w" sizes="30vh" alt="" loading="lazy" decoding="async"><img class="pers" style="left:12%;bottom:28%;height:13vh" src="naoto-works/figures-city/city-05@280w.webp" srcset="naoto-works/figures-city/city-05@280w.webp 280w, naoto-works/figures-city/city-05@560w.webp 560w" sizes="30vh" alt="" loading="lazy" decoding="async"><img class="pers" style="left:1%;bottom:11%;height:23vh" src="naoto-works/figures-city/city-01@280w.webp" srcset="naoto-works/figures-city/city-01@280w.webp 280w, naoto-works/figures-city/city-01@560w.webp 560w" sizes="30vh" alt="" loading="lazy" decoding="async"><img class="pers" style="left:76%;bottom:8%;height:25vh" src="naoto-works/figures-city/city-04@280w.webp" srcset="naoto-works/figures-city/city-04@280w.webp 280w, naoto-works/figures-city/city-04@560w.webp 560w" sizes="30vh" alt="" loading="lazy" decoding="async"></div>
+  <div class="persons" aria-hidden="true">
+    <span class="pers" data-t="0" data-u="-0.92" data-k="0.97" data-ar="0.3321"><img src="naoto-works/figures-city/city-02@280w.webp" srcset="naoto-works/figures-city/city-02@280w.webp 280w, naoto-works/figures-city/city-02@560w.webp 560w" sizes="(max-width:760px) 42vw, 16vw" alt="" loading="lazy" decoding="async"></span>
+    <span class="pers" data-t="0.24" data-u="0.72" data-k="0.95" data-ar="0.4161"><img src="naoto-works/figures-city/city-06@280w.webp" srcset="naoto-works/figures-city/city-06@280w.webp 280w, naoto-works/figures-city/city-06@560w.webp 560w" sizes="(max-width:760px) 42vw, 16vw" alt="" loading="lazy" decoding="async"></span>
+    <span class="pers" data-t="0.46" data-u="-0.93" data-k="0.84" data-ar="0.7821"><img src="naoto-works/figures-city/city-03@280w.webp" srcset="naoto-works/figures-city/city-03@280w.webp 280w, naoto-works/figures-city/city-03@560w.webp 560w" sizes="(max-width:760px) 42vw, 16vw" alt="" loading="lazy" decoding="async"></span>
+    <span class="pers" data-t="0.64" data-u="1.08" data-k="1" data-ar="0.4893"><img src="naoto-works/figures-city/city-05@280w.webp" srcset="naoto-works/figures-city/city-05@280w.webp 280w, naoto-works/figures-city/city-05@560w.webp 560w" sizes="(max-width:760px) 42vw, 16vw" alt="" loading="lazy" decoding="async"></span>
+    <span class="pers" data-t="0.84" data-u="-0.95" data-k="1" data-ar="0.3196"><img src="naoto-works/figures-city/city-01@280w.webp" srcset="naoto-works/figures-city/city-01@280w.webp 280w, naoto-works/figures-city/city-01@560w.webp 560w" sizes="(max-width:760px) 42vw, 16vw" alt="" loading="lazy" decoding="async"></span>
+    <span class="pers" data-t="1" data-u="0.32" data-k="1.02" data-ar="0.3321"><img src="naoto-works/figures-city/city-04@280w.webp" srcset="naoto-works/figures-city/city-04@280w.webp 280w, naoto-works/figures-city/city-04@560w.webp 560w" sizes="(max-width:760px) 42vw, 16vw" alt="" loading="lazy" decoding="async"></span>
+  </div>
     <p class="say say--en">PEOPLE / FASHION / CITY</p>
 
   
@@ -394,6 +414,65 @@ addEventListener('load',function(){ clearTimeout(t); setTimeout(go,3500); });
   var g=document.getElementById('garden');
   if(!g) return;
   var st=g.querySelector('.street'), pp=g.querySelector('.persons');
+
+  /* 街の人を、写真の地面に立たせる。
+     測った写真の遠近：地平線＝画像の高さの52.3%、消失点はx=50.5%、
+     道の縁は消失点から傾き0.9224（画像の幅に対する割合）で開く。
+     立っている人の頭はどれも地平線の少し上に並ぶので、
+     背丈＝(足元－地平線)×(人の背 ÷ カメラの高さ)。これを守ると一気に街の人になる。 */
+  (function(){
+    var ps=[].slice.call(g.querySelectorAll('.pers'));
+    if(!ps.length) return;
+    var IW=1400, IH=1749, HZ=.523, VX=.505, SLOPE=.9224, CAM=1.12;
+    function place(){
+      var vw=innerWidth, vh=innerHeight;
+      /* 写真は cover。画面に対してどう引き伸ばされ、どれだけはみ出しているか */
+      var sc=Math.max(vw/IW,vh/IH), dw=IW*sc, dh=IH*sc, ox=(vw-dw)/2, oy=(vh-dh)/2;
+      /* 手前の限り＝足元が画面の下に収まるところ。奥の限り＝地平線のすぐ下 */
+      /* 手前の限り。足元が画面に収まることと、背丈が画面の3割強を超えないこと。
+         近づけすぎると街ではなく人の絵になるので、上限のほうで決まることが多い */
+      var near=Math.min((vh-vh*.015-oy)/dh, HZ+vh*.34/(CAM*1.02*dh)), far=HZ+.034;
+      if(near<=far) near=far+.02;
+      /* 広い画面ほど道が狭く写るので、左右への散らばりを広げて歩道まで使う */
+      var spread=1+.9*Math.min(1,Math.max(0,(vw/vh-.75)/1.1));
+      var set=ps.map(function(p){
+        var t=+p.dataset.t, u=+p.dataset.u*spread, k=+p.dataset.k, ar=+p.dataset.ar;
+        var gy=far+(near-far)*t;
+        var h=CAM*k*(gy-HZ)*dh, w=h*ar;
+        var cx=ox+(VX+u*SLOPE*(gy-HZ))*dw, fy=oy+gy*dh;
+        return {p:p,t:t,w:w,h:h,fy:fy,x:Math.max(2,Math.min(vw-w-2,cx-w/2))};
+      });
+      /* 手前の人から順に見て、奥の人が隠れすぎていたら、足りない分だけ横へ逃がす。
+         大きさは深さだけで決まっているので、横にずらしても遠近は崩れない。
+         いちどに寄せきると玉突きで散らかるので、小さく何度もかける */
+      var ord=set.slice().sort(function(a,b){return b.t-a.t;});
+      for(var pass=0;pass<4;pass++){
+        for(var i=0;i<ord.length;i++) for(var j=i+1;j<ord.length;j++){
+          var A=ord[i], B=ord[j];
+          var ov=Math.min(A.x+A.w,B.x+B.w)-Math.max(A.x,B.x);
+          var lim=Math.max(B.w*.12,4);
+          if(ov<=lim) continue;
+          var dir=((B.x+B.w/2)<(A.x+A.w/2))?-1:1, need=ov-lim;
+          /* 画面の端で行き止まったらそこで止める。
+             反対側へ回すと近い人をまたいでしまい、かえって散らかる */
+          B.x=Math.max(2,Math.min(vw-B.w-2,B.x+dir*need));
+        }
+      }
+      set.forEach(function(o){
+        o.p.style.cssText='width:'+o.w.toFixed(1)+'px;height:'+o.h.toFixed(1)+'px;left:'+o.x.toFixed(1)+'px;top:'+(o.fy-o.h).toFixed(1)+'px;'
+          +'z-index:'+(10+Math.round(o.t*20))+';'
+          /* 遠いものほど空気が挟まる。色を抜き、締まりを落とし、輪郭をわずかに緩める */
+          +'--air:'+(.78+.22*o.t).toFixed(3)+';--sat:'+(.80+.20*o.t).toFixed(3)
+          +';--con:'+(.88+.09*o.t).toFixed(3)+';--sof:'+((1-o.t)*.6).toFixed(2)+'px'
+          /* 影：近いほど濃く小さく締まり、遠いほど薄く広がってぼける */
+          +';--sho:'+(.45+.55*o.t).toFixed(3)+';--shw:'+(72-10*o.t).toFixed(0)+'%'
+          +';--shb:'+(1.4+o.h*.012).toFixed(1)+'px';
+      });
+    }
+    place();
+    var w8=false;
+    addEventListener('resize',function(){ if(!w8){w8=true;requestAnimationFrame(function(){w8=false;place();});} });
+  })();
   var layers=[].slice.call(g.querySelectorAll('.street i'));
   var small=matchMedia('(max-width:760px)').matches;
   function src(n){ return 'naoto-assets/street/'+n+(small?'@700w':'')+'.webp'; }
