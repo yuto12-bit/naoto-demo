@@ -114,27 +114,71 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .belt__count b{font-family:Anton,sans-serif;font-size:clamp(2.4rem,7vw,5rem);line-height:1;
   color:transparent;-webkit-text-stroke:1.6px var(--ink)}
 .belt__count span{font-family:Anton,sans-serif;font-size:.66rem;letter-spacing:.26em;color:var(--vermil)}
-/* ===== LINEスタンプ ===== */
-.sticker{position:relative;z-index:2;background:#FAF8F5 var(--im-paper) repeat;background-size:320px;
+/* ===== ほかの作品（もっと見る） ===== */
+.more{position:relative;z-index:2;background:var(--paper) var(--im-paper) repeat;background-size:320px;
   border-top:4px solid var(--ink);padding:clamp(3rem,9vh,5rem) 0 clamp(3.4rem,10vh,6rem)}
-.sticker__in{max-width:1180px;margin-inline:auto;padding:0 clamp(1.4rem,5vw,4rem)}
-.sticker__h{display:flex;align-items:baseline;gap:1.1rem;margin:0 0 1.2rem}
+.more__in{max-width:1180px;margin-inline:auto;padding:0 clamp(1.4rem,5vw,4rem)}
+.more__h{display:flex;align-items:baseline;gap:1.1rem;margin:0 0 1rem}
+.more__h b{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.3em}
+.more__h span{font-size:.76rem;opacity:.5}
+.more__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
+.more__lead{margin:0 0 clamp(1.4rem,4vh,2.2rem);font-size:clamp(.8rem,1.35vw,.92rem);
+  line-height:2.05;opacity:.72}
+.more__grid{list-style:none;margin:0;padding:0;display:grid;gap:clamp(.8rem,2.4vw,1.6rem);
+  grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:761px){ .more__grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.more__it{background:#fff;border:1.5px solid var(--ink-12);padding:clamp(.5rem,1.4vw,.9rem);
+  box-shadow:0 .5rem 1.4rem rgba(20,17,15,.07)}
+.more__it img{display:block;width:100%;height:auto}
+/* 開くまでは隠しておく */
+.more__it.is-rest{display:none}
+.more.is-open .more__it.is-rest{display:block}
+.more__btn{display:inline-flex;align-items:center;gap:.6rem;margin-top:clamp(1.4rem,4vh,2.2rem);
+  padding:.7rem 1.3rem;border:1.5px solid var(--ink);background:none;border-radius:999px;
+  font-family:inherit;cursor:pointer;color:var(--ink);
+  transition:background .2s ease,color .2s ease}
+.more__btn b{font-weight:900;font-size:.8rem;letter-spacing:.06em}
+.more__btn i{width:.42em;height:.42em;border-bottom:2px solid currentColor;border-right:2px solid currentColor;
+  rotate:45deg;translate:0 -.1em;transition:rotate .2s ease}
+.more.is-open .more__btn i{rotate:-135deg;translate:0 .1em}
+.more__btn:hover,.more__btn:focus-visible{background:var(--ink);color:var(--paper)}
+
+/* ===== LINEスタンプ ===== */
+.sticker{position:relative;z-index:2;border-top:4px solid var(--ink);
+  background:#EFECE6 var(--im-paper) repeat;background-size:320px;
+  padding:clamp(3rem,9vh,5rem) 0 clamp(3.4rem,10vh,6rem)}
+.sticker__in{max-width:1180px;margin-inline:auto;padding:0 clamp(1.4rem,5vw,4rem);
+  display:grid;gap:clamp(1.8rem,5vh,3rem);align-items:center}
+@media(min-width:861px){ .sticker__in{grid-template-columns:.92fr 1.08fr;gap:clamp(2rem,4vw,4rem)} }
+.sticker__h{display:flex;align-items:baseline;gap:1.1rem;margin:0 0 1rem}
 .sticker__h b{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.3em}
 .sticker__h span{font-size:.76rem;opacity:.5}
 .sticker__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
-.sticker__t{margin:0;font-size:clamp(1.3rem,3.4vw,2.1rem);line-height:1.5;letter-spacing:.01em}
-.sticker__lead{margin:.7rem 0 0;max-width:620px;
-  font-size:clamp(.8rem,1.35vw,.92rem);line-height:2.05;opacity:.72}
-/* スタンプは並べて見せる。紙の上に置いた見立てで、1枚ずつ少し傾ける */
-.sticker__row{list-style:none;display:flex;flex-wrap:wrap;gap:clamp(.6rem,2vw,1.4rem);
-  margin:clamp(1.4rem,4vh,2.4rem) 0 0;padding:0}
-.sticker__row li{flex:0 0 auto;width:clamp(88px,15vw,148px);background:#fff;
-  border:1.5px solid var(--ink-12);padding:.5rem;
-  box-shadow:0 .5rem 1.2rem rgba(20,17,15,.08)}
-.sticker__row li:nth-child(2n){rotate:1.4deg}
-.sticker__row li:nth-child(3n){rotate:-1.8deg}
-.sticker__row img{display:block;width:100%;height:auto}
-.sticker__btn{display:inline-flex;align-items:center;gap:.7rem;margin-top:clamp(1.4rem,4vh,2.2rem);
+.sticker__t{margin:0;font-size:clamp(1.5rem,4.2vw,2.5rem);line-height:1.45;letter-spacing:.01em}
+.sticker__lead{margin:.9rem 0 0;max-width:30em;font-size:clamp(.8rem,1.35vw,.92rem);
+  line-height:2.05;opacity:.72}
+.sticker__meta{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1.4rem;
+  margin:clamp(1.1rem,3vh,1.8rem) 0 0;padding-top:clamp(.9rem,2.4vh,1.4rem);
+  border-top:1.5px solid var(--ink-12)}
+.sticker__meta dt{font-family:Anton,sans-serif;font-size:.6rem;letter-spacing:.24em;
+  color:var(--vermil);align-self:center}
+.sticker__meta dd{margin:0;font-size:.82rem;letter-spacing:.02em}
+/* スタンプを並べた台紙。シートから1枚ずつ剥がす見立て */
+.sticker__sheet{background:#fff;border:1.5px solid var(--ink-12);rotate:-.8deg;
+  padding:clamp(.9rem,2.6vw,1.5rem);
+  box-shadow:0 1rem 2.4rem rgba(20,17,15,.12),0 .2rem .5rem rgba(20,17,15,.06)}
+.sticker__sheeth{display:flex;align-items:baseline;gap:.6rem;margin:0 0 clamp(.7rem,2vw,1rem);
+  padding-bottom:.6rem;border-bottom:1.5px dashed var(--ink-12);
+  font-family:Anton,sans-serif;font-size:.58rem;letter-spacing:.26em;color:var(--ink-40)}
+.sticker__sheeth span{margin-left:auto;color:var(--vermil)}
+.sticker__grid{list-style:none;margin:0;padding:0;display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.3rem,1.4vw,.8rem)}
+.sticker__grid li{display:grid;place-items:center;padding:clamp(.25rem,1vw,.5rem);
+  border-radius:4px;background:#FAF8F5}
+.sticker__grid li:nth-child(2n){rotate:1.2deg}
+.sticker__grid li:nth-child(3n){rotate:-1.4deg}
+.sticker__grid img{display:block;width:100%;height:auto}
+.sticker__btn{display:inline-flex;align-items:center;gap:.7rem;margin-top:clamp(1.3rem,3.4vh,2rem);
   padding:.78rem 1.2rem;border-radius:999px;text-decoration:none;
   background:var(--vermil);color:#FFF7F3;
   box-shadow:0 .6rem 1.6rem rgba(211,56,28,.24);
@@ -433,6 +477,24 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
     </article>
 </div>
 
+<section class="more" id="more" aria-labelledby="more-h">
+  <div class="more__in">
+    <p class="more__h" id="more-h"><b>MORE WORKS</b><span>ほかの作品</span></p>
+    <p class="more__lead">依頼で描いたもの、その日のスケッチから。</p>
+    <ul class="more__grid">
+        <li class="more__it"><img src="../naoto-works/works/plate-8614@400w.webp" srcset="../naoto-works/works/plate-8614@400w.webp 400w, ../naoto-works/works/plate-8614@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="新郎新婦のイラスト" loading="lazy" decoding="async"></li>
+        <li class="more__it"><img src="../naoto-works/works/plate-9468@400w.webp" srcset="../naoto-works/works/plate-9468@400w.webp 400w, ../naoto-works/works/plate-9468@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="4人のイラスト" loading="lazy" decoding="async"></li>
+        <li class="more__it"><img src="../naoto-works/works/plate-8620@400w.webp" srcset="../naoto-works/works/plate-8620@400w.webp 400w, ../naoto-works/works/plate-8620@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="向かい合う二人のイラスト" loading="lazy" decoding="async"></li>
+        <li class="more__it"><img src="../naoto-works/works/plate-8074@400w.webp" srcset="../naoto-works/works/plate-8074@400w.webp 400w, ../naoto-works/works/plate-8074@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="スマホを見る二人のイラスト" loading="lazy" decoding="async"></li>
+        <li class="more__it is-rest"><img src="../naoto-works/works/plate-8627@400w.webp" srcset="../naoto-works/works/plate-8627@400w.webp 400w, ../naoto-works/works/plate-8627@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="肩車のイラスト" loading="lazy" decoding="async"></li>
+        <li class="more__it is-rest"><img src="../naoto-works/works/plate-8121@400w.webp" srcset="../naoto-works/works/plate-8121@400w.webp 400w, ../naoto-works/works/plate-8121@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="キャップの女性のイラスト" loading="lazy" decoding="async"></li>
+        <li class="more__it is-rest"><img src="../naoto-works/works/plate-8617@400w.webp" srcset="../naoto-works/works/plate-8617@400w.webp 400w, ../naoto-works/works/plate-8617@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="二人のイラスト" loading="lazy" decoding="async"></li>
+        <li class="more__it is-rest"><img src="../naoto-works/works/plate-8076@400w.webp" srcset="../naoto-works/works/plate-8076@400w.webp 400w, ../naoto-works/works/plate-8076@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="手をつなぐ親子のイラスト" loading="lazy" decoding="async"></li>
+    </ul>
+    <button class="more__btn" type="button" aria-expanded="false"><b>もっと見る</b><i aria-hidden="true"></i></button>
+  </div>
+</section>
+
 <section class="belt">
   <p class="belt__h"><b>SKETCH ARCHIVE</b><span>スケッチ一覧</span></p>
   <p class="belt__lead">日々のスケッチから。ひとりずつ、街で見かけた人を描きためています。</p>
@@ -442,20 +504,34 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   <p class="belt__note">掲載しているのは一部です。用途に応じて個別にお見せできます。</p>
 </section>
 
-<section class="sticker">
+<section class="sticker" aria-labelledby="stk-h">
   <div class="sticker__in">
-    <p class="sticker__h"><b>LINE STICKER</b><span>LINEスタンプ</span></p>
-    <h2 class="sticker__t">おすしのファッションスタンプ</h2>
-    <p class="sticker__lead">ゆるくて、ちょっとおしゃれ。日常の会話で使いやすい15種類です。</p>
-    <ul class="sticker__row">
-      <li><img src="../naoto-works/sticker/osushi-906932921.webp" alt="スタンプ「向かいます」" loading="lazy" decoding="async"></li>
-      <li><img src="../naoto-works/sticker/osushi-906932930.webp" alt="スタンプ「さいこう」" loading="lazy" decoding="async"></li>
-      <li><img src="../naoto-works/sticker/osushi-906932924.webp" alt="" loading="lazy" decoding="async"></li>
-      <li><img src="../naoto-works/sticker/osushi-906932933.webp" alt="スタンプ「ありがとう」" loading="lazy" decoding="async"></li>
-    </ul>
-    <a class="sticker__btn" href="https://line.me/S/sticker/36952174/?lang=ja&amp;utm_source=gnsh_stickerDetail" target="_blank" rel="noopener">
-      <b>LINE STORE で見る</b><i aria-hidden="true"></i>
-    </a>
+    <div class="sticker__txt">
+      <p class="sticker__h"><b>LINE STICKER</b><span>LINEスタンプ</span></p>
+      <h2 class="sticker__t" id="stk-h">おすしの<br>ファッションスタンプ</h2>
+      <p class="sticker__lead">ゆるくて、ちょっとおしゃれ。日常の会話で使いやすい15種類です。</p>
+      <dl class="sticker__meta">
+        <dt>SET</dt><dd>全15種類</dd>
+        <dt>SHOP</dt><dd>LINE STORE</dd>
+      </dl>
+      <a class="sticker__btn" href="https://line.me/S/sticker/36952174/?lang=ja&amp;utm_source=gnsh_stickerDetail" target="_blank" rel="noopener">
+        <b>LINE STORE で見る</b><i aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class="sticker__sheet" aria-hidden="true">
+      <p class="sticker__sheeth">OSUSHI JAPAN ART <span>STICKERS</span></p>
+      <ul class="sticker__grid">
+          <li><img src="../naoto-works/sticker/osushi-906932921.webp" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="../naoto-works/sticker/osushi-906932930.webp" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="../naoto-works/sticker/osushi-906932933.webp" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="../naoto-works/sticker/osushi-906932924.webp" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="../naoto-works/sticker/osushi-906932931.webp" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="../naoto-works/sticker/osushi-906932926.webp" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="../naoto-works/sticker/osushi-906932923.webp" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="../naoto-works/sticker/osushi-906932927.webp" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="../naoto-works/sticker/osushi-906932925.webp" alt="" loading="lazy" decoding="async"></li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -664,6 +740,18 @@ document.querySelectorAll('.slide').forEach(function(el){io.observe(el);});
     if(Date.now()>until){ wrap.scrollLeft+=.3; loop(); }
     requestAnimationFrame(dr);
   })();
+})();
+</script>
+<script>
+/* ほかの作品：もっと見る */
+(function(){
+  var sec=document.getElementById('more'); if(!sec) return;
+  var btn=sec.querySelector('.more__btn'), lab=btn.querySelector('b');
+  btn.addEventListener('click',function(){
+    var open=sec.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open?'true':'false');
+    lab.textContent = open ? '閉じる' : 'もっと見る';
+  });
 })();
 </script>
 </body></html>
