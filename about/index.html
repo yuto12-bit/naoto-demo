@@ -202,6 +202,47 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .cover-fig{grid-column:9 / 13;grid-row:7 / 15;align-items:center;justify-content:flex-end}
 .cover-fig img{height:auto;width:auto;max-width:100%;max-height:100%;object-fit:contain}
 
+
+/* ===== プロフィール（ノートの外）。紙の罫やリングは付けず、
+   並びだけ06ページのまま。下に案Bと同じ書き方の一覧を付ける */
+.pfx{border-top:4px solid var(--ink);
+  padding:clamp(2.6rem,8vh,4.5rem) clamp(1.2rem,5vw,4rem) clamp(3rem,9vh,5rem)}
+.pfx__in{max-width:880px;margin-inline:auto}
+.pfx__h{display:flex;align-items:baseline;gap:1.1rem;margin:0 0 clamp(1.6rem,4vh,2.4rem)}
+.pfx__h b{font-family:var(--font-en);font-size:.72rem;letter-spacing:.3em;color:var(--vermil)}
+.pfx__h span{font-size:.76rem;opacity:.5}
+.pfx__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
+/* 写真を右に回り込ませ、名前から本文までその横に流す */
+.pfx__row::after{content:"";display:block;clear:both}
+.pfx__name{font-family:var(--font-en);font-weight:400;
+  font-size:clamp(2.2rem,8.6vw,4.6rem);line-height:.98;letter-spacing:.01em}
+.pfx__role{margin-top:clamp(1rem,2.6vh,1.5rem);
+  font-size:clamp(.78rem,1.3vw,.9rem);letter-spacing:.1em;opacity:.55}
+.pfx__body{margin-top:clamp(.9rem,2.4vh,1.4rem);
+  font-size:clamp(.84rem,1.4vw,.95rem);line-height:2.1;letter-spacing:.02em}
+/* 貼った写真。紙に重ねず普通に置く（テープだけ残す） */
+.pfx__shot{float:right;width:38%;max-width:330px;
+  margin:0 0 clamp(1rem,2.6vh,1.6rem) clamp(1rem,3vw,2.6rem);
+  position:relative;background:#FCFBF8;padding:clamp(.4rem,1.1vw,.62rem);
+  box-shadow:0 .7rem 1.8rem rgba(20,17,15,.16)}
+.pfx__shot i{position:absolute;top:-.5rem;left:50%;translate:-50% 0;rotate:-2deg;
+  width:46%;aspect-ratio:480/69;background:var(--im-tape) center/100% 100% no-repeat;z-index:2}
+.pfx__shot img{display:block;width:100%;height:auto}
+.pfx__shot figcaption{margin-top:.5rem;font-size:.7rem;line-height:1.6;
+  text-align:center;color:var(--ink-40)}
+.pfx__shot figcaption span{display:inline-block}
+/* 下に付ける一覧。案Bと同じ */
+.pfdl{clear:both;margin:clamp(2rem,5vh,2.8rem) 0 0;
+  display:grid;grid-template-columns:auto 1fr;gap:.55rem 1.6rem;
+  padding-top:2rem;border-top:2px solid rgba(20,17,15,.18);
+  font-size:clamp(.72rem,1.25vw,.86rem)}
+.pfdl dt{font-family:var(--font-en);letter-spacing:.2em;opacity:.55;white-space:nowrap}
+.pfdl dd{margin:0;line-height:1.9}
+.pfdl dd span{display:inline-block}
+.pfdl dd a{color:inherit}
+/* かたまりの変わり目だけ、ひと呼吸ぶん空ける */
+.pfdl .g{margin-top:clamp(.5rem,1.5vh,.95rem)}
+
 /* ===== P02 書き始め ===== */
 .p2-tape{grid-column:10 / 13;grid-row:1;justify-self:end;rotate:5deg;
   width:100%;aspect-ratio:480/69;background:var(--im-tape) center/100% 100% no-repeat}
@@ -571,6 +612,7 @@ html:not(.js) .tix__tearoff{display:none}
 
 
 
+
 <p class="lead"><b>ABOUT</b><span>持ち歩いているノートから</span></p>
 
 <div class="wrap">
@@ -660,21 +702,6 @@ html:not(.js) .tix__tearoff{display:none}
         </div>
       </section>
 
-      <!-- ============ 06 プロフィール ============ -->
-      <section class="pg ruled mgr" data-tab="4">
-        <div class="pg__in">
-          <p class="kick">プロフィール<em>PROFILE</em></p>
-          <p class="pf-name">NAOTO<br>OTAKA</p>
-          <p class="pf-meta">イラストレーター<br>2003年生まれ<br>兵庫県加古郡出身</p>
-          <p class="pf-body">ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
-          <figure class="snap"><i aria-hidden="true"></i>
-            <img src="../naoto-works/photo/daikanyama-live@640w.webp" alt="代官山のヴィンテージショップでライブドローイングをする大高成" loading="lazy" decoding="async">
-            <figcaption>代官山／ライブドローイング</figcaption>
-          </figure>
-          <span class="folio">06</span>
-        </div>
-      </section>
-
       <!-- ============ 07 画材をスケッチした日（方眼） ============ -->
       <section class="pg grid5" data-tab="3">
         <div class="pg__in">
@@ -683,7 +710,7 @@ html:not(.js) .tix__tearoff{display:none}
           <div class="tool t2"><i class="tool__no">02</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2L18.4 15 12 21.8 5.6 15z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 9.4v8.4" stroke="currentColor" stroke-width="3"/><circle cx="12" cy="14.6" r="2" fill="currentColor"/></svg><b>ペン</b><span>PEN</span></div>
           <div class="tool t3"><i class="tool__no">03</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.4" y="3" width="17.2" height="18" fill="none" stroke="currentColor" stroke-width="3"/><path d="M8.2 3v18" stroke="currentColor" stroke-width="3"/><path d="M5.4 6.6h1.4M5.4 11h1.4M5.4 15.4h1.4" stroke="currentColor" stroke-width="2"/></svg><b>ノート</b><span>SKETCHBOOK</span></div>
           <p class="hand p7-hand">— 持ち歩いているノートに、そのまま。</p>
-          <span class="folio">07</span>
+          <span class="folio">06</span>
         </div>
       </section>
 
@@ -699,7 +726,7 @@ html:not(.js) .tix__tearoff{display:none}
           <p class="ad-dd ad-r3">雑誌・広告・アパレル・イベント</p>
           <div class="sns-row"><a class="sns" href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="17.4" cy="6.6" r="1.5" fill="currentColor"/></svg>@osushi__japan__art</a></div>
-          <span class="folio">08</span>
+          <span class="folio">07</span>
         </div>
       </section>
 
@@ -709,7 +736,7 @@ html:not(.js) .tix__tearoff{display:none}
       <button class="tab" type="button" data-tab="0">表紙</button>
       <button class="tab" type="button" data-tab="1">制作</button>
       <button class="tab" type="button" data-tab="2">これまで</button>
-      <button class="tab" type="button" data-tab="4">プロフィール</button>
+      
       <button class="tab" type="button" data-tab="3">画材・拠点</button>
     </div>
   </div>
@@ -720,6 +747,36 @@ html:not(.js) .tix__tearoff{display:none}
     <span class="bar__hint">TAP OR DRAG TO TURN</span>
   </div>
 </div>
+
+<section class="pfx" aria-labelledby="pf-h">
+  <div class="pfx__in">
+    <p class="pfx__h" id="pf-h"><b>PROFILE</b><span>プロフィール</span></p>
+    <div class="pfx__row">
+      <figure class="pfx__shot"><i aria-hidden="true"></i>
+            <img src="../naoto-works/photo/daikanyama-live@640w.webp"
+                 srcset="../naoto-works/photo/daikanyama-live@640w.webp 640w, ../naoto-works/photo/daikanyama-live@900w.webp 900w"
+                 sizes="(max-width:860px) 38vw, 330px"
+                 alt="東京・代官山のヴィンテージショップでライブドローイングをする大高成"
+                 width="900" height="1200" loading="lazy" decoding="async">
+            <figcaption><span>代官山／</span><span>ライブドローイング</span></figcaption>
+          </figure>
+      <p class="pfx__name">NAOTO<br>OTAKA</p>
+      <p class="pfx__role">イラストレーター</p>
+      <p class="pfx__body">ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
+    </div>
+    <dl class="pfdl">
+      <dt>NAME</dt><dd>大高 成 ／ OSUSHI JAPAN ART</dd>
+      <dt>BORN</dt><dd>2003年生まれ・兵庫県加古郡出身</dd>
+      <dt class="g">SCHOOL</dt><dd class="g"><span>神戸電子専門学校</span> <span>インダストリアルデザイン学科 卒</span></dd>
+      <dt>CAREER</dt><dd>プロダクトデザイン 1年</dd>
+      <dt class="g">BASE</dt><dd class="g">兵庫県加古郡（オンライン対応・全国／海外）</dd>
+      <dt>FIELD</dt><dd>雑誌・広告・アパレル・イベント</dd>
+      <dt>TOOLS</dt><dd>コピック／ペン／持ち歩いているノート</dd>
+      <dt>DIGITAL</dt><dd>デジタル化、可</dd>
+      <dt class="g">SNS</dt><dd class="g"><a href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">@osushi__japan__art</a></dd>
+    </dl>
+  </div>
+</section>
 
 <section class="sheetpaper rec" aria-labelledby="rec-h">
   <div class="sheetpaper__in">
@@ -857,6 +914,13 @@ html:not(.js) .tix__tearoff{display:none}
         var pg=PAGES[i+k]; if(!pg) break;
         pg.classList.toggle('L',k===0); pg.classList.toggle('R',per===2&&k===1);
         face.appendChild(pg);
+      }
+      /* 枚数が奇数のとき、最後の見開きの相方に白紙を置く */
+      if(per===2&&!PAGES[i+1]){
+        var blank=document.createElement('section');
+        blank.className='pg ruled mgr R'; blank.setAttribute('aria-hidden','true');
+        blank.innerHTML='<div class="pg__in"></div>';
+        face.appendChild(blank);
       }
       var back=document.createElement('div'); back.className='back'; back.setAttribute('aria-hidden','true');
       sh.appendChild(face); sh.appendChild(back);
