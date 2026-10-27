@@ -242,6 +242,15 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .pfdl dd a{color:inherit}
 /* かたまりの変わり目だけ、ひと呼吸ぶん空ける */
 .pfdl .g{margin-top:clamp(.5rem,1.5vh,.95rem)}
+/* 広い画面。左端を1180の枠にそろえ、一覧は2つ並びにする */
+@media(min-width:861px){
+  .pfx__in{max-width:1180px}
+  .pfx__shot{margin-left:clamp(2.4rem,4vw,3.6rem)}
+  .pfdl{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr);
+    column-gap:clamp(1.6rem,3vw,3rem);row-gap:.8rem;
+    margin-top:clamp(1.6rem,4vh,2.4rem)}
+  .pfdl .g{margin-top:0}
+}
 
 /* ===== P02 書き始め ===== */
 .p2-tape{grid-column:10 / 13;grid-row:1;justify-self:end;rotate:5deg;
