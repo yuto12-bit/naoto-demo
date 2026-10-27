@@ -254,7 +254,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   font-size:clamp(.72rem,1.25vw,.86rem)}
 .pfdl dt{font-family:var(--font-en);letter-spacing:.2em;opacity:.55;white-space:nowrap}
 .pfdl dd{margin:0;line-height:1.9}
+.pfdl dd span{display:inline-block}
 .pfdl dd a{color:inherit}
+/* かたまりの変わり目だけ、ひと呼吸ぶん空ける */
+.pfdl .g{margin-top:clamp(.5rem,1.5vh,.95rem)}
 
 /* ===== P02 書き始め ===== */
 .p2-tape{grid-column:10 / 13;grid-row:1;justify-self:end;rotate:5deg;
@@ -788,10 +791,13 @@ html:not(.js) .tix__tearoff{display:none}
     <dl class="pfdl">
       <dt>NAME</dt><dd>大高 成 ／ OSUSHI JAPAN ART</dd>
       <dt>BORN</dt><dd>2003年生まれ・兵庫県加古郡出身</dd>
-      <dt>BASE</dt><dd>兵庫県加古郡（オンライン対応・全国／海外）</dd>
+      <dt class="g">SCHOOL</dt><dd class="g"><span>神戸電子専門学校</span> <span>インダストリアルデザイン学科 卒</span></dd>
+      <dt>CAREER</dt><dd>プロダクトデザイン 1年</dd>
+      <dt class="g">BASE</dt><dd class="g">兵庫県加古郡（オンライン対応・全国／海外）</dd>
       <dt>FIELD</dt><dd>雑誌・広告・アパレル・イベント</dd>
       <dt>TOOLS</dt><dd>コピック／ペン／持ち歩いているノート</dd>
-      <dt>SNS</dt><dd><a href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">@osushi__japan__art</a></dd>
+      <dt>DIGITAL</dt><dd>デジタル化、可</dd>
+      <dt class="g">SNS</dt><dd class="g"><a href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">@osushi__japan__art</a></dd>
     </dl>
   </div>
 </section>
