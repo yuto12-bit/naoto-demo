@@ -93,6 +93,8 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
   display:grid;place-items:center;
   padding:var(--cardpad) var(--gut);
   background:#D7D3CB;background-image:var(--im-grain);background-size:300px}
+/* 広い画面は札の外が広く出る。地を沈めて、札が1枚の画面として立つようにする */
+@media(min-width:761px){ .pane{background-color:#BCB6AC} }
 /* 幅は「画面の高さ×9/16」で決め打ち。中身に依らんので size コンテナにできる */
 /* 注意：カードの padding に cq 単位は使えん（自分の大きさが自分の単位を決める循環になる）。
    カードの縦横は式で分かってるので、そこから直に出す。cq は中身の文字にだけ使う。 */
@@ -179,6 +181,8 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 .door__lead{font-size:3.5cqw;line-height:2;opacity:.78;margin-top:2cqh}
 .door__lead b{font-weight:900;opacity:1;
   background:linear-gradient(transparent 58%,rgba(211,56,28,.3) 58%)}
+/* 広い画面は文ごとのかたまりで折る（「お見積りは無料／です。」と切れんように） */
+@media(min-width:761px){ .door__lead > span,.door__lead > b{display:inline-block} }
 .door__top{min-height:0}
 /* 目次。格子の線を減らして、1行ずつの帯として読ませる */
 .door__idx{list-style:none;min-height:0;overflow:auto;
@@ -582,7 +586,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
     <div class="door__top">
       <span class="door__big" aria-hidden="true">FAQ</span>
       <h1 class="door__h">ご依頼について</h1>
-      <p class="door__lead">イラスト制作とライブスケッチのご依頼について。<b>お見積りは無料です。</b></p>
+      <p class="door__lead"><span>イラスト制作とライブスケッチのご依頼について。</span><b>お見積りは無料です。</b></p>
     </div>
     <ul class="door__idx" aria-label="このページの目次"><li><a href="#svc"><i>01</i>できること</a></li><li><a href="#uses"><i>02</i>対応できる用途</a></li><li><a href="#flow"><i>03</i>制作の流れ</a></li><li><a href="#money"><i>04</i>料金のこと</a></li><li><a href="#right"><i>05</i>権利のこと</a></li><li><a href="#make"><i>06</i>制作のこと</a></li><li><a href="#biz"><i>07</i>お取引のこと</a></li></ul>
     

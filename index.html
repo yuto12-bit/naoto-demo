@@ -230,6 +230,18 @@ html.ready .nav{opacity:1}
   font-size:clamp(.72rem,1.25vw,.86rem)}
 .note dt{font-family:Anton,sans-serif;letter-spacing:.2em;opacity:.55;white-space:nowrap}
 .note dd{margin:0}
+/* 広い画面。640pxの1列だと右が大きく空くので、1180の枠にそろえて
+   文を左、内訳を右に置く。左端は足もとと同じ位置に来る */
+@media(min-width:861px){
+  .note__in{max-width:1180px;margin-inline:auto;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.62fr);
+    column-gap:clamp(2.6rem,5vw,4.6rem);align-items:start}
+  .note h3{grid-column:1 / -1}
+  .note p{grid-column:1;max-width:34em}
+  .note dl{grid-column:2;grid-row:2 / span 2;align-self:start;
+    margin-top:.35rem;padding:0 0 0 clamp(1.6rem,3vw,2.6rem);
+    border-top:0;border-left:2px solid rgba(20,17,15,.18)}
+}
 
 /* ===== WORKSへの導線 ===== */
 .togo{position:relative;border-top:4px solid var(--ink);

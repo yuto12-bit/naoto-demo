@@ -209,15 +209,15 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 
 /* ===== 実績：ページをめくる ===== */
 .mag{border-top:4px solid var(--ink);
-  padding:clamp(3.2rem,9vh,5.5rem) clamp(1.2rem,4vw,3rem) clamp(4.5rem,12vh,7rem)}
+  padding:clamp(3.2rem,9vh,5.5rem) clamp(1.4rem,5vw,4rem) clamp(4.5rem,12vh,7rem)}
 .mag__h{display:flex;align-items:baseline;gap:1.1rem;margin-bottom:clamp(1.6rem,4.5vh,2.4rem);
-  max-width:1120px;margin-inline:auto}
+  max-width:1180px;margin-inline:auto}
 .mag__h b{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.3em}
 .mag__h span{font-size:.76rem;opacity:.5}
 .mag__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
 
 /* ===== 本 ===== */
-.book{position:relative;max-width:1120px;margin:0 auto;
+.book{position:relative;max-width:1180px;margin:0 auto;
   aspect-ratio:1120/620;perspective:2400px;perspective-origin:50% 50%;
   touch-action:pan-y;user-select:none;cursor:grab}
 .book:active{cursor:grabbing}
@@ -273,7 +273,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .pg__runner{position:absolute;top:clamp(.9rem,2.2vh,1.4rem);right:clamp(1.2rem,2.6vw,2.2rem);
   font-family:Anton,sans-serif;font-size:.5rem;letter-spacing:.24em;opacity:.3}
 
-.bar{max-width:1120px;margin:1.2rem auto 0;display:flex;align-items:center;gap:1rem}
+.bar{max-width:1180px;margin:1.2rem auto 0;display:flex;align-items:center;gap:1rem}
 .bar__idx{font-family:Anton,sans-serif;font-size:.6rem;letter-spacing:.22em;opacity:.45}
 .bar__track{flex:1;height:2px;background:var(--ink-12);position:relative}
 .bar__track i{position:absolute;left:0;top:0;bottom:0;background:var(--vermil);width:0;
