@@ -219,16 +219,20 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   border:1.5px solid currentColor;border-radius:999px;padding:.26rem .8rem}
 .demo a:hover,.demo a:focus-visible{background:#FFF7F3;color:var(--vermil)}
 
-/* 【案C】ノートの外に出した、代官山の写真 */
-.site__row{display:grid;gap:clamp(1rem,3vh,1.6rem) clamp(1.4rem,4vw,3rem);align-items:start}
-@media(min-width:861px){ .site__row{grid-template-columns:minmax(0,360px) minmax(0,1fr)} }
-.site__shot{margin:0;background:#fff;border:1.5px solid var(--ink-12);
-  padding:clamp(.4rem,1.2vw,.7rem);box-shadow:0 .7rem 1.8rem rgba(20,17,15,.1);
-  rotate:-.6deg;max-width:420px}
-.site__shot img{display:block;width:100%;height:auto}
-.site__shot figcaption{margin-top:.6rem;font-size:.7rem;letter-spacing:.02em;opacity:.5}
-.site__lead{font-size:calc(var(--lh)*.56);line-height:var(--lh);
-  letter-spacing:.02em;max-width:30em;margin-top:calc(var(--lh)*.3)}
+/* 【案C】ノートの外に出したプロフィール */
+.prof__row{display:grid;gap:calc(var(--lh)*.7) clamp(1.4rem,4vw,3rem);align-items:start}
+@media(min-width:861px){ .prof__row{grid-template-columns:minmax(0,340px) minmax(0,1fr)} }
+.prof__shot{margin:0;background:#FCFBF8;border:1.5px solid var(--ink-12);
+  padding:calc(var(--lh)*.26);box-shadow:0 calc(var(--lh)*.2) calc(var(--lh)*.55) rgba(20,17,15,.14);
+  rotate:-.7deg;max-width:400px}
+.prof__shot img{display:block;width:100%;height:auto}
+.prof__shot figcaption{margin-top:calc(var(--lh)*.2);font-size:calc(var(--lh)*.38);
+  line-height:calc(var(--lh)*.6);text-align:center;color:var(--ink-40)}
+.prof__name{font-family:var(--font-en);font-weight:400;font-size:calc(var(--lh)*1.25);
+  line-height:calc(var(--lh)*1.4);letter-spacing:.02em}
+.prof__meta{font-size:calc(var(--lh)*.46);line-height:var(--lh);opacity:.72}
+.prof__body{margin-top:calc(var(--lh)*.5);font-size:calc(var(--lh)*.5);
+  line-height:var(--lh);max-width:30em}
 
 /* ===== P02 書き始め ===== */
 .p2-tape{grid-column:10 / 13;grid-row:1;justify-self:end;rotate:5deg;
@@ -598,7 +602,7 @@ html:not(.js) .tix__tearoff{display:none}
 <p class="sh-menu__foot">OSUSHI JAPAN ART / NAOTO OTAKA<br>兵庫県加古郡</p></div><div class="sh-gap" aria-hidden="true"></div>
 
 <div class="demo">
-  <p><b>案C</b>確認用。表紙に拠点と分野、代官山の写真を外に。</p>
+  <p><b>案C</b>確認用。表紙に拠点と分野、プロフィールをノートの外に。</p>
   <a href="./">今のABOUT</a><a href="plain.html">案B</a>
 </div>
 
@@ -697,21 +701,6 @@ html:not(.js) .tix__tearoff{display:none}
         </div>
       </section>
 
-      <!-- ============ 06 プロフィール ============ -->
-      <section class="pg ruled mgr" data-tab="4">
-        <div class="pg__in">
-          <p class="kick">プロフィール<em>PROFILE</em></p>
-          <p class="pf-name">NAOTO<br>OTAKA</p>
-          <p class="pf-meta">イラストレーター<br>2003年生まれ<br>兵庫県加古郡出身</p>
-          <p class="pf-body">ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
-          <figure class="snap"><i aria-hidden="true"></i>
-            <img src="../naoto-works/photo/daikanyama-live@640w.webp" alt="代官山のヴィンテージショップでライブドローイングをする大高成" loading="lazy" decoding="async">
-            <figcaption>代官山／ライブドローイング</figcaption>
-          </figure>
-          <span class="folio">06</span>
-        </div>
-      </section>
-
       <!-- ============ 07 画材をスケッチした日（方眼） ============ -->
       <section class="pg grid5" data-tab="3">
         <div class="pg__in">
@@ -720,7 +709,7 @@ html:not(.js) .tix__tearoff{display:none}
           <div class="tool t2"><i class="tool__no">02</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2L18.4 15 12 21.8 5.6 15z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 9.4v8.4" stroke="currentColor" stroke-width="3"/><circle cx="12" cy="14.6" r="2" fill="currentColor"/></svg><b>ペン</b><span>PEN</span></div>
           <div class="tool t3"><i class="tool__no">03</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.4" y="3" width="17.2" height="18" fill="none" stroke="currentColor" stroke-width="3"/><path d="M8.2 3v18" stroke="currentColor" stroke-width="3"/><path d="M5.4 6.6h1.4M5.4 11h1.4M5.4 15.4h1.4" stroke="currentColor" stroke-width="2"/></svg><b>ノート</b><span>SKETCHBOOK</span></div>
           <p class="hand p7-hand">— 持ち歩いているノートに、そのまま。</p>
-          <span class="folio">07</span>
+          <span class="folio">06</span>
         </div>
       </section>
 
@@ -736,7 +725,7 @@ html:not(.js) .tix__tearoff{display:none}
           <p class="ad-dd ad-r3">雑誌・広告・アパレル・イベント</p>
           <div class="sns-row"><a class="sns" href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="17.4" cy="6.6" r="1.5" fill="currentColor"/></svg>@osushi__japan__art</a></div>
-          <span class="folio">08</span>
+          <span class="folio">07</span>
         </div>
       </section>
 
@@ -746,7 +735,7 @@ html:not(.js) .tix__tearoff{display:none}
       <button class="tab" type="button" data-tab="0">表紙</button>
       <button class="tab" type="button" data-tab="1">制作</button>
       <button class="tab" type="button" data-tab="2">これまで</button>
-      <button class="tab" type="button" data-tab="4">プロフィール</button>
+      
       <button class="tab" type="button" data-tab="3">画材・拠点</button>
     </div>
   </div>
@@ -758,20 +747,24 @@ html:not(.js) .tix__tearoff{display:none}
   </div>
 </div>
 
-<section class="sheetpaper site" aria-labelledby="site-h">
+<section class="sheetpaper prof" aria-labelledby="prof-h">
   <div class="sheetpaper__in">
     <span class="marg-no" aria-hidden="true">09</span>
-    <p class="sechead" id="site-h">店頭で描く<em>ON SITE</em></p>
-    <div class="site__row">
-      <figure class="site__shot">
+    <p class="sechead" id="prof-h">プロフィール<em>PROFILE</em></p>
+    <div class="prof__row">
+      <figure class="prof__shot">
         <img src="../naoto-works/photo/daikanyama-live@640w.webp"
              srcset="../naoto-works/photo/daikanyama-live@640w.webp 640w, ../naoto-works/photo/daikanyama-live@900w.webp 900w"
-             sizes="(max-width:860px) 88vw, 360px"
+             sizes="(max-width:860px) 88vw, 340px"
              alt="東京・代官山のヴィンテージショップでライブドローイングをする大高成"
              width="900" height="1200" loading="lazy" decoding="async">
-        <figcaption>代官山／MAISON DE VII.</figcaption>
+        <figcaption>代官山／ライブドローイング</figcaption>
       </figure>
-      <p class="site__lead">東京・代官山のヴィンテージセレクトショップ「MAISON DE VII.」とのコラボレーション。店頭でのライブドローイングを行いました。その日その場所の空気を、線に残しています。</p>
+      <div class="prof__txt">
+        <p class="prof__name">NAOTO OTAKA</p>
+        <p class="prof__meta">イラストレーター／2003年生まれ／兵庫県加古郡出身</p>
+        <p class="prof__body">ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
+      </div>
     </div>
   </div>
 </section>
@@ -912,6 +905,13 @@ html:not(.js) .tix__tearoff{display:none}
         var pg=PAGES[i+k]; if(!pg) break;
         pg.classList.toggle('L',k===0); pg.classList.toggle('R',per===2&&k===1);
         face.appendChild(pg);
+      }
+      /* 枚数が奇数のとき、最後の見開きの相方に白紙を置く */
+      if(per===2&&!PAGES[i+1]){
+        var blank=document.createElement('section');
+        blank.className='pg ruled mgr R'; blank.setAttribute('aria-hidden','true');
+        blank.innerHTML='<div class="pg__in"></div>';
+        face.appendChild(blank);
       }
       var back=document.createElement('div'); back.className='back'; back.setAttribute('aria-hidden','true');
       sh.appendChild(face); sh.appendChild(back);
