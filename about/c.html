@@ -219,23 +219,44 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   border:1.5px solid currentColor;border-radius:999px;padding:.26rem .8rem}
 .demo a:hover,.demo a:focus-visible{background:#FFF7F3;color:var(--vermil)}
 
-/* 【案C】ノートの外に出したプロフィール。
-   紙の組みはノートの06ページのまま。下に案Bと同じ書き方の一覧を足す */
-.pfpage{padding:clamp(2.4rem,7vh,4rem) clamp(1.2rem,5vw,4rem) clamp(3rem,9vh,5rem);
-  border-top:4px solid var(--ink)}
-.pfpage__h{max-width:620px;margin:0 auto clamp(1.2rem,3vh,1.8rem);
-  display:flex;align-items:baseline;gap:1.1rem}
-.pfpage__h b{font-family:var(--font-en);font-size:.72rem;letter-spacing:.3em;color:var(--vermil)}
-.pfpage__h span{font-size:.76rem;opacity:.5}
-.pfpage__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
-/* ノートから抜いた1枚。中身は手を入れていない */
-.pfpage__in{position:relative;max-width:620px;margin-inline:auto;aspect-ratio:4 / 5;
-  box-shadow:0 26px 58px rgba(20,17,15,.13),0 2px 5px rgba(20,17,15,.05)}
-@media(max-width:860px){ .pfpage__in{aspect-ratio:auto;height:min(78svh,620px)} }
-/* 小口のシールは付かないので、その余白は戻す */
-.pfpage .face--single .pg__in{padding-right:var(--px)}
+/* 【案C】プロフィール。ノートの紙（横罫・リング・マージン罫）は外して、
+   並びだけ06ページのまま。下に案Bと同じ書き方の一覧を付ける */
+.pfx{border-top:4px solid var(--ink);
+  padding:clamp(2.6rem,8vh,4.5rem) clamp(1.2rem,5vw,4rem) clamp(3rem,9vh,5rem)}
+.pfx__in{max-width:880px;margin-inline:auto}
+.pfx__h{display:flex;align-items:baseline;gap:1.1rem;margin:0 0 clamp(1.6rem,4vh,2.4rem)}
+.pfx__h b{font-family:var(--font-en);font-size:.72rem;letter-spacing:.3em;color:var(--vermil)}
+.pfx__h span{font-size:.76rem;opacity:.5}
+.pfx__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
+.pfx__row{display:grid;align-items:start;
+  column-gap:clamp(1.1rem,4vw,2.6rem);row-gap:clamp(1.6rem,4.5vh,2.4rem);
+  grid-template-columns:minmax(0,1fr) minmax(0,40%);
+  grid-template-areas:"txt shot" "body body"}
+.pfx__txt{grid-area:txt} .pfx__shot{grid-area:shot} .pfx__body{grid-area:body}
+/* 広い画面は写真を右に通しで。左は名前から本文まで続けて流す */
+@media(min-width:861px){
+  .pfx__row{grid-template-columns:minmax(0,1fr) 320px;
+    grid-template-areas:"txt shot" "body shot";
+    grid-template-rows:min-content minmax(min-content,1fr);
+    column-gap:clamp(2rem,4vw,3.4rem)}
+}
+.pfx__name{font-family:var(--font-en);font-weight:400;
+  font-size:clamp(2rem,5.6vw,3.2rem);line-height:1.06;letter-spacing:.02em}
+.pfx__meta{margin-top:clamp(.9rem,2.2vh,1.3rem);
+  font-size:clamp(.78rem,1.3vw,.9rem);line-height:2.1;opacity:.72}
+/* 貼った写真。紙に重ねず普通に置く（テープだけ残す） */
+.pfx__shot{margin:0;position:relative;justify-self:end;max-width:320px;
+  background:#FCFBF8;padding:clamp(.4rem,1.1vw,.62rem);
+  box-shadow:0 .7rem 1.8rem rgba(20,17,15,.16)}
+.pfx__shot i{position:absolute;top:-.5rem;left:50%;translate:-50% 0;rotate:-2deg;
+  width:46%;aspect-ratio:480/69;background:var(--im-tape) center/100% 100% no-repeat;z-index:2}
+.pfx__shot img{display:block;width:100%;height:auto}
+.pfx__shot figcaption{margin-top:.5rem;font-size:.7rem;line-height:1.6;
+  text-align:center;color:var(--ink-40)}
+.pfx__body{font-size:clamp(.84rem,1.4vw,.95rem);line-height:2.1;letter-spacing:.02em;max-width:40em}
+@media(max-width:620px){ .pfx__shot{max-width:none} }
 /* 下に付ける一覧。案Bと同じ */
-.pfdl{max-width:620px;margin:clamp(1.8rem,4.5vh,2.6rem) auto 0;
+.pfdl{margin:clamp(2rem,5vh,2.8rem) 0 0;
   display:grid;grid-template-columns:auto 1fr;gap:.55rem 1.6rem;
   padding-top:2rem;border-top:2px solid rgba(20,17,15,.18);
   font-size:clamp(.72rem,1.25vw,.86rem)}
@@ -756,33 +777,33 @@ html:not(.js) .tix__tearoff{display:none}
   </div>
 </div>
 
-<section class="pfpage" aria-labelledby="pf-h">
-  <p class="pfpage__h" id="pf-h"><b>PROFILE</b><span>プロフィール</span></p>
-  <div class="pfpage__in">
-    <div class="face face--single">
-      <i class="rings" aria-hidden="true"></i>
-      <section class="pg ruled mgr">
-        <div class="pg__in">
-          <p class="kick">プロフィール<em>PROFILE</em></p>
-          <p class="pf-name">NAOTO<br>OTAKA</p>
-          <p class="pf-meta">イラストレーター<br>2003年生まれ<br>兵庫県加古郡出身</p>
-          <p class="pf-body">ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
-          <figure class="snap"><i aria-hidden="true"></i>
-            <img src="../naoto-works/photo/daikanyama-live@640w.webp" alt="代官山のヴィンテージショップでライブドローイングをする大高成" loading="lazy" decoding="async">
-            <figcaption>代官山／ライブドローイング</figcaption>
-          </figure>
-        </div>
-      </section>
+<section class="pfx" aria-labelledby="pf-h">
+  <div class="pfx__in">
+    <p class="pfx__h" id="pf-h"><b>PROFILE</b><span>プロフィール</span></p>
+    <div class="pfx__row">
+      <div class="pfx__txt">
+        <p class="pfx__name">NAOTO<br>OTAKA</p>
+        <p class="pfx__meta">イラストレーター<br>2003年生まれ<br>兵庫県加古郡出身</p>
+      </div>
+      <figure class="pfx__shot"><i aria-hidden="true"></i>
+        <img src="../naoto-works/photo/daikanyama-live@640w.webp"
+             srcset="../naoto-works/photo/daikanyama-live@640w.webp 640w, ../naoto-works/photo/daikanyama-live@900w.webp 900w"
+             sizes="(max-width:620px) 42vw, 320px"
+             alt="東京・代官山のヴィンテージショップでライブドローイングをする大高成"
+             width="900" height="1200" loading="lazy" decoding="async">
+        <figcaption>代官山／ライブドローイング</figcaption>
+      </figure>
+      <p class="pfx__body">ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
     </div>
+    <dl class="pfdl">
+      <dt>NAME</dt><dd>大高 成 ／ OSUSHI JAPAN ART</dd>
+      <dt>BORN</dt><dd>2003年生まれ・兵庫県加古郡出身</dd>
+      <dt>BASE</dt><dd>兵庫県加古郡（オンライン対応・全国／海外）</dd>
+      <dt>FIELD</dt><dd>雑誌・広告・アパレル・イベント</dd>
+      <dt>TOOLS</dt><dd>コピック／ペン／持ち歩いているノート</dd>
+      <dt>SNS</dt><dd><a href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">@osushi__japan__art</a></dd>
+    </dl>
   </div>
-  <dl class="pfdl">
-    <dt>NAME</dt><dd>大高 成 ／ OSUSHI JAPAN ART</dd>
-    <dt>BORN</dt><dd>2003年生まれ・兵庫県加古郡出身</dd>
-    <dt>BASE</dt><dd>兵庫県加古郡（オンライン対応・全国／海外）</dd>
-    <dt>FIELD</dt><dd>雑誌・広告・アパレル・イベント</dd>
-    <dt>TOOLS</dt><dd>コピック／ペン／持ち歩いているノート</dd>
-    <dt>SNS</dt><dd><a href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">@osushi__japan__art</a></dd>
-  </dl>
 </section>
 
 <section class="sheetpaper rec" aria-labelledby="rec-h">
