@@ -219,20 +219,29 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   border:1.5px solid currentColor;border-radius:999px;padding:.26rem .8rem}
 .demo a:hover,.demo a:focus-visible{background:#FFF7F3;color:var(--vermil)}
 
-/* 【案C】ノートの外に出したプロフィール */
-.prof__row{display:grid;gap:calc(var(--lh)*.7) clamp(1.4rem,4vw,3rem);align-items:start}
-@media(min-width:861px){ .prof__row{grid-template-columns:minmax(0,340px) minmax(0,1fr)} }
-.prof__shot{margin:0;background:#FCFBF8;border:1.5px solid var(--ink-12);
-  padding:calc(var(--lh)*.26);box-shadow:0 calc(var(--lh)*.2) calc(var(--lh)*.55) rgba(20,17,15,.14);
-  rotate:-.7deg;max-width:400px}
-.prof__shot img{display:block;width:100%;height:auto}
-.prof__shot figcaption{margin-top:calc(var(--lh)*.2);font-size:calc(var(--lh)*.38);
-  line-height:calc(var(--lh)*.6);text-align:center;color:var(--ink-40)}
-.prof__name{font-family:var(--font-en);font-weight:400;font-size:calc(var(--lh)*1.25);
-  line-height:calc(var(--lh)*1.4);letter-spacing:.02em}
-.prof__meta{font-size:calc(var(--lh)*.46);line-height:var(--lh);opacity:.72}
-.prof__body{margin-top:calc(var(--lh)*.5);font-size:calc(var(--lh)*.5);
-  line-height:var(--lh);max-width:30em}
+/* 【案C】ノートの外に出したプロフィール。
+   紙の組みはノートの06ページのまま。下に案Bと同じ書き方の一覧を足す */
+.pfpage{padding:clamp(2.4rem,7vh,4rem) clamp(1.2rem,5vw,4rem) clamp(3rem,9vh,5rem);
+  border-top:4px solid var(--ink)}
+.pfpage__h{max-width:620px;margin:0 auto clamp(1.2rem,3vh,1.8rem);
+  display:flex;align-items:baseline;gap:1.1rem}
+.pfpage__h b{font-family:var(--font-en);font-size:.72rem;letter-spacing:.3em;color:var(--vermil)}
+.pfpage__h span{font-size:.76rem;opacity:.5}
+.pfpage__h::after{content:"";flex:1;height:2px;background:var(--ink-12)}
+/* ノートから抜いた1枚。中身は手を入れていない */
+.pfpage__in{position:relative;max-width:620px;margin-inline:auto;aspect-ratio:4 / 5;
+  box-shadow:0 26px 58px rgba(20,17,15,.13),0 2px 5px rgba(20,17,15,.05)}
+@media(max-width:860px){ .pfpage__in{aspect-ratio:auto;height:min(78svh,620px)} }
+/* 小口のシールは付かないので、その余白は戻す */
+.pfpage .face--single .pg__in{padding-right:var(--px)}
+/* 下に付ける一覧。案Bと同じ */
+.pfdl{max-width:620px;margin:clamp(1.8rem,4.5vh,2.6rem) auto 0;
+  display:grid;grid-template-columns:auto 1fr;gap:.55rem 1.6rem;
+  padding-top:2rem;border-top:2px solid rgba(20,17,15,.18);
+  font-size:clamp(.72rem,1.25vw,.86rem)}
+.pfdl dt{font-family:var(--font-en);letter-spacing:.2em;opacity:.55;white-space:nowrap}
+.pfdl dd{margin:0;line-height:1.9}
+.pfdl dd a{color:inherit}
 
 /* ===== P02 書き始め ===== */
 .p2-tape{grid-column:10 / 13;grid-row:1;justify-self:end;rotate:5deg;
@@ -747,26 +756,33 @@ html:not(.js) .tix__tearoff{display:none}
   </div>
 </div>
 
-<section class="sheetpaper prof" aria-labelledby="prof-h">
-  <div class="sheetpaper__in">
-    <span class="marg-no" aria-hidden="true">09</span>
-    <p class="sechead" id="prof-h">プロフィール<em>PROFILE</em></p>
-    <div class="prof__row">
-      <figure class="prof__shot">
-        <img src="../naoto-works/photo/daikanyama-live@640w.webp"
-             srcset="../naoto-works/photo/daikanyama-live@640w.webp 640w, ../naoto-works/photo/daikanyama-live@900w.webp 900w"
-             sizes="(max-width:860px) 88vw, 340px"
-             alt="東京・代官山のヴィンテージショップでライブドローイングをする大高成"
-             width="900" height="1200" loading="lazy" decoding="async">
-        <figcaption>代官山／ライブドローイング</figcaption>
-      </figure>
-      <div class="prof__txt">
-        <p class="prof__name">NAOTO OTAKA</p>
-        <p class="prof__meta">イラストレーター／2003年生まれ／兵庫県加古郡出身</p>
-        <p class="prof__body">ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
-      </div>
+<section class="pfpage" aria-labelledby="pf-h">
+  <p class="pfpage__h" id="pf-h"><b>PROFILE</b><span>プロフィール</span></p>
+  <div class="pfpage__in">
+    <div class="face face--single">
+      <i class="rings" aria-hidden="true"></i>
+      <section class="pg ruled mgr">
+        <div class="pg__in">
+          <p class="kick">プロフィール<em>PROFILE</em></p>
+          <p class="pf-name">NAOTO<br>OTAKA</p>
+          <p class="pf-meta">イラストレーター<br>2003年生まれ<br>兵庫県加古郡出身</p>
+          <p class="pf-body">ファッションを中心に、手描きならではのラフな線や色彩を生かしたイラストを制作する。人物の装いや日常の何気ない瞬間を独自の視点で切り取り、ファッションやライフスタイルにまつわる表現を展開する。</p>
+          <figure class="snap"><i aria-hidden="true"></i>
+            <img src="../naoto-works/photo/daikanyama-live@640w.webp" alt="代官山のヴィンテージショップでライブドローイングをする大高成" loading="lazy" decoding="async">
+            <figcaption>代官山／ライブドローイング</figcaption>
+          </figure>
+        </div>
+      </section>
     </div>
   </div>
+  <dl class="pfdl">
+    <dt>NAME</dt><dd>大高 成 ／ OSUSHI JAPAN ART</dd>
+    <dt>BORN</dt><dd>2003年生まれ・兵庫県加古郡出身</dd>
+    <dt>BASE</dt><dd>兵庫県加古郡（オンライン対応・全国／海外）</dd>
+    <dt>FIELD</dt><dd>雑誌・広告・アパレル・イベント</dd>
+    <dt>TOOLS</dt><dd>コピック／ペン／持ち歩いているノート</dd>
+    <dt>SNS</dt><dd><a href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener">@osushi__japan__art</a></dd>
+  </dl>
 </section>
 
 <section class="sheetpaper rec" aria-labelledby="rec-h">
