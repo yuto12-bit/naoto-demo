@@ -303,28 +303,32 @@ html.ready .nav{opacity:1}
    左の柱＝青い舞台（ポスターと流れる言葉）、右の柱＝説明の紙。
    説明はコラボの高さぶん引き上げ、中で貼り付けて並走させる。 */
 @media(min-width:1000px){
-  /* 左 52% にポスターと言葉を収める */
+  /* 左 52% にポスターと言葉を収める。行間もあいだも広げてゆったり読ませる */
   .collab__bg i{right:48%}
-  .collab__flow{right:48%;gap:clamp(1rem,2.6vh,2rem);
-    padding:clamp(4rem,11vh,7rem) clamp(1.4rem,3.4vw,3.2rem)}
+  .collab__flow{right:48%;gap:clamp(1.8rem,4.8vh,3.6rem);
+    padding:clamp(4rem,11vh,7rem) clamp(1.8rem,4.4vw,4.4rem)}
   .blk{width:min(34vw,430px)}
-  .b1{font-size:clamp(1.5rem,3vw,2.7rem)}
+  .blk--en{line-height:2}
+  .b1{font-size:clamp(1.5rem,3vw,2.7rem);line-height:1.5}
   .b2{font-size:clamp(.95rem,1.7vw,1.45rem)}
   .b3{font-size:clamp(.7rem,1.05vw,.92rem)}
+  .b3 span+span{margin-top:.9em}
   .b4{font-size:clamp(.64rem,.95vw,.84rem)}
+  .b4::before{margin-bottom:1.5rem}
   .collab__tag{top:clamp(4rem,8vh,5.6rem)}
 
-  /* 右 48% は説明の紙。隣で止まったまま、左の言葉が流れる */
-  /* 上の罫は左の舞台と地続き。紙が上に乗るので、こちらにも同じ罫を引く */
+  /* 右 48% は説明の紙。隣で止まったまま、左の言葉が流れる。
+     境目に線は引かず、余白だけで分ける */
   .note{margin:-300vh 0 0 52%;width:48%;height:300vh;padding:0;
-    border-top:4px solid var(--ink);border-left:4px solid var(--ink)}
+    border-top:4px solid var(--ink);border-left:0}
   .note__in{position:sticky;top:0;min-height:100vh;max-width:none;margin:0;
     display:flex;flex-direction:column;justify-content:center;
-    padding:clamp(2rem,6vh,4rem) clamp(1.6rem,3.2vw,3.4rem)}
-  .note h3{margin-bottom:clamp(1.4rem,3.4vh,2.2rem)}
-  .note p{max-width:32em}
-  .note dl{align-self:stretch;margin:clamp(1.8rem,4.5vh,2.8rem) 0 0;
-    padding:clamp(1.4rem,3.5vh,2.2rem) 0 0;
+    padding:clamp(2rem,6vh,4rem) clamp(2.4rem,5.2vw,5.6rem)}
+  .note h3{margin-bottom:clamp(1.8rem,4.2vh,2.8rem)}
+  .note p{max-width:32em;line-height:2.35}
+  .note p+p{margin-top:2em}
+  .note dl{align-self:stretch;margin:clamp(2.4rem,6vh,3.6rem) 0 0;
+    padding:clamp(1.8rem,4.5vh,2.8rem) 0 0;row-gap:.95rem;
     border-top:2px solid rgba(20,17,15,.18);border-left:0}
 
   /* 舞台のあとの空き。紙だけが続くと抜けて見えるので短くする */
