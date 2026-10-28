@@ -355,6 +355,20 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
     width:min(300px,24vw);max-width:none}
   .info__meta{font-size:.78rem;margin-top:1.5rem}
   .info__meta dt{font-size:.6rem}
+
+  /* 1点ごとに左右を入れ替える。奇数は 画像左／説明右、偶数はその逆。
+     壁の写真も左右を返す。角のある壁（06）だと、返さないと額が角を
+     またいでしまう。平らな壁は返しても見た目が変わらない */
+  .slide:nth-of-type(even) .wall{transform:scaleX(-1)}
+  /* 偶数の額の位置は奇数の鏡写し（50% で折り返した値）。
+     clamp の下限は左の説明に突き当たらないため、上限は画面から
+     はみ出さないため。どちらも額の端で止める */
+  .slide:nth-of-type(even) .frame{
+    left:clamp(calc(39% + var(--vh) * 1.12 / var(--ar) / 2),
+               calc(56% - (var(--px) - 44%) * .6),
+               calc(94% - var(--vh) * 1.12 / var(--ar) / 2))}
+  .slide:nth-of-type(even) .info{right:auto;
+    left:max(clamp(2rem,8vw,7rem), calc(50% - 750px))}
 }
 </style><link rel="stylesheet" href="../assets/css/site-header.css">
 <script src="../assets/js/site-header.js" defer></script>
