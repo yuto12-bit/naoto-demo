@@ -134,14 +134,18 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 /* 開くまでは隠しておく */
 .more__it.is-rest{display:none}
 .more.is-open .more__it.is-rest{display:block}
-.more__btn{display:inline-flex;align-items:center;gap:.6rem;margin-top:clamp(1.4rem,4vh,2.2rem);
-  padding:.7rem 1.3rem;border:1.5px solid var(--ink);background:none;border-radius:999px;
+/* 「もっと見る」は行き先ではなく開け閉めなので、券ではなく角の立った箱。
+   丸い錠剤の形は浮いている「相談する」に譲る */
+.more__btn{display:inline-flex;align-items:center;gap:.75rem;margin-top:clamp(1.4rem,4vh,2.2rem);
+  padding:.62rem 1.15rem;border:1.5px solid var(--ink);background:#FFFEFB;
   font-family:inherit;cursor:pointer;color:var(--ink);
+  box-shadow:0 .25rem .7rem rgba(20,17,15,.09);
   transition:background .2s ease,color .2s ease}
 .more__btn b{font-weight:900;font-size:.8rem;letter-spacing:.06em}
-.more__btn i{width:.42em;height:.42em;border-bottom:2px solid currentColor;border-right:2px solid currentColor;
-  rotate:45deg;translate:0 -.1em;transition:rotate .2s ease}
-.more.is-open .more__btn i{rotate:-135deg;translate:0 .1em}
+/* 墨の三角。開いているあいだは上を向く */
+.more__btn i{width:0;height:0;border-left:.3rem solid transparent;border-right:.3rem solid transparent;
+  border-top:.42rem solid currentColor;transition:rotate .2s ease}
+.more.is-open .more__btn i{rotate:180deg}
 .more__btn:hover,.more__btn:focus-visible{background:var(--ink);color:var(--paper)}
 
 /* ===== LINEスタンプ ===== */
@@ -179,16 +183,34 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .sticker__grid li:nth-child(2n){rotate:1.2deg}
 .sticker__grid li:nth-child(3n){rotate:-1.4deg}
 .sticker__grid img{display:block;width:100%;height:auto}
-.sticker__btn{display:inline-flex;align-items:center;gap:.7rem;margin-top:clamp(1.3rem,3.4vh,2rem);
-  padding:.78rem 1.2rem;border-radius:999px;text-decoration:none;
-  background:var(--vermil);color:#FFF7F3;
-  box-shadow:0 .6rem 1.6rem rgba(211,56,28,.24);
-  transition:background .2s ease,box-shadow .2s ease,translate .2s ease}
-.sticker__btn b{font-weight:900;font-size:.82rem;letter-spacing:.06em}
-.sticker__btn i{width:.4em;height:.4em;border-top:2px solid currentColor;border-right:2px solid currentColor;
-  rotate:45deg}
-.sticker__btn:hover,.sticker__btn:focus-visible{background:#14110F;translate:0 -2px;
-  box-shadow:0 .9rem 2rem rgba(20,17,15,.22)}
+/* ===== 券：ページの中の「押すところ」 =====
+   ABOUT の半券と同じ仕立て。角は立てたまま、紙の地に墨の罫を回し、
+   右の端はミシン目で切り離せる体裁にして、そこに矢印を置く。
+   浮いている「相談する」は丸くて朱色のまま。こちらは紙もので通して顔を分ける */
+.tkt{--stub:2.7rem;--notch:12px;--notch-bg:var(--paper);
+  position:relative;display:inline-grid;grid-template-columns:minmax(0,1fr) var(--stub);
+  align-items:stretch;text-decoration:none;color:var(--ink);background:#FFFEFB;
+  border:1.5px solid var(--ink);box-shadow:0 .25rem .7rem rgba(20,17,15,.09);
+  transition:translate .24s ease,box-shadow .24s ease}
+.tkt__in{padding:.62rem 1rem .66rem;display:grid;gap:.2rem;text-align:left}
+.tkt__k{font-family:Anton,sans-serif;font-size:.56rem;letter-spacing:.24em;color:var(--vermil)}
+.tkt__b{font-weight:900;font-size:.84rem;letter-spacing:.04em;line-height:1.5}
+.tkt__end{display:grid;place-items:center;border-left:2px dashed rgba(20,17,15,.38);
+  transition:border-color .24s ease}
+.tkt__end svg{width:1.05rem;height:auto;display:block;transition:translate .24s ease}
+/* ミシン目の上下にノッチ。紙を切り抜いた体にする */
+.tkt::before,.tkt::after{content:"";position:absolute;z-index:2;
+  width:var(--notch);height:var(--notch);border-radius:50%;
+  background:var(--notch-bg);border:1.5px solid var(--ink);right:var(--stub)}
+.tkt::before{top:0;translate:50% -50%}
+.tkt::after{bottom:0;translate:50% 50%}
+.tkt:hover,.tkt:focus-visible{translate:0 -2px;box-shadow:0 .5rem 1.2rem rgba(20,17,15,.16)}
+.tkt:hover .tkt__end,.tkt:focus-visible .tkt__end{border-left-color:var(--vermil)}
+.tkt:hover .tkt__end svg,.tkt:focus-visible .tkt__end svg{translate:2px 0}
+.tkt:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.tkt,.tkt__end,.tkt__end svg{transition:none}}
+/* ステッカーの段は地色が少し濃いので、ノッチもその色で抜く */
+.sticker__btn{margin-top:clamp(1.3rem,3.4vh,2rem);--notch-bg:#EFECE6}
 
 .lane{display:flex;align-items:flex-end;gap:clamp(1rem,2.6vw,2rem);width:max-content;
   padding:0 2vw}
@@ -604,8 +626,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
         <dt>SET</dt><dd>全15種類</dd>
         <dt>SHOP</dt><dd>LINE STORE</dd>
       </dl>
-      <a class="sticker__btn" href="https://line.me/S/sticker/36952174/?lang=ja&amp;utm_source=gnsh_stickerDetail" target="_blank" rel="noopener">
-        <b>LINE STORE で見る</b><i aria-hidden="true"></i>
+      <a class="tkt sticker__btn" href="https://line.me/S/sticker/36952174/?lang=ja&amp;utm_source=gnsh_stickerDetail" target="_blank" rel="noopener">
+        <span class="tkt__in"><span class="tkt__k">LINE STORE</span><span class="tkt__b">スタンプを見る</span></span>
+        <span class="tkt__end" aria-hidden="true"><svg viewBox="0 0 600 200"><path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg></span>
       </a>
     </div>
     <div class="sticker__sheet" aria-hidden="true">

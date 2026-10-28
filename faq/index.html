@@ -366,12 +366,30 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 }
 .end__h{font-weight:900;font-size:9cqw;line-height:1.3;margin-top:.14em;letter-spacing:-.025em}
 .end__s{font-size:3.4cqw;line-height:2;opacity:.76;margin-top:2cqh}
-.end__go{display:flex;align-items:center;justify-content:space-between;gap:.8em;
-  margin-top:2.6cqh;color:#FAF8F5;background:var(--vermil);text-decoration:none;
-  font-weight:900;font-size:4.2cqw;line-height:1;
-  padding:2.6cqh .9em 2.4cqh;transition:opacity .18s ease}
-.end__go::after{content:"→";font-family:var(--font-en);font-weight:400}
-.end__go:hover,.end__go:focus-visible{opacity:.78}
+/* 締めの「押すところ」。ABOUT の半券と同じ仕立ての券にして、
+   浮いている「相談する」（丸くて朱色）とは顔を分ける。
+   右の端はミシン目で、そこに矢印を置く */
+.end__go{--stub:9cqw;--notch:3.3cqw;
+  position:relative;display:grid;grid-template-columns:minmax(0,1fr) var(--stub);
+  align-items:stretch;margin-top:2.6cqh;text-decoration:none;color:var(--ink);
+  background:#FFFEFB;border:1.5px solid var(--ink);
+  box-shadow:0 .7cqh 1.8cqh rgba(20,17,15,.1);
+  transition:translate .24s ease,box-shadow .24s ease}
+.end__go b{display:block;padding:2.2cqh .9em 2.4cqh;font-weight:900;font-size:4.2cqw;line-height:1.35}
+.end__go b em{display:block;font-style:normal;font-family:var(--font-en);font-weight:400;
+  font-size:2.4cqw;letter-spacing:.24em;color:var(--vermil);margin-bottom:.55em;line-height:1}
+.end__go i{display:grid;place-items:center;border-left:2px dashed rgba(20,17,15,.38);
+  transition:border-color .24s ease}
+.end__go i svg{width:4.2cqw;height:auto;display:block;transition:translate .24s ease}
+/* ミシン目の上下にノッチ。紙を切り抜いた体にする */
+.end__go::before,.end__go::after{content:"";position:absolute;z-index:2;
+  width:var(--notch);height:var(--notch);border-radius:50%;
+  background:#EDE9E1;border:1.5px solid var(--ink);right:var(--stub)}
+.end__go::before{top:0;translate:50% -50%}
+.end__go::after{bottom:0;translate:50% 50%}
+.end__go:hover,.end__go:focus-visible{translate:0 -2px;box-shadow:0 1.3cqh 2.6cqh rgba(20,17,15,.17)}
+.end__go:hover i,.end__go:focus-visible i{border-left-color:var(--vermil)}
+.end__go:hover i svg,.end__go:focus-visible i svg{translate:2px 0}
 .end__top,.end__mid{min-height:0}
 .end__mid{display:flex;flex-direction:column;justify-content:center}
 .end__sns{display:flex;gap:.9em;margin-top:2.4cqh}
@@ -1044,7 +1062,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
       <p class="end__s">用途や時期が決まっていない段階でも構いません。お見積りは無料で、お断りいただいても費用は発生しません。</p>
     </div>
     <div class="end__mid">
-      <a class="end__go" href="../contact/">お問い合わせフォームへ</a>
+      <a class="end__go" href="../contact/"><b><em>CONTACT</em>お問い合わせフォームへ</b><i aria-hidden="true"><svg viewBox="0 0 600 200"><path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg></i></a>
       <div class="end__sns">
       <a href="https://www.instagram.com/osushi__japan__art/" target="_blank" rel="noopener" aria-label="Instagram">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="17.4" cy="6.6" r="1.5" fill="currentColor"/></svg></a>

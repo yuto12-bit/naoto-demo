@@ -96,14 +96,34 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
 .fld.is-err .err{display:flex}
 .hp{position:absolute;left:-9999px}
 
-.submit{display:flex;align-items:center;justify-content:center;gap:1.1rem;width:100%;
-  background:var(--vermil);color:var(--paper);border:0;cursor:pointer;
-  font-weight:900;font-size:clamp(.92rem,1.7vw,1.05rem);letter-spacing:.06em;
-  padding:1.25rem 1.6rem;margin-top:.6rem;transition:background .3s}
-.submit:hover{background:var(--vermil-d)}
+/* 送信は、書いた紙を窓口へ出す動き。ABOUT の半券と同じ仕立ての券にして、
+   浮いている「相談する」（丸くて朱色）とは顔を分ける。
+   右の端はミシン目で、そこに矢印を置く */
+.submit{--stub:3.4rem;--notch:13px;
+  position:relative;display:grid;grid-template-columns:minmax(0,1fr) var(--stub);
+  align-items:stretch;width:100%;margin-top:.6rem;padding:0;cursor:pointer;
+  background:#FFFEFB;border:1.5px solid var(--ink);color:var(--ink);font-family:inherit;
+  box-shadow:0 .3rem .8rem rgba(20,17,15,.09);
+  transition:translate .24s ease,box-shadow .24s ease}
+.submit b{display:block;padding:1.05rem 1.4rem 1.1rem;text-align:left;
+  font-weight:900;font-size:clamp(.92rem,1.7vw,1.05rem);letter-spacing:.06em}
+.submit b em{display:block;font-style:normal;font-family:Anton,sans-serif;font-weight:400;
+  font-size:.58rem;letter-spacing:.26em;color:var(--vermil);margin-bottom:.5rem}
+.submit i{display:grid;place-items:center;border-left:2px dashed rgba(20,17,15,.38);
+  transition:border-color .24s ease}
+.submit svg{width:20px;height:auto;display:block;
+  transition:translate .45s cubic-bezier(.2,.7,.25,1)}
+/* ミシン目の上下にノッチ。用紙の地で抜く */
+.submit::before,.submit::after{content:"";position:absolute;z-index:2;
+  width:var(--notch);height:var(--notch);border-radius:50%;
+  background:var(--sheet,#FBFAF8);border:1.5px solid var(--ink);right:var(--stub)}
+.submit::before{top:0;translate:50% -50%}
+.submit::after{bottom:0;translate:50% 50%}
+.submit:hover:not(:disabled),.submit:focus-visible{translate:0 -2px;
+  box-shadow:0 .6rem 1.4rem rgba(20,17,15,.16)}
+.submit:hover:not(:disabled) i,.submit:focus-visible i{border-left-color:var(--vermil)}
+.submit:hover:not(:disabled) svg{translate:5px 0}
 .submit:disabled{opacity:.5;cursor:default}
-.submit svg{width:22px;height:auto;transition:transform .45s cubic-bezier(.2,.7,.25,1)}
-.submit:hover:not(:disabled) svg{transform:translateX(6px)}
 .trust{font-size:.68rem;opacity:.5;line-height:1.85;margin-top:1.1rem;text-align:center}
 .state{display:none;align-items:center;justify-content:center;gap:.7rem;margin-top:1.3rem;font-size:.86rem}
 .state svg{width:18px;height:18px;color:var(--vermil);flex:none}
@@ -190,9 +210,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
         <textarea id="body" name="body" rows="6" required></textarea><p class="err"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 6.8v6.4" stroke="currentColor" stroke-width="3.4"/><circle cx="12" cy="17.4" r="1.7" fill="currentColor"/></svg>内容をご記入ください</p>
       </div>
         <input class="hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="submit" type="submit" id="sb">相談を送る
-          <svg viewBox="0 0 600 200" aria-hidden="true"><path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg>
-        </button>
+        <button class="submit" type="submit" id="sb"><b><em>SEND</em>相談を送る</b><i aria-hidden="true"><svg viewBox="0 0 600 200"><path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg></i></button>
         <p class="trust">ご記入いただいた内容は、ご相談への返信以外には使用しません。</p>
         <p class="state" id="sending"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3" opacity=".2"/><path d="M21 12a9 9 0 0 0-9-9" fill="none" stroke="currentColor" stroke-width="3"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur=".85s" repeatCount="indefinite"/></path></svg>送信中…</p>
         <p class="state" id="done"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12.4l5.6 5.6L20.5 6.6" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>送信しました。3営業日以内にご返信します。</p>
