@@ -329,6 +329,33 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   .belt__count b{font-size:clamp(2.4rem,7vw,3.6rem)}
   .next__jp{font-size:clamp(1.2rem,3.6vw,2.1rem)}
 }
+
+/* ===== 広い画面：額と説明を寄せて、空きすぎる壁を詰める =====
+   額は壁の左寄りに小さく、説明は右端にぽつんと置かれていて、あいだに
+   500〜620px の空白ができていた。額を大きくして中央寄りへ寄せ、説明は
+   右端から引き離して額と同じ高さの中心にそろえる。 */
+@media(min-width:1000px){
+  /* 額：ヘッダーの下の真ん中を軸にして、ひとまわり大きくする。
+     掛ける位置は壁ごとの持ち味を残しつつ、中央（44%）へ4割寄せる。
+     height の3つめの上限は、どの高さの画面でもはみ出さないための歯止め。
+     left の min() は、右へ寄った額（03 など）が説明に突き当たらないよう、
+     額の右端が画面の 61% を越えないところで止めるもの */
+  .frame{top:calc(50% + var(--sh-h,62px) / 2);
+    height:min(calc(var(--vh) * 1.12), calc(var(--maxw) * var(--ar)),
+               calc(100svh - var(--sh-h,62px) - 5rem));
+    left:min(calc(44% + (var(--px) - 44%) * .6),
+             calc(61% - var(--vh) * 1.12 / var(--ar) / 2))}
+
+  /* 説明：幅を決め打ちして、題の長さで左端が動かないようにする。
+     縦は額と同じ中心にそろえる。下端から離れるので、浮いている
+     「相談する」とも重ならない。
+     max() は、広い画面で右端まで離れていかないための歯止め */
+  .info{bottom:auto;top:calc(50% + var(--sh-h,62px) / 2);translate:0 -50%;
+    right:max(clamp(2rem,8vw,7rem), calc(50% - 750px));
+    width:min(300px,24vw);max-width:none}
+  .info__meta{font-size:.78rem;margin-top:1.5rem}
+  .info__meta dt{font-size:.6rem}
+}
 </style><link rel="stylesheet" href="../assets/css/site-header.css">
 <script src="../assets/js/site-header.js" defer></script>
 <script>try{var v=sessionStorage.getItem("sh-nav");if(v){sessionStorage.removeItem("sh-nav");var o=JSON.parse(v),d=document.documentElement;d.setAttribute("data-sh-nav",v);d.style.setProperty("--sh-to",'"'+o.k+'"');d.style.setProperty("--sh-jp",'"'+o.j+'"');d.classList.add("sh-arrive")}}catch(e){}</script>
