@@ -127,9 +127,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .more__grid{list-style:none;margin:0;padding:0;display:grid;gap:clamp(.8rem,2.4vw,1.6rem);
   grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(min-width:761px){ .more__grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
-.more__it{background:#fff;border:1.5px solid var(--ink-12);padding:clamp(.5rem,1.4vw,.9rem);
-  box-shadow:0 .5rem 1.4rem rgba(20,17,15,.07)}
-.more__it img{display:block;width:100%;height:auto}
+/* 1点ずつ、展示室と同じ額に入れて掛ける。箱の比率は額の絵と同じにして、
+   中の窓（.frame__win）の位置が額の線とぴったり合うようにする */
+.more__it{position:relative;aspect-ratio:1/1.3093;
+  filter:drop-shadow(5px 7px 11px rgba(20,17,15,.22)) drop-shadow(1px 2px 3px rgba(20,17,15,.12))}
 /* 開くまでは隠しておく */
 .more__it.is-rest{display:none}
 .more.is-open .more__it.is-rest{display:block}
@@ -531,14 +532,54 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
     <p class="more__h" id="more-h"><b>MORE WORKS</b><span>ほかの作品</span></p>
     <p class="more__lead">依頼で描いたもの、その日のスケッチから。</p>
     <ul class="more__grid">
-        <li class="more__it"><img src="../naoto-works/works/plate-8614@400w.webp" srcset="../naoto-works/works/plate-8614@400w.webp 400w, ../naoto-works/works/plate-8614@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="新郎新婦のイラスト" loading="lazy" decoding="async"></li>
-        <li class="more__it"><img src="../naoto-works/works/plate-9468@400w.webp" srcset="../naoto-works/works/plate-9468@400w.webp 400w, ../naoto-works/works/plate-9468@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="4人のイラスト" loading="lazy" decoding="async"></li>
-        <li class="more__it"><img src="../naoto-works/works/plate-8620@400w.webp" srcset="../naoto-works/works/plate-8620@400w.webp 400w, ../naoto-works/works/plate-8620@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="向かい合う二人のイラスト" loading="lazy" decoding="async"></li>
-        <li class="more__it"><img src="../naoto-works/works/plate-8074@400w.webp" srcset="../naoto-works/works/plate-8074@400w.webp 400w, ../naoto-works/works/plate-8074@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="スマホを見る二人のイラスト" loading="lazy" decoding="async"></li>
-        <li class="more__it is-rest"><img src="../naoto-works/works/plate-8627@400w.webp" srcset="../naoto-works/works/plate-8627@400w.webp 400w, ../naoto-works/works/plate-8627@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="肩車のイラスト" loading="lazy" decoding="async"></li>
-        <li class="more__it is-rest"><img src="../naoto-works/works/plate-8121@400w.webp" srcset="../naoto-works/works/plate-8121@400w.webp 400w, ../naoto-works/works/plate-8121@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="キャップの女性のイラスト" loading="lazy" decoding="async"></li>
-        <li class="more__it is-rest"><img src="../naoto-works/works/plate-8617@400w.webp" srcset="../naoto-works/works/plate-8617@400w.webp 400w, ../naoto-works/works/plate-8617@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="二人のイラスト" loading="lazy" decoding="async"></li>
-        <li class="more__it is-rest"><img src="../naoto-works/works/plate-8076@400w.webp" srcset="../naoto-works/works/plate-8076@400w.webp 400w, ../naoto-works/works/plate-8076@600w.webp 600w" sizes="(max-width:760px) 44vw, 22vw" alt="手をつなぐ親子のイラスト" loading="lazy" decoding="async"></li>
+        <li class="more__it">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/plate-8614@400w.webp" srcset="../naoto-works/works/plate-8614@400w.webp 400w, ../naoto-works/works/plate-8614@600w.webp 600w" alt="新郎新婦のイラスト" loading="lazy" decoding="async" sizes="(max-width:760px) 29vw, 15vw">
+          </span>
+        </li>
+        <li class="more__it">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/plate-9468@400w.webp" srcset="../naoto-works/works/plate-9468@400w.webp 400w, ../naoto-works/works/plate-9468@600w.webp 600w" alt="4人のイラスト" loading="lazy" decoding="async" sizes="(max-width:760px) 29vw, 15vw">
+          </span>
+        </li>
+        <li class="more__it">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/plate-8620@400w.webp" srcset="../naoto-works/works/plate-8620@400w.webp 400w, ../naoto-works/works/plate-8620@600w.webp 600w" alt="向かい合う二人のイラスト" loading="lazy" decoding="async" sizes="(max-width:760px) 29vw, 15vw">
+          </span>
+        </li>
+        <li class="more__it">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/plate-8074@400w.webp" srcset="../naoto-works/works/plate-8074@400w.webp 400w, ../naoto-works/works/plate-8074@600w.webp 600w" alt="スマホを見る二人のイラスト" loading="lazy" decoding="async" sizes="(max-width:760px) 29vw, 15vw">
+          </span>
+        </li>
+        <li class="more__it is-rest">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/plate-8627@400w.webp" srcset="../naoto-works/works/plate-8627@400w.webp 400w, ../naoto-works/works/plate-8627@600w.webp 600w" alt="肩車のイラスト" loading="lazy" decoding="async" sizes="(max-width:760px) 29vw, 15vw">
+          </span>
+        </li>
+        <li class="more__it is-rest">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/plate-8121@400w.webp" srcset="../naoto-works/works/plate-8121@400w.webp 400w, ../naoto-works/works/plate-8121@600w.webp 600w" alt="キャップの女性のイラスト" loading="lazy" decoding="async" sizes="(max-width:760px) 29vw, 15vw">
+          </span>
+        </li>
+        <li class="more__it is-rest">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/plate-8617@400w.webp" srcset="../naoto-works/works/plate-8617@400w.webp 400w, ../naoto-works/works/plate-8617@600w.webp 600w" alt="二人のイラスト" loading="lazy" decoding="async" sizes="(max-width:760px) 29vw, 15vw">
+          </span>
+        </li>
+        <li class="more__it is-rest">
+          <img class="frame__bg" src="../naoto-assets/gallery/frame-tall.webp" alt="" loading="lazy" decoding="async">
+          <span class="frame__win" style="left:16.74418604651163%;top:13.676731793960922%;width:65.81395348837209%;height:71.75843694493783%">
+            <img src="../naoto-works/works/plate-8076@400w.webp" srcset="../naoto-works/works/plate-8076@400w.webp 400w, ../naoto-works/works/plate-8076@600w.webp 600w" alt="手をつなぐ親子のイラスト" loading="lazy" decoding="async" sizes="(max-width:760px) 29vw, 15vw">
+          </span>
+        </li>
     </ul>
     <button class="more__btn" type="button" aria-expanded="false"><b>もっと見る</b><i aria-hidden="true"></i></button>
   </div>

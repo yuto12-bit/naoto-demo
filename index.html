@@ -22,7 +22,6 @@
 :root{--ink:#14110F;--paper:#E9E8E6;--vermil:#D3381C;
   --im-paper:url("naoto-assets/tile/paper-white@512w.webp");
   --im-sign:url("naoto-hand/hand/naoto-otaka-signature.webp");
-  --im-plate:url("naoto-hand/hand/sushi-plate@700w.webp");
   --im-poster:url("naoto-works/works/maison-de-vii@1400w.webp");
   --im-grain:url("naoto-assets/overlay/photocopy-grain@760w.webp");}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -33,7 +32,7 @@ html,body{overflow-x:hidden;overflow-x:clip}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
   background:var(--im-grain) repeat;background-size:700px;opacity:.38;mix-blend-mode:multiply}
 
-/* ===== ローディング：署名が皿に乗って流れてくる ===== */
+/* ===== ローディング：署名がレールに乗って流れてくる ===== */
 .loader{position:fixed;inset:0;z-index:100;overflow:hidden;
   background:var(--paper) var(--im-paper) repeat;background-size:320px;
   transition:opacity .5s ease .1s, visibility 0s linear .6s}
@@ -43,16 +42,19 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
 .ld-rail::after{content:"";position:absolute;left:0;right:0;top:5px;height:1px;background:var(--vermil)}
 @keyframes railIn{to{transform:scaleX(1)}}
 
-/* 皿が空で流れてきて、その上で署名が書かれる */
-.ld-car{position:absolute;left:50%;top:50%;translate:-50% -50%;
-  width:min(520px,66vw);display:flex;flex-direction:column;align-items:center;
-  transform:translateX(112vw);animation:carIn 1.0s cubic-bezier(.16,.72,.24,1) .3s forwards}
+/* 署名が流れてきて、レールの上で書かれ、また流れ去る。
+   レールのすぐ上に底をそろえたいので、レールの位置を基準に上へ引き上げる */
+.ld-car{position:absolute;left:50%;top:calc(50% + 6.2vmin);translate:-50% -100%;
+  width:min(520px,66vw);padding-bottom:clamp(.5rem,2.4vmin,1.3rem);
+  display:flex;flex-direction:column;align-items:center;
+  transform:translateX(112vw);
+  animation:carIn 1.0s cubic-bezier(.16,.72,.24,1) .3s forwards,
+            carOut .85s cubic-bezier(.5,0,.75,.4) 2.6s forwards}
 @keyframes carIn{to{transform:translateX(0)}}
+@keyframes carOut{from{transform:translateX(0)}to{transform:translateX(-128vw);opacity:.9}}
 
 /* 署名：2行を順に書いていく */
-.ld-sign{position:relative;width:82%;aspect-ratio:568/367;margin-bottom:-4%;
-  animation:lift .5s cubic-bezier(.3,.7,.2,1) 2.55s forwards}
-@keyframes lift{to{transform:translateY(-3.2vmin)}}
+.ld-sign{position:relative;width:82%;aspect-ratio:568/367}
 .ld-sign i{position:absolute;left:0;right:0;
   background-image:var(--im-sign);background-repeat:no-repeat;background-size:100% auto;
   clip-path:inset(0 100% 0 0);}
@@ -72,9 +74,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
 @keyframes pen2{0%{opacity:1;transform:translateX(0)}
  92%{opacity:1;transform:translateX(96%)} 100%{opacity:0;transform:translateX(100%)}}
 
-.ld-plate{width:100%;aspect-ratio:993/407;background:var(--im-plate) no-repeat center/contain;
-  animation:plateOut .85s cubic-bezier(.5,0,.75,.4) 2.85s forwards}
-@keyframes plateOut{to{transform:translateX(-128vw);opacity:.9}}
 /* 通し番号っぽい小さい文字 */
 .ld-meta{position:absolute;left:clamp(1rem,4vw,3rem);bottom:clamp(1rem,4vw,3rem);
   font-family:Anton,sans-serif;font-size:.6rem;letter-spacing:.28em;opacity:0;
@@ -152,7 +151,7 @@ html.ready .nav{opacity:1}
 @media (prefers-reduced-motion:reduce){
   .fg{opacity:1!important;transform:none!important;transition:none!important}
   .say{transition:none!important} .scroll::after{animation:none}
-  .ld-car,.ld-sign,.ld-sign i,.ld-plate,.ld-rail,.ld-meta,.ld-meta2{animation:none!important;
+  .ld-car,.ld-sign,.ld-sign i,.ld-rail,.ld-meta,.ld-meta2{animation:none!important;
     transform:none!important;opacity:1!important;clip-path:none!important}
   .ld-sign u{display:none}
 }
@@ -354,7 +353,6 @@ html.ready .nav{opacity:1}
   <i class="ld-rail"></i>
   <div class="ld-car">
     <div class="ld-sign"><i class="l1"></i><i class="l2"></i><u class="p1"></u><u class="p2"></u></div>
-    <i class="ld-plate"></i>
   </div>
   <span class="ld-meta">OSUSHI JAPAN ART</span>
   <span class="ld-meta2">NOW SERVING</span>
