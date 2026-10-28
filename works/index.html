@@ -154,7 +154,18 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   padding:clamp(3rem,9vh,5rem) 0 clamp(3.4rem,10vh,6rem)}
 .sticker__in{max-width:1180px;margin-inline:auto;padding:0 clamp(1.4rem,5vw,4rem);
   display:grid;gap:clamp(1.8rem,5vh,3rem);align-items:center}
-@media(min-width:861px){ .sticker__in{grid-template-columns:.92fr 1.08fr;gap:clamp(2rem,4vw,4rem)} }
+/* 広い画面：左の列は文、その下に券。右の列はシートで、4行ぶん通す。
+   行の隙間は空けず、券の margin で文との間を取る（狭い画面と同じ間合い）。
+   上下の 1fr は、文と券をひとかたまりのままシートの中心にそろえるためのもの */
+@media(min-width:861px){
+  .sticker__in{grid-template-columns:.92fr 1.08fr;
+    column-gap:clamp(2rem,4vw,4rem);row-gap:0;
+    grid-template-areas:". sheet" "txt sheet" "btn sheet" ". sheet";
+    grid-template-rows:1fr auto auto 1fr}
+  .sticker__txt{grid-area:txt}
+  .sticker__sheet{grid-area:sheet}
+  .sticker__btn{grid-area:btn;margin-top:clamp(1.3rem,3.4vh,2rem)}
+}
 .sticker__h{display:flex;align-items:baseline;gap:1.1rem;margin:0 0 1rem}
 .sticker__h b{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.3em}
 .sticker__h span{font-size:.76rem;opacity:.5}
@@ -210,7 +221,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .tkt:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.tkt,.tkt__end,.tkt__end svg{transition:none}}
 /* ステッカーの段は地色が少し濃いので、ノッチもその色で抜く */
-.sticker__btn{margin-top:clamp(1.3rem,3.4vh,2rem);--notch-bg:#EFECE6}
+/* ステッカーの段は地色が少し濃いので、ノッチもその色で抜く。
+   券は並びの一員。横に伸びないよう左で止める */
+.sticker__btn{justify-self:start;--notch-bg:#EFECE6}
 
 .lane{display:flex;align-items:flex-end;gap:clamp(1rem,2.6vw,2rem);width:max-content;
   padding:0 2vw}
@@ -626,10 +639,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
         <dt>SET</dt><dd>全15種類</dd>
         <dt>SHOP</dt><dd>LINE STORE</dd>
       </dl>
-      <a class="tkt sticker__btn" href="https://line.me/S/sticker/36952174/?lang=ja&amp;utm_source=gnsh_stickerDetail" target="_blank" rel="noopener">
-        <span class="tkt__in"><span class="tkt__k">LINE STORE</span><span class="tkt__b">スタンプを見る</span></span>
-        <span class="tkt__end" aria-hidden="true"><svg viewBox="0 0 600 200"><path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg></span>
-      </a>
     </div>
     <div class="sticker__sheet" aria-hidden="true">
       <p class="sticker__sheeth">OSUSHI JAPAN ART <span>STICKERS</span></p>
@@ -645,6 +654,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
           <li><img src="../naoto-works/sticker/osushi-906932925.webp" alt="" loading="lazy" decoding="async"></li>
       </ul>
     </div>
+      <a class="tkt sticker__btn" href="https://line.me/S/sticker/36952174/?lang=ja&amp;utm_source=gnsh_stickerDetail" target="_blank" rel="noopener">
+        <span class="tkt__in"><span class="tkt__k">LINE STORE</span><span class="tkt__b">スタンプを見る</span></span>
+        <span class="tkt__end" aria-hidden="true"><svg viewBox="0 0 600 200"><path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg></span>
+      </a>
   </div>
 </section>
 
