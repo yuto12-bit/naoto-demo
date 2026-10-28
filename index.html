@@ -417,7 +417,7 @@ addEventListener('load',function(){ clearTimeout(t); setTimeout(go,3500); });
   var layers=[].slice.call(g.querySelectorAll('.street i'));
   var small=matchMedia('(max-width:760px)').matches;
   /* ?v は焼き直した街を確実に読ませるための番号。焼き直したら上げる */
-  function src(n){ return 'naoto-assets/street/'+n+(small?'@700w':'')+'.webp?v=5'; }
+  function src(n){ return 'naoto-assets/street/'+n+(small?'@700w':'')+'.webp?v=6'; }
   function load(i){
     var el=layers[i];
     if(!el||el.dataset.loaded) return;
