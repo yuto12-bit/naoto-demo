@@ -136,7 +136,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .more.is-open .more__it.is-rest{display:block}
 /* 「もっと見る」は行き先ではなく開け閉めなので、券ではなく角の立った箱。
    丸い錠剤の形は浮いている「相談する」に譲る */
-.more__btn{display:inline-flex;align-items:center;gap:.75rem;margin-top:clamp(1.4rem,4vh,2.2rem);
+.more__btn{display:flex;width:fit-content;margin-inline:auto;
+  align-items:center;gap:.75rem;margin-top:clamp(1.4rem,4vh,2.2rem);
   padding:.62rem 1.15rem;border:1.5px solid var(--ink);background:#FFFEFB;
   font-family:inherit;cursor:pointer;color:var(--ink);
   box-shadow:0 .25rem .7rem rgba(20,17,15,.09);
@@ -223,7 +224,11 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 /* ステッカーの段は地色が少し濃いので、ノッチもその色で抜く */
 /* ステッカーの段は地色が少し濃いので、ノッチもその色で抜く。
    券は並びの一員。横に伸びないよう左で止める */
-.sticker__btn{justify-self:start;--notch-bg:#EFECE6}
+/* 狭い画面では券が一段ぶん独り立ちするので真ん中に。
+   広い画面では左の文の列の一員なので、見出しや SET／SHOP と頭をそろえる。
+   上の media より後ろに置かないと効かない（media は強さを足さない） */
+.sticker__btn{justify-self:center;--notch-bg:#EFECE6}
+@media(min-width:861px){ .sticker__btn{justify-self:start} }
 
 .lane{display:flex;align-items:flex-end;gap:clamp(1rem,2.6vw,2rem);width:max-content;
   padding:0 2vw}
