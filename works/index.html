@@ -23,7 +23,8 @@
   --im-paper:url("../naoto-assets/tile/paper-white@512w.webp");
   --im-grain:url("../naoto-assets/overlay/photocopy-grain@420w.webp");
   --im-icon:url("../naoto-works/works/icon-face-cut@400w.webp");
-  --im-plate:url("../naoto-hand/hand/sushi-plate@400w.webp");}
+  --im-plate:url("../naoto-hand/hand/sushi-plate@400w.webp");
+  --im-torn:url("../naoto-assets/torn/torn-paper-all-sides@480w.webp");}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Shippori Mincho",serif;color:var(--ink);
   background:var(--paper) var(--im-paper) repeat;background-size:320px}
@@ -134,20 +135,34 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 /* 開くまでは隠しておく */
 .more__it.is-rest{display:none}
 .more.is-open .more__it.is-rest{display:block}
-/* 「もっと見る」は行き先ではなく開け閉めなので、券ではなく角の立った箱。
-   丸い錠剤の形は浮いている「相談する」に譲る */
+/* ===== 紙切れ：ページの中の「押すところ」 =====
+   ちぎった紙の切れ端に書いて、置いてある体。縁は破れ目まかせで、
+   角も枠もない。少しだけ傾けて、手で置いたように見せる。
+   浮いている「相談する」は丸くて朱色のまま。こちらは紙もので顔を分ける。
+   カーソルを乗せると、拾い上げるように浮いて傾きが戻る */
+.scrap{display:inline-flex;align-items:center;gap:.85rem;
+  padding:1rem 1.8rem .95rem 1.55rem;text-decoration:none;color:var(--ink);
+  font-family:inherit;cursor:pointer;border:0;
+  background:var(--im-torn) center/100% 100% no-repeat;
+  filter:drop-shadow(3px 5px 7px rgba(20,17,15,.2)) drop-shadow(1px 1px 2px rgba(20,17,15,.12));
+  transition:translate .22s ease,rotate .22s ease,filter .22s ease}
+.scrap__in{display:grid;gap:.18rem;text-align:left}
+.scrap__k{font-family:Anton,sans-serif;font-size:.56rem;letter-spacing:.24em;color:var(--vermil)}
+.scrap b{font-weight:900;font-size:.82rem;letter-spacing:.05em;line-height:1.4}
+.scrap svg{width:1.05rem;height:auto;display:block;transition:translate .22s ease}
+.scrap:hover,.scrap:focus-visible{translate:0 -3px;rotate:0deg;
+  filter:drop-shadow(4px 9px 13px rgba(20,17,15,.26)) drop-shadow(1px 2px 3px rgba(20,17,15,.14))}
+.scrap:hover svg,.scrap:focus-visible svg{translate:3px 0}
+.scrap:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.scrap,.scrap svg{transition:none}}
+
+/* 「もっと見る」も紙切れ。額の並びの真ん中に置く */
 .more__btn{display:flex;width:fit-content;margin-inline:auto;
-  align-items:center;gap:.75rem;margin-top:clamp(1.4rem,4vh,2.2rem);
-  padding:.62rem 1.15rem;border:1.5px solid var(--ink);background:#FFFEFB;
-  font-family:inherit;cursor:pointer;color:var(--ink);
-  box-shadow:0 .25rem .7rem rgba(20,17,15,.09);
-  transition:background .2s ease,color .2s ease}
-.more__btn b{font-weight:900;font-size:.8rem;letter-spacing:.06em}
+  margin-top:clamp(1.4rem,4vh,2.2rem);rotate:-1deg}
 /* 墨の三角。開いているあいだは上を向く */
 .more__btn i{width:0;height:0;border-left:.3rem solid transparent;border-right:.3rem solid transparent;
   border-top:.42rem solid currentColor;transition:rotate .2s ease}
 .more.is-open .more__btn i{rotate:180deg}
-.more__btn:hover,.more__btn:focus-visible{background:var(--ink);color:var(--paper)}
 
 /* ===== LINEスタンプ ===== */
 .sticker{position:relative;z-index:2;border-top:4px solid var(--ink);
@@ -195,39 +210,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
 .sticker__grid li:nth-child(2n){rotate:1.2deg}
 .sticker__grid li:nth-child(3n){rotate:-1.4deg}
 .sticker__grid img{display:block;width:100%;height:auto}
-/* ===== 券：ページの中の「押すところ」 =====
-   ABOUT の半券と同じ仕立て。角は立てたまま、紙の地に墨の罫を回し、
-   右の端はミシン目で切り離せる体裁にして、そこに矢印を置く。
-   浮いている「相談する」は丸くて朱色のまま。こちらは紙もので通して顔を分ける */
-.tkt{--stub:2.7rem;--notch:12px;--notch-bg:var(--paper);
-  position:relative;display:inline-grid;grid-template-columns:minmax(0,1fr) var(--stub);
-  align-items:stretch;text-decoration:none;color:var(--ink);background:#FFFEFB;
-  border:1.5px solid var(--ink);box-shadow:0 .25rem .7rem rgba(20,17,15,.09);
-  transition:translate .24s ease,box-shadow .24s ease}
-.tkt__in{padding:.62rem 1rem .66rem;display:grid;gap:.2rem;text-align:left}
-.tkt__k{font-family:Anton,sans-serif;font-size:.56rem;letter-spacing:.24em;color:var(--vermil)}
-.tkt__b{font-weight:900;font-size:.84rem;letter-spacing:.04em;line-height:1.5}
-.tkt__end{display:grid;place-items:center;border-left:2px dashed rgba(20,17,15,.38);
-  transition:border-color .24s ease}
-.tkt__end svg{width:1.05rem;height:auto;display:block;transition:translate .24s ease}
-/* ミシン目の上下にノッチ。紙を切り抜いた体にする */
-.tkt::before,.tkt::after{content:"";position:absolute;z-index:2;
-  width:var(--notch);height:var(--notch);border-radius:50%;
-  background:var(--notch-bg);border:1.5px solid var(--ink);right:var(--stub)}
-.tkt::before{top:0;translate:50% -50%}
-.tkt::after{bottom:0;translate:50% 50%}
-.tkt:hover,.tkt:focus-visible{translate:0 -2px;box-shadow:0 .5rem 1.2rem rgba(20,17,15,.16)}
-.tkt:hover .tkt__end,.tkt:focus-visible .tkt__end{border-left-color:var(--vermil)}
-.tkt:hover .tkt__end svg,.tkt:focus-visible .tkt__end svg{translate:2px 0}
-.tkt:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){.tkt,.tkt__end,.tkt__end svg{transition:none}}
-/* ステッカーの段は地色が少し濃いので、ノッチもその色で抜く */
-/* ステッカーの段は地色が少し濃いので、ノッチもその色で抜く。
-   券は並びの一員。横に伸びないよう左で止める */
-/* 狭い画面では券が一段ぶん独り立ちするので真ん中に。
+/* 狭い画面では紙切れが一段ぶん独り立ちするので真ん中に。
    広い画面では左の文の列の一員なので、見出しや SET／SHOP と頭をそろえる。
    上の media より後ろに置かないと効かない（media は強さを足さない） */
-.sticker__btn{justify-self:center;--notch-bg:#EFECE6}
+.sticker__btn{justify-self:center;rotate:.9deg}
 @media(min-width:861px){ .sticker__btn{justify-self:start} }
 
 .lane{display:flex;align-items:flex-end;gap:clamp(1rem,2.6vw,2rem);width:max-content;
@@ -621,7 +607,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
           </span>
         </li>
     </ul>
-    <button class="more__btn" type="button" aria-expanded="false"><b>もっと見る</b><i aria-hidden="true"></i></button>
+    <button class="scrap more__btn" type="button" aria-expanded="false"><b>もっと見る</b><i aria-hidden="true"></i></button>
   </div>
 </section>
 
@@ -659,9 +645,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
           <li><img src="../naoto-works/sticker/osushi-906932925.webp" alt="" loading="lazy" decoding="async"></li>
       </ul>
     </div>
-      <a class="tkt sticker__btn" href="https://line.me/S/sticker/36952174/?lang=ja&amp;utm_source=gnsh_stickerDetail" target="_blank" rel="noopener">
-        <span class="tkt__in"><span class="tkt__k">LINE STORE</span><span class="tkt__b">スタンプを見る</span></span>
-        <span class="tkt__end" aria-hidden="true"><svg viewBox="0 0 600 200"><path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg></span>
+      <a class="scrap sticker__btn" href="https://line.me/S/sticker/36952174/?lang=ja&amp;utm_source=gnsh_stickerDetail" target="_blank" rel="noopener">
+        <span class="scrap__in"><span class="scrap__k">LINE STORE</span><b>スタンプを見る</b></span>
+        <svg viewBox="0 0 600 200" aria-hidden="true"><path d="M0 66h380V0l220 100-220 100v-66H0z" fill="currentColor"/></svg>
       </a>
   </div>
 </section>
