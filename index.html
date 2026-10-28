@@ -303,10 +303,12 @@ html.ready .nav{opacity:1}
    左の柱＝青い舞台（ポスターと流れる言葉）、右の柱＝説明の紙。
    説明はコラボの高さぶん引き上げ、中で貼り付けて並走させる。 */
 @media(min-width:1000px){
-  /* 左 52% にポスターと言葉を収める。行間もあいだも広げてゆったり読ませる */
-  .collab__bg i{right:48%}
-  .collab__flow{right:48%;gap:clamp(1.8rem,4.8vh,3.6rem);
-    padding:clamp(4rem,11vh,7rem) clamp(1.8rem,4.4vw,4.4rem)}
+  /* 左 52% にポスターと言葉を収める。上のヘッダーのぶんを空けて、
+     絵も言葉もヘッダーの下の1画面に全部おさめる */
+  .collab__bg i{right:48%;bottom:clamp(.4rem,2vh,1.6rem);
+    top:calc(var(--sh-h,62px) + clamp(.4rem,1.6vh,1.2rem))}
+  .collab__flow{right:48%;top:var(--sh-h,62px);gap:clamp(1.1rem,4.8vh,3.6rem);
+    padding:clamp(1.6rem,8vh,7rem) clamp(1.8rem,4.4vw,4.4rem)}
   .blk{width:min(34vw,430px)}
   .blk--en{line-height:2}
   .b1{font-size:clamp(1.5rem,3vw,2.7rem);line-height:1.5}
@@ -314,21 +316,23 @@ html.ready .nav{opacity:1}
   .b3{font-size:clamp(.7rem,1.05vw,.92rem)}
   .b3 span+span{margin-top:.9em}
   .b4{font-size:clamp(.64rem,.95vw,.84rem)}
-  .b4::before{margin-bottom:1.5rem}
-  .collab__tag{top:clamp(4rem,8vh,5.6rem)}
+  .b4::before{margin-bottom:clamp(.8rem,1.8vh,1.5rem)}
+  .collab__tag{top:calc(var(--sh-h,62px) + clamp(.6rem,2vh,1.4rem))}
 
   /* 右 48% は説明の紙。隣で止まったまま、左の言葉が流れる。
-     境目に線は引かず、余白だけで分ける */
+     境目に線は引かず、余白だけで分ける。
+     縦の空きは画面の高さに追わせて、低い画面でも1画面に収める */
   .note{margin:-300vh 0 0 52%;width:48%;height:300vh;padding:0;
     border-top:4px solid var(--ink);border-left:0}
   .note__in{position:sticky;top:0;min-height:100vh;max-width:none;margin:0;
     display:flex;flex-direction:column;justify-content:center;
-    padding:clamp(2rem,6vh,4rem) clamp(2.4rem,5.2vw,5.6rem)}
-  .note h3{margin-bottom:clamp(1.8rem,4.2vh,2.8rem)}
+    padding:calc(var(--sh-h,62px) + clamp(.8rem,2.8vh,2.2rem))
+            clamp(2.4rem,5.2vw,5.6rem) clamp(1.4rem,4.4vh,3.4rem)}
+  .note h3{margin-bottom:clamp(1.1rem,4.2vh,2.8rem)}
   .note p{max-width:32em}
-  .note p+p{margin-top:2em}
-  .note dl{align-self:stretch;margin:clamp(2.4rem,6vh,3.6rem) 0 0;
-    padding:clamp(1.8rem,4.5vh,2.8rem) 0 0;row-gap:.95rem;
+  .note p+p{margin-top:clamp(1.3em,3.6vh,2em)}
+  .note dl{align-self:stretch;margin:clamp(1.4rem,6vh,3.6rem) 0 0;
+    padding:clamp(1.1rem,4.5vh,2.8rem) 0 0;row-gap:clamp(.5rem,1.6vh,.95rem);
     border-top:2px solid rgba(20,17,15,.18);border-left:0}
 
   /* 舞台のあとの空き。紙だけが続くと抜けて見えるので短くする */
