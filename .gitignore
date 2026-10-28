@@ -16,3 +16,5 @@ __*.html
 
 # もらった画像セット（サイトからは参照していない。手元には残す）
 naoto-assets/street/homepage-image-set*/
+naoto-assets/street/street-pc-1400.webp
+naoto-assets/street/street-sp-700.webp
