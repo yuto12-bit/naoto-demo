@@ -13,3 +13,6 @@ naoto-assets/photo/
 
 # 作業中に出る一時ファイル
 __*.html
+
+# もらった画像セット（サイトからは参照していない。手元には残す）
+naoto-assets/street/homepage-image-set*/
