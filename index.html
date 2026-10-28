@@ -311,6 +311,34 @@ html.ready .nav{opacity:1}
 .foot a{color:inherit;text-decoration:none}
 .foot a:hover{color:var(--vermil)}
 
+
+/* ===== 広い画面の手入れ（スマホには掛からない） ===== */
+@media(min-width:861px){
+  /* コラボの言葉。位置の決め打ちをやめて上から順に流す。重なりようがなくなる */
+  .collab__flow{display:flex;flex-direction:column;justify-content:center;
+    gap:clamp(1.2rem,3.2vh,2.4rem);
+    padding:clamp(5rem,13vh,8rem) clamp(1.2rem,5vw,4rem)}
+  .blk{position:static;width:min(44vw,540px)}
+  .b1{font-size:clamp(1.7rem,4.2vw,3.4rem)}
+
+  /* 行き先の→を、日本語の行の真ん中にそろえる。
+     ずらす量＝日本語の行の高さの半分 − 矢印の高さの半分（矢印は横:縦=3:1） */
+  .togo{--jp:clamp(1.4rem,4.6vw,2.5rem);--arw:clamp(56px,7vw,92px)}
+  .togo__jp{font-size:var(--jp)}
+  .togo a{align-items:flex-start}
+  .togo__arw{width:var(--arw);margin-top:calc(var(--jp) * 1.3 / 2 - var(--arw) / 6)}
+
+  .pair__row{--jp:clamp(1.3rem,4.2vw,2.3rem);--arw:clamp(50px,6.4vw,84px)}
+  .pair__jp{font-size:var(--jp)}
+  .pair__in{align-items:flex-start}
+  .pair__arw{width:var(--arw);margin-top:calc(var(--jp) * 1.3 / 2 - var(--arw) / 6)}
+
+  /* 見出しが大きすぎたので詰める */
+  .gate h2{font-size:clamp(1.3rem,4.2vw,2.3rem)}
+
+  /* COLLABORATION の札が上のヘッダーに隠れていた。その下へ逃がす */
+  .collab__tag{top:clamp(5rem,10vh,7rem)}
+}
 </style><link rel="stylesheet" href="assets/css/site-header.css">
 <script src="assets/js/site-header.js" defer></script>
 <script>try{var v=sessionStorage.getItem("sh-nav");if(v){sessionStorage.removeItem("sh-nav");var o=JSON.parse(v),d=document.documentElement;d.setAttribute("data-sh-nav",v);d.style.setProperty("--sh-to",'"'+o.k+'"');d.style.setProperty("--sh-jp",'"'+o.j+'"');d.classList.add("sh-arrive")}}catch(e){}</script>

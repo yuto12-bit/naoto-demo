@@ -321,6 +321,14 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:95;
   .frame,.info{opacity:1!important;transform:none!important;transition:none}
   .intro .cue::after{animation:none}
 }
+
+/* ===== 広い画面の手入れ（スマホには掛からない） ===== */
+@media(min-width:861px){
+  .intro h1{font-size:clamp(1.7rem,5.2vw,2.8rem)}
+  .info__no{font-size:clamp(2.2rem,5.5vw,3rem)}
+  .belt__count b{font-size:clamp(2.4rem,7vw,3.6rem)}
+  .next__jp{font-size:clamp(1.2rem,3.6vw,2.1rem)}
+}
 </style><link rel="stylesheet" href="../assets/css/site-header.css">
 <script src="../assets/js/site-header.js" defer></script>
 <script>try{var v=sessionStorage.getItem("sh-nav");if(v){sessionStorage.removeItem("sh-nav");var o=JSON.parse(v),d=document.documentElement;d.setAttribute("data-sh-nav",v);d.style.setProperty("--sh-to",'"'+o.k+'"');d.style.setProperty("--sh-jp",'"'+o.j+'"');d.classList.add("sh-arrive")}}catch(e){}</script>

@@ -128,6 +128,11 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
 .foot a:hover{color:var(--vermil)}
 @media(max-width:760px){ .nav a{display:none} }
 @media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
+
+/* ===== 広い画面の手入れ（スマホには掛からない） ===== */
+@media(min-width:861px){
+  .head h1{font-size:clamp(1.6rem,5vw,2.6rem)}
+}
 </style><link rel="stylesheet" href="../assets/css/site-header.css">
 <script src="../assets/js/site-header.js" defer></script>
 <script>try{var v=sessionStorage.getItem("sh-nav");if(v){sessionStorage.removeItem("sh-nav");var o=JSON.parse(v),d=document.documentElement;d.setAttribute("data-sh-nav",v);d.style.setProperty("--sh-to",'"'+o.k+'"');d.style.setProperty("--sh-jp",'"'+o.j+'"');d.classList.add("sh-arrive")}}catch(e){}</script>
