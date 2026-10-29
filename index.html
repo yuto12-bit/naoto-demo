@@ -181,6 +181,25 @@ html.ready .nav{opacity:1}
 .collab--niko .collab__bg::after{background:rgba(243,241,236,.5)}
 .collab--niko .blk{color:var(--ink)}
 .collab--niko .collab__tag{color:var(--ink)}
+
+/* 実物のキャンペーンサイトを、スマホの形に入れて舞台の右に置く。
+   中身は 400px 幅で描かせてから縮める。枠の幅を変えるときは
+   --ph（縮める倍率）も一緒に変えること。400 × --ph ＝ 枠の内側の幅 */
+.phone{position:absolute;z-index:3;top:50%;translate:0 -50%;
+  right:clamp(1.2rem,6vw,5rem);width:264px;--ph:.62;
+  aspect-ratio:9/19;border:8px solid var(--ink);border-radius:30px;
+  background:#fff;overflow:hidden;
+  box-shadow:0 1.4rem 3rem rgba(20,17,15,.26),0 .3rem .8rem rgba(20,17,15,.16)}
+/* 受話口のあたり */
+.phone::before{content:"";position:absolute;top:0;left:50%;translate:-50% 0;
+  width:40%;height:15px;background:var(--ink);border-radius:0 0 10px 10px;z-index:2}
+/* 高さは枠の内側より余らせる。足りないと下に白帯が出る */
+.phone__in{position:absolute;top:0;left:0;width:400px;height:1100px;
+  transform-origin:top left;transform:scale(var(--ph))}
+.phone iframe{width:100%;height:100%;border:0;display:block}
+/* 画面が狭いとひとまわり小さく。さらに狭いと文字と重なるので出さない */
+@media(max-width:1199px){ .phone{width:216px;--ph:.5} }
+@media(max-width:860px){ .phone{display:none} }
 /* 文字が乗る側だけ落とす。全面を暗くしない */
 .collab__bg i::after{content:"";position:absolute;inset:0;
   background:linear-gradient(100deg,rgba(20,17,15,.62) 0,rgba(20,17,15,.34) 42%,transparent 72%)}
@@ -325,6 +344,8 @@ html.ready .nav{opacity:1}
      舞台の高さそのものを縮める */
   .collab__bg{top:var(--sh-h,62px);height:calc(100svh - var(--sh-h,62px))}
   .collab__bg i{right:48%}
+  /* 右48%は説明の紙が上に乗る。スマホのモックは舞台の見えている側へ寄せる */
+  .collab--niko .phone{right:calc(48% + clamp(1rem,2.2vw,2.6rem))}
   .collab__flow{right:48%;gap:clamp(1.1rem,4.8vh,3.6rem);
     padding:clamp(1rem,7vh,7rem) clamp(1.8rem,4.4vw,4.4rem)}
   .blk{width:min(34vw,430px)}
@@ -422,6 +443,13 @@ html.ready .nav{opacity:1}
   <div class="collab__bg">
     <i></i>
     <p class="collab__tag">COLLABORATION</p>
+    <div class="phone">
+      <div class="phone__in">
+        <iframe src="https://www.nikoand.jp/2026_campaign/deauniau2026/"
+          title="niko and… であうにあう 2026 A/W キャンペーンサイト"
+          loading="lazy" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer"></iframe>
+      </div>
+    </div>
 
     <div class="collab__flow">
       <p class="blk blk--en b1">niko and&hellip;<br>&times; NAOTO OTAKA</p>
