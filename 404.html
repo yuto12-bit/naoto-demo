@@ -1,0 +1,67 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ページが見つかりません — NAOTO OTAKA</title>
+<meta name="description" content="お探しのページは見つかりませんでした。">
+<link rel="icon" href="/assets/ogp/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/ogp/favicon-180.png">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* 存在しないURLに来たときの1枚。GitHub Pages はどの階層の迷子にも
+   このファイルを返すので、読み込むものはすべて / から始める絶対パスにする。
+   相対パスだと /works/なんとか から来た人だけ崩れる */
+:root{--ink:#14110F;--ink-12:rgba(20,17,15,.12);--paper:#E9E8E6;--vermil:#D3381C;
+  --im-paper:url("/naoto-assets/tile/paper-white@512w.webp");}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Zen Kaku Gothic New",sans-serif;color:var(--ink);
+  background:var(--paper) var(--im-paper) repeat;background-size:320px;
+  min-height:100svh;display:grid;place-items:center;
+  padding:calc(var(--sh-h,62px) + 2rem) clamp(1.4rem,6vw,4rem) clamp(3rem,10vh,6rem)}
+
+.lost{max-width:34rem;text-align:left}
+/* 大きな 404。中を抜いて、紙に押した型のように */
+.lost__no{display:block;font-family:Anton,sans-serif;font-size:clamp(5rem,22vw,11rem);
+  line-height:.85;letter-spacing:.04em;color:transparent;
+  -webkit-text-stroke:2px var(--ink);margin-bottom:clamp(1.2rem,4vh,2.2rem)}
+.lost__h{font-weight:900;font-size:clamp(1.15rem,3.4vw,1.7rem);line-height:1.6}
+.lost__h::after{content:"";display:block;width:2.6rem;height:2px;
+  background:var(--vermil);margin-top:1.1rem}
+.lost__p{font-size:clamp(.84rem,1.5vw,.95rem);line-height:2.05;opacity:.76;
+  margin-top:clamp(1.1rem,3.4vh,1.8rem)}
+
+/* 行き先。サイトのほかの「押すところ」と同じ、角の立った紙の箱 */
+.lost__go{display:grid;gap:.7rem;margin-top:clamp(1.8rem,5vh,2.8rem);
+  grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr))}
+.lost__go a{display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+  padding:.8rem 1rem;background:#FFFEFB;border:1.5px solid var(--ink);
+  color:inherit;text-decoration:none;
+  box-shadow:0 .25rem .7rem rgba(20,17,15,.09);
+  transition:background .2s ease,color .2s ease}
+.lost__go a:hover,.lost__go a:focus-visible{background:var(--ink);color:var(--paper)}
+.lost__go b{font-family:Anton,sans-serif;font-size:.72rem;letter-spacing:.18em;font-weight:400}
+.lost__go span{font-size:.76rem;opacity:.7}
+.lost__go a:hover span,.lost__go a:focus-visible span{opacity:.9}
+@media (prefers-reduced-motion:reduce){ .lost__go a{transition:none} }
+</style><link rel="stylesheet" href="/assets/css/site-header.css">
+<script src="/assets/js/site-header.js" defer></script>
+</head><body><header class="sh">
+<a class="sh__id" href="/" aria-label="OSUSHI JAPAN ART ホーム"><i class="sh__logo" aria-hidden="true"></i><b>OSUSHI JAPAN ART</b></a>
+<nav class="sh__nav" aria-label="メインナビゲーション"><a href="/works/">WORKS</a><a href="/faq/">FAQ</a><a href="/about/">ABOUT</a><a href="/contact/">CONTACT</a></nav>
+<button class="sh__btn" type="button" id="sh-btn" aria-expanded="false" aria-controls="sh-menu" aria-label="メニューを開く"><i aria-hidden="true"></i></button>
+</header>
+<div class="sh-menu" id="sh-menu" hidden><nav aria-label="サイト内（全体）"><a href="/"><em>HOME</em><span>トップ</span></a><a href="/works/"><em>WORKS</em><span>作品</span></a><a href="/faq/"><em>FAQ</em><span>ご依頼について</span></a><a href="/about/"><em>ABOUT</em><span>大高成について</span></a><a href="/contact/"><em>CONTACT</em><span>お問い合わせ</span></a></nav>
+<p class="sh-menu__foot">OSUSHI JAPAN ART / NAOTO OTAKA<br>兵庫県加古郡</p></div>
+
+<main class="lost">
+  <span class="lost__no" aria-hidden="true">404</span>
+  <h1 class="lost__h">このページは見つかりませんでした</h1>
+  <p class="lost__p">住所が変わったか、入力の途中が欠けているのかもしれません。下のどれかからお進みください。</p>
+  <nav class="lost__go" aria-label="おもなページ">
+    <a href="/"><b>HOME</b><span>トップ</span></a>
+    <a href="/works/"><b>WORKS</b><span>作品</span></a>
+    <a href="/faq/"><b>FAQ</b><span>ご依頼について</span></a>
+    <a href="/about/"><b>ABOUT</b><span>大高成について</span></a>
+    <a href="/contact/"><b>CONTACT</b><span>お問い合わせ</span></a>
+  </nav>
+</main>
+</body></html>
