@@ -24,6 +24,7 @@
   --im-sign:url("naoto-hand/hand/naoto-otaka-signature.webp");
   --im-plate:url("naoto-hand/hand/sushi-plate@700w.webp");
   --im-poster:url("naoto-works/works/maison-de-vii@1400w.webp");
+  --im-poster2:url("naoto-works/works/niko-and-2026@1400w.webp");
   --im-grain:url("naoto-assets/overlay/photocopy-grain@760w.webp");}
 *{box-sizing:border-box;margin:0;padding:0}
 html.loading,html.loading body{overflow:hidden}
@@ -169,6 +170,17 @@ html.ready .nav{opacity:1}
 .collab__bg.is-dim::after{opacity:1}
 @media (prefers-reduced-motion:reduce){.collab__bg::after{transition:none}}
 .collab__bg i{position:absolute;inset:0;background:var(--im-poster) center/contain no-repeat}
+/* 2枚目（niko and…）。板が紙色なので、はみ出した地も紙色にそろえる。
+   1枚目は濃紺のポスターに白い字なので左側を黒く落としているが、
+   こちらは紙なので逆。左側を白く飛ばして、字は墨にする。
+   そうしないと絵が泥色に沈む */
+.collab--niko .collab__bg{background:#EFEDE8}
+.collab--niko .collab__bg i{background-image:var(--im-poster2)}
+.collab--niko .collab__bg i::after{
+  background:linear-gradient(100deg,rgba(243,241,236,.92) 0,rgba(243,241,236,.74) 40%,rgba(243,241,236,.12) 68%,transparent 80%)}
+.collab--niko .collab__bg::after{background:rgba(243,241,236,.5)}
+.collab--niko .blk{color:var(--ink)}
+.collab--niko .collab__tag{color:var(--ink)}
 /* 文字が乗る側だけ落とす。全面を暗くしない */
 .collab__bg i::after{content:"";position:absolute;inset:0;
   background:linear-gradient(100deg,rgba(20,17,15,.62) 0,rgba(20,17,15,.34) 42%,transparent 72%)}
@@ -209,6 +221,8 @@ html.ready .nav{opacity:1}
   font-size:clamp(.72rem,1.25vw,.86rem)}
 .note dt{font-family:Anton,sans-serif;letter-spacing:.2em;opacity:.55;white-space:nowrap}
 .note dd{margin:0}
+.note dd a{color:inherit;text-decoration:none;border-bottom:1.5px solid var(--vermil);padding-bottom:.1em}
+.note dd a:hover,.note dd a:focus-visible{color:var(--vermil)}
 /* 広い画面。640pxの1列だと右が大きく空くので、1180の枠にそろえて
    文を左、内訳を右に置く。左端は足もとと同じ位置に来る */
 @media(min-width:861px){
@@ -404,6 +418,36 @@ html.ready .nav{opacity:1}
   </div>
 </section>
 
+<section class="collab collab--niko">
+  <div class="collab__bg">
+    <i></i>
+    <p class="collab__tag">COLLABORATION</p>
+
+    <div class="collab__flow">
+      <p class="blk blk--en b1">niko and&hellip;<br>&times; NAOTO OTAKA</p>
+      <p class="blk blk--en b2">ILLUSTRATION FOR<br>&ldquo;DEAU NI AU&rdquo; 2026 A/W</p>
+      <p class="blk blk--en b3">
+        <span>CLIENT &mdash; niko and&hellip;</span>
+        <span>AGENCY &mdash; 博報堂Gravity</span>
+      </p>
+      <p class="blk blk--en b4">2026 AUTUMN &amp; WINTER CAMPAIGN</p>
+    </div>
+  </div>
+</section>
+<section class="note">
+  <div class="note__in">
+    <h3>ABOUT THIS WORK</h3>
+    <p>niko and&hellip; の2026年 秋冬キャンペーン「であうにあう」で、イラストレーションを担当しました。キャンペーンサイトに寄せられたエピソードに、一本ずつ絵をつけています。</p>
+    <p>テーマは <b>親しき仲にも出会いあり。</b> ── 見慣れた人、見慣れたものの中にも、まだ出会っていないものがある。日常のひとこまを線で起こしました。</p>
+    <dl>
+      <dt>CLIENT</dt><dd>niko and&hellip;</dd>
+      <dt>AGENCY</dt><dd>博報堂Gravity</dd>
+      <dt>WORK</dt><dd>イラストレーション</dd>
+      <dt>SITE</dt><dd><a href="https://www.nikoand.jp/2026_campaign/deauniau2026/" target="_blank" rel="noopener">nikoand.jp</a></dd>
+    </dl>
+  </div>
+</section>
+
 <script>
 document.documentElement.classList.add('loading');
 function go(){ document.documentElement.classList.remove('loading');
@@ -560,16 +604,19 @@ figs.forEach(function(el){io.observe(el);});
 <script>
 
 (function(){
-  var sec=document.querySelector('.collab'), blks=[].slice.call(document.querySelectorAll('.blk'));
-  var bg=sec.querySelector('.collab__bg');
+  /* 舞台は複数ある。それぞれ自分のスクロール量で言葉を出す */
   var marks=[.06,.26,.46,.66];
-  function upd(){
-    var r=sec.getBoundingClientRect(), total=sec.offsetHeight-innerHeight;
-    var p=Math.min(Math.max(-r.top/total,0),1);
-    blks.forEach(function(b,i){ b.classList.toggle('on', p>=marks[i]); });
-    if(bg) bg.classList.toggle('is-dim', p>=marks[0]);
-  }
-  addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
+  [].slice.call(document.querySelectorAll('.collab')).forEach(function(sec){
+    var blks=[].slice.call(sec.querySelectorAll('.blk'));
+    var bg=sec.querySelector('.collab__bg');
+    function upd(){
+      var r=sec.getBoundingClientRect(), total=sec.offsetHeight-innerHeight;
+      var p=Math.min(Math.max(-r.top/total,0),1);
+      blks.forEach(function(b,i){ b.classList.toggle('on', p>=marks[i]); });
+      if(bg) bg.classList.toggle('is-dim', p>=marks[0]);
+    }
+    addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
+  });
 })();
 </script>
 </body></html>
