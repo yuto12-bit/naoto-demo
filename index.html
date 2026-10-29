@@ -143,6 +143,9 @@ html.ready .nav{opacity:1}
 
 .empty{height:40vh}
 @media(max-width:760px){ .nav a{display:none} .garden{height:170vh}
+  /* スマホは街が引いて見えるので寄せる。縦の位置は人のいる帯が
+     画面の中ほどに来るところ。左右は 0.17〜0.83 が映り、端の人も入る */
+  .street i{background-size:auto 150%;background-position:center 62%}
   .fg{height:calc(var(--h) * .52)}
   .say{width:62vw}
   .say--jp{font-size:.8rem}
