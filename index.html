@@ -199,7 +199,15 @@ html.ready .nav{opacity:1}
 .phone iframe{width:100%;height:100%;border:0;display:block}
 /* 画面が狭いとひとまわり小さく。さらに狭いと文字と重なるので出さない */
 @media(max-width:1199px){ .phone{width:216px;--ph:.5} }
-@media(max-width:860px){ .phone{display:none} }
+/* 狭い画面は、重ねずに左右2カラム。文字を左、モックを右に置く。
+   文字の幅を 48vw に詰めて、モックのぶんの場所をつくる。
+   モックの幅は px で決め打ち（--ph は 400 × --ph ＝ 内側の幅）*/
+@media(max-width:860px){
+  .collab--niko .blk{width:46vw}
+  .collab--niko .phone{width:150px;--ph:.335;right:clamp(.8rem,4vw,1.4rem);
+    border-width:6px;border-radius:22px;box-shadow:0 .8rem 1.8rem rgba(20,17,15,.24)}
+  .collab--niko .phone::before{height:10px}
+}
 /* 文字が乗る側だけ落とす。全面を暗くしない */
 .collab__bg i::after{content:"";position:absolute;inset:0;
   background:linear-gradient(100deg,rgba(20,17,15,.62) 0,rgba(20,17,15,.34) 42%,transparent 72%)}
