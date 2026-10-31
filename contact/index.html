@@ -215,6 +215,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
         <p class="state" id="sending"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3" opacity=".2"/><path d="M21 12a9 9 0 0 0-9-9" fill="none" stroke="currentColor" stroke-width="3"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur=".85s" repeatCount="indefinite"/></path></svg>送信中…</p>
         <p class="state" id="done"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12.4l5.6 5.6L20.5 6.6" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>送信しました。3営業日以内にご返信します。</p>
         <p class="state" id="fail"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 6.8v6.4" stroke="currentColor" stroke-width="3.4"/><circle cx="12" cy="17.4" r="1.7" fill="currentColor"/></svg>送信できませんでした。お手数ですがメールでご連絡ください。</p>
+        <p class="state" id="unsure"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 7.6v5" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.6" fill="currentColor"/></svg>受付できたか確認できませんでした。届いている場合もあります。入力は残していますので、少し待ってからもう一度お試しいただくか、メールでご連絡ください。</p>
       </form>
     </div>
   </div>
@@ -238,7 +239,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
 <script>
 var ENDPOINT='';
 var f=document.getElementById('cf'), sb=document.getElementById('sb');
-var st={s:document.getElementById('sending'),d:document.getElementById('done'),f:document.getElementById('fail')};
+var st={s:document.getElementById('sending'),d:document.getElementById('done'),
+        f:document.getElementById('fail'),u:document.getElementById('unsure')};
 function show(el){Object.values(st).forEach(function(x){x.classList.toggle('on',x===el);});}
 f.addEventListener('submit',function(e){
   e.preventDefault(); var ok=true, first=null;
@@ -257,14 +259,20 @@ f.addEventListener('submit',function(e){
     body:JSON.stringify(Object.fromEntries(new FormData(f)))})
    .then(function(r){
      /* fetch は 404 でも 500 でも成功扱いで返ってくる。中身まで見て判断する */
-     if(!r.ok) throw new Error('http '+r.status);
+     if(!r.ok) throw 0;
      return r.json();
    })
    .then(function(j){
-     if(!j || j.ok!==true) throw new Error('ng');
+     if(!j || typeof j.ok!=='boolean') throw 0;
+     /* 向こうが「受け付けなかった」と明言したときだけ、失敗と言い切る */
+     if(j.ok!==true) throw 'ng';
      show(st.d); f.reset();
    })
-   .catch(function(){ show(st.f); sb.disabled=false; });
+   .catch(function(e){
+     /* 通信が切れた・応答を読めなかった場合は、保存されている見込みもある。
+        「失敗」と言い切らずに、分からないと伝える */
+     show(e==='ng' ? st.f : st.u); sb.disabled=false;
+   });
 });
 f.addEventListener('input',function(e){
   var w=e.target.closest('[data-f]'); if(w) w.classList.remove('is-err');
