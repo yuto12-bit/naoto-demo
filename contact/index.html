@@ -250,10 +250,21 @@ f.addEventListener('submit',function(e){
   if(!ok){ first.focus(); return; }
   if(f._hp.value) return;
   show(st.s); sb.disabled=true;
-  if(!ENDPOINT){ setTimeout(function(){show(st.d);},900); return; }
+  /* 送信先が未設定のあいだは、正直に「送れなかった」と出す。
+     届いていないのに「送信しました」と見せるのがいちばん悪い */
+  if(!ENDPOINT){ show(st.f); sb.disabled=false; return; }
   fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain'},
     body:JSON.stringify(Object.fromEntries(new FormData(f)))})
-   .then(function(){show(st.d);f.reset();}).catch(function(){show(st.f);sb.disabled=false;});
+   .then(function(r){
+     /* fetch は 404 でも 500 でも成功扱いで返ってくる。中身まで見て判断する */
+     if(!r.ok) throw new Error('http '+r.status);
+     return r.json();
+   })
+   .then(function(j){
+     if(!j || j.ok!==true) throw new Error('ng');
+     show(st.d); f.reset();
+   })
+   .catch(function(){ show(st.f); sb.disabled=false; });
 });
 f.addEventListener('input',function(e){
   var w=e.target.closest('[data-f]'); if(w) w.classList.remove('is-err');
