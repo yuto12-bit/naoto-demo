@@ -237,7 +237,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;
 </footer>
 
 <script>
-var ENDPOINT='';
+/* お問い合わせの送信先。Google Apps Script のウェブアプリ。
+   直したら、保存だけでなく『デプロイを管理』で新バージョンにすること */
+var ENDPOINT='https://script.google.com/macros/s/AKfycbyubA26E_3kQx6u59aHu31iJDf3VbETLePZzAPVc2PxUTeLKcvmojg2KCN-R8hf1bo/exec';
 var f=document.getElementById('cf'), sb=document.getElementById('sb');
 var st={s:document.getElementById('sending'),d:document.getElementById('done'),
         f:document.getElementById('fail'),u:document.getElementById('unsure')};
