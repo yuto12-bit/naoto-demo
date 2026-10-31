@@ -264,9 +264,13 @@ f.addEventListener('submit',function(e){
    })
    .then(function(j){
      if(!j || typeof j.ok!=='boolean') throw 0;
-     /* 向こうが「受け付けなかった」と明言したときだけ、失敗と言い切る */
-     if(j.ok!==true) throw 'ng';
-     show(st.d); f.reset();
+     if(j.ok===true){ show(st.d); f.reset(); return; }
+     /* 断られた理由で分ける。保存に手をつける前に弾かれたと分かるものだけ
+        「送信できませんでした」。保存の途中で落ちた（sheet / internal）は、
+        行が残っている見込みがあるので言い切らない */
+     var mada=['no-body','too-large','bad-json','bad-input',
+               'spam','too-long','required','email','busy'];
+     throw mada.indexOf(j.why)>=0 ? 'ng' : 0;
    })
    .catch(function(e){
      /* 通信が切れた・応答を読めなかった場合は、保存されている見込みもある。
