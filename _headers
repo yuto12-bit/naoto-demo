@@ -1,0 +1,27 @@
+# Cloudflare Pages に渡す配信の指示。
+# 画像は一度読んだらしばらく持っておいてもらう。このサイトは28MB・570枚が
+# ほぼ画像なので、ここが効くかどうかで2回目以降の表示が変わる。
+# 名前を変えずに中身を差し替えることがあるので、永久（immutable）にはせず
+# 30日で見直させる。すぐ反映したいときは URL に ?v= を足して別物にする。
+
+/naoto-assets/*
+  Cache-Control: public, max-age=2592000
+
+/naoto-works/*
+  Cache-Control: public, max-age=2592000
+
+/naoto-svg/*
+  Cache-Control: public, max-age=2592000
+
+/naoto-hand/*
+  Cache-Control: public, max-age=2592000
+
+/assets/*
+  Cache-Control: public, max-age=2592000
+
+# HTML は毎回確かめさせる。直したものがすぐ出るように
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
