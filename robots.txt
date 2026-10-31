@@ -1,4 +1,5 @@
-# 確認用の仮公開のあいだは検索を止める。
-# 本番公開のときに Allow に戻し、Sitemap 行を足すこと。
+# naotootaka.com 本番。検索に出す。
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://naotootaka.com/sitemap.xml
