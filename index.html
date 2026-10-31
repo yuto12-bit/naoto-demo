@@ -16,6 +16,20 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <!-- /@meta -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Person","@id":"https://naotootaka.com/#person",
+  "name":"大高成","alternateName":["NAOTO OTAKA","オスシジャパンアート","OSUSHI JAPAN ART"],
+  "jobTitle":"イラストレーター","url":"https://naotootaka.com/",
+  "image":"https://naotootaka.com/assets/ogp/ogp.png",
+  "sameAs":["https://www.instagram.com/osushi__japan__art/"],
+  "address":{"@type":"PostalAddress","addressCountry":"JP","addressRegion":"兵庫県","addressLocality":"加古郡"},
+  "knowsAbout":["イラストレーション","ファッションイラスト","ライブドローイング","人物画"]},
+ {"@type":"WebSite","@id":"https://naotootaka.com/#site",
+  "url":"https://naotootaka.com/","name":"NAOTO OTAKA — OSUSHI JAPAN ART",
+  "inLanguage":"ja","publisher":{"@id":"https://naotootaka.com/#person"}}
+]}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 
@@ -99,7 +113,11 @@ html.ready .nav{opacity:1}
 
 /* ===== ① トップ ===== */
 .hero{height:100svh;display:grid;place-content:center;position:relative}
-.sign{width:min(426px,54vw);aspect-ratio:568/367;
+/* 目には見せず、読み上げと検索にだけ届かせる文字。
+   署名は絵なので、見出しの中身が空のままだと検索に何も伝わらない */
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.sign{width:min(426px,54vw);aspect-ratio:568/367;position:relative;
   background:var(--im-sign) no-repeat center/contain;
   transform:translateY(-3.2vmin)}
 
@@ -415,7 +433,7 @@ html.ready .nav{opacity:1}
 
 
 <section class="hero">
-  <h1 class="sign" role="img" aria-label="NAOTO OTAKA"></h1>
+  <h1 class="sign"><span class="vh">NAOTO OTAKA ／ 大高成 — オスシジャパンアート</span></h1>
 </section>
 
 <section class="garden" id="garden" aria-hidden="true">
@@ -430,7 +448,7 @@ html.ready .nav{opacity:1}
     <p class="collab__tag">COLLABORATION</p>
     
     <div class="collab__flow">
-      <p class="blk blk--en b1">MAISON DE VII.<br>× NAOTO OTAKA</p>
+      <h2 class="blk blk--en b1">MAISON DE VII.<br>× NAOTO OTAKA</h2>
       <p class="blk blk--en b2">LIVE DRAWING<br>AT MAISON DE VII.</p>
       <p class="blk blk--en b3">
         <span>WEAR. WALK. DRAW.</span>
@@ -467,7 +485,7 @@ html.ready .nav{opacity:1}
     </div>
 
     <div class="collab__flow">
-      <p class="blk blk--en b1">niko and&hellip;<br>&times; NAOTO OTAKA</p>
+      <h2 class="blk blk--en b1">niko and&hellip;<br>&times; NAOTO OTAKA</h2>
       <p class="blk blk--en b2">ILLUSTRATION FOR<br>&ldquo;DEAU NI AU&rdquo; 2026 A/W</p>
       <p class="blk blk--en b3">
         <span>CLIENT &mdash; niko and&hellip;</span>

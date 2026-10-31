@@ -18,6 +18,11 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <!-- /@meta -->
+<style>/* 目には見せず、読み上げと検索にだけ届かせる文字。
+   署名は絵なので、見出しの中身が空のままだと検索に何も伝わらない */
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Zen+Kurenaido&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#14110F;--ink-40:rgba(20,17,15,.4);--ink-20:rgba(20,17,15,.2);--ink-30:rgba(20,17,15,.3);--ink-12:rgba(20,17,15,.12);
@@ -639,7 +644,7 @@ html:not(.js) .tix__tearoff{display:none}
         <div class="pg__in">
           <div class="cover-label">
             <i aria-hidden="true"></i>
-            <h1 class="sign" role="img" aria-label="Naoto Otaka 大高成"></h1>
+            <h1 class="sign"><span class="vh">大高成（NAOTO OTAKA）について</span></h1>
             <b>大高 成</b>
             <span>STREET ART / LIVE SKETCH</span>
           </div>
